@@ -3,7 +3,7 @@ import { Meteor } from 'meteor/meteor';
 Meteor.startup(() => {
   // code to run on server at startup
 
-    // if users database is empty, seed these values
+    /* if users database is empty, seed these values
     if(Meteor.users.find().count() < 1) {
       // users array
       var users = [ ///note these are fictional email addresses and for demon only
@@ -35,7 +35,7 @@ Meteor.startup(() => {
           Roles.addUsersToRoles(userId, d.roles, d.group);
 
       });
-  }
+  }*/
 });
 
 
@@ -43,38 +43,7 @@ Meteor.startup(() => {
 
 
 Meteor.methods({
-  seedDatabase: function(){
-    // users array
-    var users = [ ///note these are fictional email addresses and for demon only
-      { name: 'Simon', email: 'simon.chapman@nhs.net', password: 'password', roles: ['clinician', 'admin'], group: 'KCH' },
-      { name: 'Martha', email: 'martha.ford-adams@nhs.net', password: 'password', roles: ['clinician'], group: 'KCH' },
-      { name: 'Tony', email: 'tony.hulse@gstt.nhs.uk', password: 'password', roles: ['clinician'], group: 'ELCH' },
-      { name: 'Joanna', email: 'joanna.lawrence@uhl.nhs.uk', password: 'password', roles: ['clinician'], group: 'UHL' },
-      { name: 'Psychologist', email: 'psychology@kings.com', password: 'password', roles: ['clinician'], group: 'KCH' },
-      { name: 'Dietician', email: 'dietician@kings.com', password: 'password', roles: ['clinician'], group: 'KCH' },
-      { name: 'Parent', email: 'kingsparent@example.com', password: 'password', roles: ['parent'], group: 'KCH' },
-      { name: 'Headmaster', email: 'headmaster@school.com', password: 'password', roles: ['school'], group: 'KCH' }
-
-    ];
-    // user creation
-    _.each(users, function(d) {
-      // return id for use in roles assignment below
-      var userId = Accounts.createUser({
-        email: d.email,
-        password: d.password,
-        username: d.email,
-        profile: {
-          name: d.name
-        }
-      });
-      // verify user email
-      Meteor.users.update({ _id: userId }, { $set: { 'emails.0.verified': true } });
-      // add roles to user
-
-        Roles.addUsersToRoles(userId, d.roles, d.group);
-
-    });
-  },
+  
   deleteBooking: function(booking_id){
     Bookings.remove({_id: booking_id});
   },
