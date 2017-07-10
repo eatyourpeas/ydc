@@ -16,5 +16,8 @@ Template.home.events({
   },
   'click .home-promo-blue': function(){
     Router.go('/news');
+  },
+  'click #seedbutton': function(){
+    Meteor.call('seedDatabase');
   }
 });
