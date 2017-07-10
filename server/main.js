@@ -43,7 +43,7 @@ Meteor.startup(() => {
 
 
 Meteor.methods({
-  
+
   deleteBooking: function(booking_id){
     Bookings.remove({_id: booking_id});
   },
@@ -102,7 +102,7 @@ Meteor.methods({
 });
 
 Accounts.onCreateUser((options, user) => {
-  /*
+
     var admin = false;
     var clinician = false;
 
@@ -123,11 +123,11 @@ Accounts.onCreateUser((options, user) => {
       user.profile.admin = admin;
 
       return user;
-      */
+
 });
 
 Meteor.users.after.insert(function(userId, doc){
-/*
+
   //after new user created, add to role
   if (doc.profile.clinician) {
     Roles.addUsersToRoles(doc._id, "clinician", doc.clinic);
@@ -140,7 +140,7 @@ Meteor.users.after.insert(function(userId, doc){
   if (doc.profile.school) {
     Roles.addUsersToRoles(doc._id, "school", doc.clinic);
   }
-  */
+
 });
 
 ///publications
