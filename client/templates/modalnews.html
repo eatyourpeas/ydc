@@ -1,0 +1,170 @@
+<template name='modalNewPost'>
+
+  <div class="modal fade" id="newPostModal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+
+                <div class="modal-header">
+                    <h4 class="modal-title">Create new post</h4>
+                </div>
+
+                <div class="modal-body">
+
+                <div class="row" style="padding-top: 50px;">
+                  <div class="col-md-12">
+
+                    <form role='form' id="newpost">
+
+                        <div class="form-group row">
+                          <label for="newsheadline" class="col-md-4 form-control-label">Headline</label>
+                          <div class="col-md-8">
+                            <div class="input-group" id="newsheadlinegroup">
+                              <input class="form-control input-sm" type="text" id="newsheadlinetext"/>
+                            </div>
+                          </div>
+                        </div>
+
+                        <div class="form-group row">
+                          <label for="newsstrapline" class="col-sm-4 form-control-label">Subheading</label>
+                          <div class="col-sm-8">
+                            <div class="input-group" id="newsstraplinegroup">
+                              <input class="form-control input-sm" type="text" name="newsstraplinetext"/>
+                            </div>
+                          </div>
+                        </div>
+
+                        <div class="form-group row">
+                          <label for="newstext" class="col-sm-4 form-control-label">Text</label>
+                          <div class="col-sm-8">
+                            <div class="input-group" id="news-text-group">
+                              <textarea class="form-control" rows="10" type="text" id="newstext"></textarea>
+                            </div>
+                          </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <label for="imageuploader" class="col-sm-4 form-control-label">Picture</label>
+                          <!--div class="col-lg-2 col-md-2"></div-->
+                          <div class="col-lg-8 col-md-8 col-sm-12" id="imageuploader">
+                            {{>uploadImageForm}}
+                          </div>
+                          <!--div class="col-lg-2 col-md-2"></div-->
+                        </div>
+
+                        <div class="modal-footer">
+                          <div class="col-md-6">
+                            <span><small><i class="fa fa-clock-o" aria-hidden="true"></i> {{dateTimeShorten getDateTime}}</small></span>
+                          </div>
+                          <div class="col-md-6">
+                            <button type="button" class="btn btn-default" data-dismiss="modal" id='closeNewPostButton'>Close</button>
+                            <button type="submit" class="btn btn-info">Create New Post</button>
+                          </div>
+                        </div>
+                    </form>
+                  </div>
+                </div>
+              </div>
+            </div>
+        </div>
+    </div>
+
+</template>
+
+<template name='modalEditPost'>
+
+  <div class="modal fade">
+        <div class="modal-dialog">
+            <div class="modal-content">
+
+                <div class="modal-header">
+                    <h4 class="modal-title">Edit Post</h4>
+                </div>
+
+                <div class="modal-body">
+
+                <div class="row" style="padding-top: 50px;">
+                  {{#with selectedPost}}
+                  <form role='form' id="editpost">
+
+                  <div class="col-md-12">
+
+                        <div class="form-group row">
+                          <label for="newsheadline" class="col-md-4 form-control-label">Headline</label>
+                          <div class="col-md-8">
+                            <div class="input-group" id="newsheadlinegroup">
+                              <input class="form-control input-sm" type="text" id="newsheadlinetext" value={{post_headline}} />
+                            </div>
+                          </div>
+                        </div>
+
+                        <div class="form-group row">
+                          <label for="newsstrapline" class="col-sm-4 form-control-label">Subheading</label>
+                          <div class="col-sm-8">
+                            <div class="input-group" id="newsstraplinegroup">
+                              <input class="form-control input-sm" type="text" name="newsstraplinetext" value={{post_subtitle}} />
+                            </div>
+                          </div>
+                        </div>
+
+                        <div class="form-group row">
+                          <label for="newstext" class="col-sm-4 form-control-label">Text</label>
+                          <div class="col-sm-8">
+                            <div class="input-group" id="news-text-group">
+                              <textarea class="form-control" rows="10" type="text" id="newstext" value={{post_text}}></textarea>
+                            </div>
+                          </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <label for="imageuploader" class="col-sm-4 form-control-label">Picture</label>
+                          <!--div class="col-lg-2 col-md-2"></div-->
+                          <div class="col-lg-8 col-md-8 col-sm-12" id="imageuploader">
+                            {{>uploadImageForm}}
+                          </div>
+                          <!--div class="col-lg-2 col-md-2"></div-->
+                        </div>
+
+                        <div class="modal-footer">
+                          <div class="col-md-6">
+                            <span><small><i class="fa fa-clock-o" aria-hidden="true"></i> {{dateTimeShorten post_date}}</small></span>
+                          </div>
+                          <div class="col-md-6">
+                            <button type="button" class="btn btn-default" data-dismiss="modal" id='closeEditPostButton'>Close</button>
+                            <button type="submit" class="btn btn-info">Submit Edited Post</button>
+                          </div>
+                        </div>
+                        </div>
+                    </form>
+                      {{/with}}
+                </div>
+              </div>
+            </div>
+        </div>
+    </div>
+
+</template>
+
+<template name='modalDeletePost'>
+  <div class="modal fade">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Deleting Post!</h4>
+                </div>
+                <div class="modal-body">
+                  <div class="row" style="padding-top: 50px;">
+                    <div class="col-md-12">
+                      <H2>You are about to delete this post. This cannot be undone. Confirm if you wish to continue.</H2>
+                    </div>
+                  </div>
+                </div>
+                <div class="modal-footer">
+                  <div class="col-md-6">
+                    <button type="button" class="btn btn-default" data-dismiss="modal" id='closeMapButton'>Close</button>
+                    <button type="submit" class="btn btn-danger" id="deletepostbutton">Delete Post</button>
+                  </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</template>

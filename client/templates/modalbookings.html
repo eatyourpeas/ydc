@@ -1,0 +1,71 @@
+<template name='modalDeleteBooking'>
+
+  <div class="modal fade">
+        <div class="modal-dialog">
+            <div class="modal-content">
+
+                <div class="modal-header">
+                    <h4 class="modal-title">Just Checking...</h4>
+                </div>
+
+                <div class="modal-body">
+                    <h2>Are you sure you want to cancel this booking? You cannot undo this.</h2>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-danger" id="deleteBooking">Delete Booking</button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+</template>
+
+<template name='bookingsModal'>
+  <div class="modal fade">
+        <div class="modal-dialog">
+            <div class="modal-content" >
+                <div class="modal-header">
+                    <h4 class="modal-title">Bookings</h4>
+                </div>
+
+                <table class="table table-bordered" >
+                  <thead>
+                    <tr>
+                      <th>Booking Holder Name</th>
+                      <th>Booking Holder Email</th>
+                      <th>Confirmation Status</th>
+                      <th>Cancel</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {{#each bookingsForCourse}}
+                      <tr id="bookings" class='default'>
+                          <td>{{bookingHolder booked_by}}</td>
+                          <td>{{bookingHolderEmail booked_by}}</td>
+                        {{#if booking_validated}}
+                          <td>Booking Confirmed</td>
+                          {{#if selectedCourseIsComplete }}
+                            <td><span><i class="fa fa-icon-ok"></i></span>&nbsp;Course Complete</td>
+                          {{ else}}
+                            <td><button class = "btn btn-danger" id='cancelBookingButton'> Cancel Booking </button></td>
+                          {{/if}}
+                        {{else}}
+                          <td>Confirmation Pending</td>
+                          <td><button class = "btn btn-danger disabled" id='cancelBookingButton'> Cancel Booking </button></td>
+                        {{/if}}
+                      </tr>
+                    {{/each}}
+                  </tbody>
+                </table>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-danger" id="deleteCourse">Delete Course</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</template>

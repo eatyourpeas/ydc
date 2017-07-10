@@ -1,0 +1,48 @@
+<template name='shoppingBasket'>
+  <div class="dropdown">
+    <a href='/'><span class="glyphicon glyphicon-shopping-cart"></span> Basket<span class='badge'>{{numberOfBasketItems}}</span> <b class="caret"></b></a>
+    <div class="dropdown-content">
+        <h2><b>Courses</b></h2>
+          <ul id="cart" class='clearfix'></ul>
+            <li class="divider"></li>
+          <!--  <form class='form'> -->
+              {{#each allCurrentUserUnvalidatedBookings }}
+              <div class="row">
+                <div class="col-md-6">
+                  <div class='checkbox'>
+                      <label class='courseSelect'><input type="checkbox" value={{_id}} >
+                        {{ #with courseForBooking course }}
+                          <b>{{ course_name }}</b>: {{ dateTimeShortenToDate start_date }}
+                        {{ /with }}
+                      </label>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="input-group">
+                          <span class="input-group-btn">
+                              <button type="button" class="btn btn-default bt-sm" {{disabledstatusminus _id}} data-type="minus" id="subtractonebutton" data-field="quant[1]" value={{courseForBooking course}} name={{_id}}>
+                                  <span class="glyphicon glyphicon-minus"></span>
+                              </button>
+                          </span>
+                          <input type="text" name="quant[1]" id={{_id}} class="form-control input-number" value={{numberOfItems _id}}  min="1" max="10" style="text-align: center;">
+                          <span class="input-group-btn">
+                              <button type="button" class="btn btn-default btn-sm" id='addonebutton' name={{_id}} {{disabledstatusplus _id}} data-type="plus" data-field="quant[1]" value={{courseForBooking course}}>
+                                  <span class="glyphicon glyphicon-plus"></span>
+                              </button>
+                          </span>
+                    </div>
+                  </div>
+                </div>
+              {{/each}}
+        <div class="btn-group pull-right">
+                  <button name='removeButton' id = 'removeButton' class="btn btn-default" {{remove_button_enabled}}>Remove Items</button> <!--<a href="#" class="simpleCart_empty btn btn-sm btn-danger">Clear Cart</a> -->
+                  <button name='checkoutButton' id='checkoutButton' class="btn btn-default" {{submit_button_enabled}}>Check Out</button><!--<a href="#" class="simpleCart_checkout btn btn-sm btn-success">Checkout Now</a>-->
+          <!--
+            <button name='removeButton' class="btn btn-default disabled">Remove Items</button> <a href="#" class="simpleCart_empty btn btn-sm btn-danger">Clear Cart</a>
+            <button name='checkoutButton' class="btn btn-default disabled">Check Out</button><a href="#" class="simpleCart_checkout btn btn-sm btn-success">Checkout Now</a>
+          -->
+        </div>
+        <!--      </form>  -->
+      </div>
+  </div>
+</template>

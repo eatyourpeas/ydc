@@ -1,0 +1,170 @@
+<template name='modalDeleteResource'>
+
+  <div class="modal fade">
+        <div class="modal-dialog">
+            <div class="modal-content">
+
+                <div class="modal-header">
+                    <h4 class="modal-title">Just Checking...</h4>
+                </div>
+
+                <div class="modal-body">
+                    <h2>Are you sure you want to delete this resource? You cannot undo this.</h2>
+
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-danger" id="deleteresourcebutton">Delete Resource</button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+</template>
+
+<template name='modalAddResource'>
+
+  <div class="modal fade">
+        <div class="modal-dialog">
+            <div class="modal-content">
+
+                <div class="modal-header">
+                    <h4 class="modal-title">Add New Resource</h4>
+                </div>
+                <form role='form' id="newresourceform">
+                  <div class="modal-body">
+
+                    <div class="alert alert-warning" id="successAlert" style="display: none;">
+                      {{alertMessage}}
+                    </div>
+
+                    <div class="form-group row">
+                      <label for="document_title" class="col-sm-4 form-control-label">*Document Title:</label>
+                      <div class="col-sm-8">
+                        <div class="input-group" id="document_title_group">
+                          <input class="form-control" type="text" id="document_title"/>
+                        </div>
+                      </div>
+                    </div>
+
+                      <div class="form-group row">
+                        <label for="resource_category" class="col-sm-4 form-control-label">*Category:</label>
+                        <div class="col-sm-8">
+                            <select class="form-control" id="category">
+                                <option value="NoSelection">select a category...</option>
+                              {{#each resourceCategories}}
+                                <option value={{this.value}}{{selectedCategory this.value}}>{{this.text}}</option>
+                              {{/each}}
+                            </select>
+                            {{#each chosenCategories}}
+                              <label class="badge badge-default categoryBadge" id={{this}}><span class="glyphicon glyphicon-remove"></span> {{this}}</label>
+                            {{/each}}
+                        </div>
+                      </div>
+                      <div class="form-group row">
+                        <label for="clinic" class="col-sm-4 form-control-label">*Clinic:</label>
+                        <div class="col-sm-8">
+                          <select class="form-control" id="clinic">
+                            <option value="NoFilter">Select your centre...</option>
+                            <option value="ELCH">Evelina London Children's Hospital</option>
+                            <option value="KCH">King's College Hospital</option>
+                            <option value="PRUH">Princess Royal University Hospital</option>
+                            <option value="UHL">University Hospital Lewisham</option>
+                          </select>
+                        </div>
+                      </div>
+
+                      <div class="form-group row">
+                        <label for="description" class="col-sm-4 form-control-label">Description:</label>
+                        <div class="col-sm-8">
+                          <div class="input-group" id="description_group">
+                            <textarea class="form-control" type="text" id="description"></textarea>
+                          </div>
+                        </div>
+                      </div>
+                      {{>uploadForm}}
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-info" id="addresourcebutton">Add Resources</button>
+                </div>
+              </form>
+            </div>
+        </div>
+    </div>
+
+</template>
+
+<template name='modalEditResource'>
+
+  <div class="modal fade">
+        <div class="modal-dialog">
+            <div class="modal-content">
+
+                <div class="modal-header">
+                    <h4 class="modal-title">Edit Resource</h4>
+                </div>
+                <form role='form' id='editresourceform'>
+                  {{#with selectedResource}}
+                  <div class="modal-body">
+
+                    <div class="form-group row">
+                      <label for="document_title" class="col-sm-4 form-control-label">Document Title:</label>
+                      <div class="col-sm-8">
+                        <div class="input-group" id="document_title_group">
+                          <input class="form-control" type="text" id="document_title" value={{file_title}} />
+                        </div>
+                      </div>
+                    </div>
+
+                      <div class="form-group row">
+                        <label for="resource_category" class="col-sm-4 form-control-label">Category:</label>
+                        <div class="col-sm-8">
+                          <select class="form-control" id="category">
+                            {{#each categoryOptions}}
+                              <option value={{this.value}} {{selectedCategory this.value}}>{{this.text}}</option>
+                            {{/each}}
+                          </select>
+                        </div>
+                      </div>
+                      <div class="form-group row">
+                        <label for="clinic" class="col-sm-2 form-control-label">Clinic:</label>
+                        <div class="col-sm-10">
+                          <select class="form-control" id="clinic">
+                            {{#each clinicOptions}}
+                              <option value={{this.value}} {{selectedClinic this.value}}>{{this.text}}</option>
+                            {{/each}}
+                          </select>
+                        </div>
+                      </div>
+
+                      <div class="form-group row">
+                        <label for="description" class="col-sm-4 form-control-label">Description:</label>
+                        <div class="col-sm-8">
+                          <div class="input-group" id="description_group">
+                            <textarea class="form-control" type="text" id="description" value={{file_summary}}></textarea>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="form-group row">
+                        <label for="description" class="col-sm-4 form-control-label">File name:</label>
+                          <div class="col-sm-8">
+                            {{fileNameForResource file_id}}
+                            <h4> NOTE: You cannot edit this file! To change file please delete and add as new resource</h4>
+                          </div>
+                      </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-info" id="editresourcebutton">Edit Resource</button>
+                </div>
+                {{/with}}
+              </form>
+            </div>
+        </div>
+    </div>
+
+</template>

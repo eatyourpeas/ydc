@@ -1,0 +1,55 @@
+<template name='bookingadmin'>
+  <container>
+    <div class="row">
+      <div class="col-md-2"></div>
+      <div class="col-md-10">
+        <h1 class='pages-promo-title'>Booking Administration</h1>
+      </div>
+      <div class="col-md-2"></div>
+    </div> <!---div-->
+    <div class = "row">
+      <div class="col-md-2">
+			</div>
+			<div class="col-md-8">
+        {{ #if getAllBookings }}
+          <table class="table table-bordered">
+            <thead>
+              <tr>
+                <th>Course Name</th>
+                <th>Dates</th>
+                <th>Clinic</th>
+                <th>Validated</th>
+                <th>YDC Member</th>
+                <th>Cancel</th>
+              </tr>
+            </thead>
+            <tbody>
+                {{#each getAllBookings}}
+                    <tr class={{bookingExpiredClass course}} id="bookingUsers">
+                      <td>{{courseNameForBooking course}}</td>
+                      <td>{{ courseDatesForBooking course }}</td>
+                      <td>{{ courseClinicForBooking course}}</td>
+                      {{ #if booking_validated}}
+                        <td>Confirmed</td>
+                      {{ else }}
+                        <td>Pending Confirmation</td>
+                      {{/if}}
+                      <td>{{courseUserForBooking booked_by}}</td>
+                      {{#if courseHasCompleted course}}
+                        <td><span class="glyphicon glyphicon-ok"></span>&nbsp;Course Complete</td>
+                      {{ else }}
+                        <td><button class="btn btn-danger" id='cancelBookingButton'>Cancel</button></td>
+                      {{ /if }}
+                    </tr>
+                {{/each}}
+            </tbody>
+          </table>
+        {{ else }}
+          <H2> There are no bookings so far... </H2>
+        {{ /if }}
+      </div>
+      <div class="col-md-2">
+			</div>
+    </div> <!---row -->
+  </container>
+</template>

@@ -1,0 +1,115 @@
+import { Template } from 'meteor/templating';
+import { ReactiveVar } from 'meteor/reactive-var';
+import { FilesCollection } from 'meteor/ostrio:files';
+
+Template.news.onCreated(function(){
+  var post = Meteor.call('mostRecentPost', function(error, post){
+    if (error) {
+      console.log(error);
+      return;
+    } else {
+      Session.set('selectedPost', post._id);
+      Session.set("editPost", false);
+    }
+  });
+
+  this.announcement_visible = new ReactiveVar(true);
+
+
+});
+
+Template.news.events({
+  'click #newPostButton': function(){
+    Session.set("editPost", false);
+    Modal.show('modalNewPost');
+  },
+  'click #editPostButton': function(){
+    Session.set("editPost", true);
+    Modal.show('modalEditPost');
+  },
+  'click #deletePostButton': function(){
+    Session.set("editPost", false);
+    Modal.show('modalDeletePost');
+  },
+  'click #post': function(event, template){
+    var post = Posts.findOne({_id: this._id});
+    Session.set('selectedPost', post._id);
+  },
+  'click #deleteimagebutton': function(event){
+    Meteor.call('deleteImages', this._id);
+  },
+  'click #cancel_announcement':function(event, template){
+    template.announcement_visible.set(false);
+  },
+  'click #add_announcement_button': function(event, template){
+    Modal.show('addAnnouncementModal');
+  },
+  'click #edit_announcement_button': function(event, template){
+    Modal.show('editAnnouncementModal');
+  }
+});
+
+Template.news.helpers({
+  'mostRecentPost': function(){
+    return Posts.findOne({}, {sort: {post_date: -1, limit: 1}});
+  },
+  'postsInDateOrder': function(){
+    return Posts.find({}, {sort: {post_date: -1}});
+  },
+  'selectedPost': function(){
+    var post_id = Session.get('selectedPost');
+    var post = Posts.findOne(post_id);
+    return post;
+  },
+  'imageForId': function(image_id){
+    if (image_id) {
+      var image = Images.findOne(image_id);
+      return image;
+    }
+  },
+  'allImages': function(){
+    return Images.find();
+  },
+  'imageDelete': function(fileToDelete){
+    Meteor.call('deleteImages', fileToDelete);
+  },
+  'disabled': function(){
+    if (Session.get('selectedPost')) {
+      return ""
+    } else {
+      return "disabled";
+    }
+  },
+  'thereIsNoImage': function(){
+    var post = Posts.findOne(Session.get("selectedPost"));
+    if (post.post_image == "") {
+      return true;
+    } else {
+      return false;
+    }
+  },
+  'announcement_visible': function(){
+    var me = Meteor.userId();
+    var myCentre = Roles.getGroupsForUser(me);
+    var admin = false;
+    if (Roles.userIsInRole(me,'admin', myCentre[0])) {
+      admin = true;
+    }
+    var a_week_ago = new Date();
+    a_week_ago.setDate(a_week_ago.getDate() - 7);
+    var announcement = Announcements.findOne({clinic: myCentre[0], announcement_datetime: {$gt: a_week_ago.getTime()}}, {sort: {createdAt: -1}, limit: 1});
+
+    if ((Template.instance().announcement_visible.get() && announcement)||(Template.instance().announcement_visible.get() && admin)) {
+      return '';
+    } else {
+      return 'hidden';
+    }
+  },
+  'announcementsForMyClinic': function(){
+    var me = Meteor.userId();
+    var myCentre = Roles.getGroupsForUser(me);
+    var a_week_ago = new Date();
+    a_week_ago.setDate(a_week_ago.getDate() - 7);
+    return Announcements.findOne({clinic: myCentre[0], announcement_datetime: {$gt: a_week_ago.getTime()}}, {sort: {createdAt: -1}, limit: 1});
+  }
+});

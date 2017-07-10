@@ -1,0 +1,147 @@
+<template name='modalAddTeamMember'>
+  <div class="modal fade">
+        <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                  <h1 class="modal-title">Add A New Team Member</h1>
+              </div>
+              <div class="modal-body">
+                      <div class="row" style="padding-top: 50px;">
+                        <div class="col-md-1"></div>
+                        <div class="col-md-9">
+                          <form role='form'>
+                              <div class="form-group row">
+                                <label for="clinician-name" class="col-md-2 form-control-label">Name</label>
+                                <div class="col-md-10">
+                                  <input type="text" id="clinician-name">
+                                </div>
+                              </div>
+                              <div class="form-group row">
+                                <label for="clinician-email" class="col-md-2 form-control-label">Email</label>
+                                <div class="col-md-10">
+                                  <input type="text" id="clinician-email" name="clinician-email">
+                                </div>
+                              </div>
+                              <div class="form-group row">
+                                <label for="clinic" class="col-md-2 form-control-label">Clinic:</label>
+                                <div class="col-md-10">
+                                  <select class="form-control" id="clinic">
+                                    <option value="ELCH">Evelina London Children's Hospital</option>
+                                    <option value="KCH">King's College Hospital</option>
+                                    <option value="PRUH">Princess Royal University Hospital</option>
+                                    <option value="UHL">University Hospital Lewisham</option>
+                                  </select>
+                                </div>
+                              </div>
+                              <div class="form-group row">
+                                <label for="clinician" class="col-sm-4 form-control-label">Clinician
+                                  <input type="checkbox" id="clinician">
+                                </label>
+                                <label for="admin" class="col-sm-4 form-control-label">Administrator
+                                  <input type="checkbox" id="admin">
+                                </label>
+                                <label for="school" class="col-sm-4 form-control-label">School
+                                  <input type="checkbox" id="school" >
+                                </label>
+                              </div>
+                              <div class="modal-footer">
+                                  <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                  <button type="submit" class="btn btn-info">Create New Team Member</button>
+                              </div>
+                          </form>
+                        </div>
+                        <div class="col-md-1"></div>
+                      </div>
+              </div>
+        </div>
+    </div>
+  </div>
+</template>
+
+<template name='modalEditTeamMember'>
+  <div class="modal fade">
+        <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                  <h1 class="modal-title">Edit A Team Member</h1>
+              </div>
+              <div class="modal-body">
+                      <div class="row" style="padding-top: 50px;">
+                        <div class="col-md-2"></div>
+                        <div class="col-md-8">
+                          <form role='form'>
+                              <div class="form-group row">
+                                <label for="clinician-name" class="col-sm-3 form-control-label">Name</label>
+                                  <input type="text" id="clinician-name" value={{selectedUser.profile.name}}>
+                              </div>
+                              <div class="form-group row">
+                                <label for="clinician-email" class="col-sm-3 form-control-label">Email</label>
+                                  <input type="text" class='col-sm-8 form-control-input' id="clinician-email" name="clinician-email" value={{selectedUser.emails.[0].address}}>
+                              </div>
+                              <div class="form-group row">
+                                <label for="clinic" class="col-sm-3 form-control-label" id="clinic-label">Clinic:</label>
+                                <div class="col-sm-9">
+
+                                  <select class="form-control col-sm-8" id="clinic">
+                                    {{#each clinicOptions}}
+                                      <option value={{this.value}} {{selectedClinic this.value}}>{{this.text}}</option>
+                                    {{/each}}
+                                  </select>
+
+                                </div>
+                              </div>
+                              {{#with selectedUser}}
+                                <div class="form-group row">
+                                  <label for="clinician" class="col-sm-12 form-control-label">Clinician
+                                    <input type="checkbox" id="clinician" checked={{isClinician this._id}}>
+                                  </label>
+                                </div>
+                                <div class="form-group row">
+                                  <label for="admin" class="col-sm-12 form-control-label">Administrator
+                                    <input type="checkbox" id="admin" checked={{isAdmin this._id}}>
+                                  </label>
+                                </div>
+                                <div class="form-group row">
+                                  <label for="school" class="col-sm-12 form-control-label">School
+                                    <input type="checkbox" id="school" checked={{isSchool this._id}}>
+                                  </label>
+                                </div>
+                              {{/with}}
+                              <div class="modal-footer">
+                                  <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                  <button type="submit" class="btn btn-info">Update Team Member Details</button>
+                              </div>
+                          </form>
+                        </div>
+                        <div class="col-md-2"></div>
+                      </div>
+              </div>
+        </div>
+    </div>
+  </div>
+</template>
+
+<template name='modalDeleteTeamMember'>
+  <div class="modal fade">
+        <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                  <h1 class="modal-title">Remove a YDC Member</h1>
+              </div>
+              <div class="modal-body">
+                      <div class="row" style="padding-top: 50px;">
+                        <div class="col-md-2"></div>
+                        <div class="col-md-8">
+                          <H2>You are about to delete a YDC member. This cannot be undone. Are you sure?</H2>
+                        </div>
+                        <div class="col-md-2"></div>
+                      </div>
+              </div>
+              <div class="modal-footer">
+                  <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                  <button type="button" class="btn btn-danger" id="deleteteammemberbutton">Remove YDC Member</button>
+              </div>
+              </div>
+        </div>
+    </div>
+</template>

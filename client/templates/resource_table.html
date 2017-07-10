@@ -1,0 +1,25 @@
+<template name='resource_table'>
+  <table class="resource_table" cellpadding="5">
+    <tbody>
+      <tr>
+        <th class="resource_table_head">Title:</th><td class="resource_table_data">{{file_title}}</td>
+      </tr>
+      <tr>
+        <th class="resource_table_head">Description:</th><td class="resource_table_data">{{file_summary}}</td>
+      </tr>
+      <tr>
+        <th class="resource_table_head">Date:</th><td class="resource_table_data">{{dateTimeShortenToDate file_date}}</td>
+      </tr>
+      <tr>
+        <th class="resource_table_head"></th>
+          <td class="download_td">
+            <a class="btn btn-default btn-sm" id='download_button' href="{{fileURL (documentForResource file_id)}}?download=true" download="{{documentNameForResource file_id}}" target="_parent">DOWNLOAD <i class="glyphicon glyphicon-download-alt"></i></a>
+            {{#if currentUserIsClinician}}
+              <button class="btn btn-primary btn-sm" id="editResourceButton">Edit</button>
+              <button class="btn btn-danger btn-sm" id="deleteResourceButton">Remove</button>
+            {{/if}}
+          </td>
+      </tr>
+    </tbody>
+  </table>
+</template>

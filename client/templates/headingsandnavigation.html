@@ -1,0 +1,96 @@
+<template name='headingsandnavigation'>
+  <header id="masthead" class="site-header" role="banner">
+    <div class="container">
+      <a href="/"><div class="site-branding"></div></a>
+      <div class="right-side">
+        <!-- potential container for appendAround -->
+        <div class="top" data-set="globalnav">
+          <div class="menu-global-nav-container">
+            <ul id="menu-global-nav" class="menu">
+              {{ #if currentUserIsSchoolOrParent}}
+                <!--contact us can go here if felt necessary -->
+              {{/if}}
+              <li class="login-buttons-div">
+                {{> loginButtons  align='right'}}
+              </li>
+              {{#if basketHasItems }}
+                <li>
+                  {{> shoppingBasket }}
+                </li>
+              {{/if}}
+              {{#if userIsAdmin}}
+              <li class="dropdown">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown">User Administration<b class="caret"></b></a>
+                <ul class="dropdown-menu">
+                  <li><a href="/useradmin">View All Users</a></li>
+                  <li><a href="/bookingadmin">View All Bookings</a></li>
+                </ul>
+              </li>
+              {{/if}}
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header><!-- #masthead -->
+
+  <div class="container">
+    <!-- new -->
+      <nav class="navbar navbar-default" role="navigation">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse main-navigation" id="bs-example-navbar-collapse-1">
+          <div class="menu-primary-nav-container">
+            <ul id="menu-primary-nav" class="menu">
+              <li id="menu-item-home" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-7"><a href="/">Home</a></li>
+              <li id="menu-item-events" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-38"><a href="/news">Events</a></li>
+              <li id="menu-item-resources" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-40"><a href="/resources">Resources</a></li>
+              <li class="dropdown" id="menu-item-courses">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Courses <span class="caret"></span></a>
+                <ul class="dropdown-menu" id="menu-item-courses">
+                  <li><a href="/aboutcourses">About our Courses</a></li>
+                  {{#if currentUser}}
+                    {{#if currentUserIsClinician }}
+                      <li>
+                        <a href='/addevent'>Add Events</a>
+                      </li>
+                    {{ /if }}
+                    {{ #if currentUserIsSchoolOrParent}}
+                      <li>
+                        <a href="/schedule">Courses</a>
+                      </li>
+                    {{ /if }}
+                  {{/if}}
+                </ul>
+              </li>
+              <li id="menu-item-40" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-40"><a href="/contact-us">Getting Help</a></li>
+            </ul>
+          </div>
+          <div class="navbar-search-container">
+            <form role="search" method="get" id="searchform" class="searchform" action="/">
+              <label class="offscreen" for="s">Search for:</label>
+              <input type="text" value="" name="s" id="s" class="search-input" placeholder="{{searchtext}}">
+              <input type="submit" value="GO" class="search-btn">
+            </form>
+          </div>
+        </div><!-- /.navbar-collapse -->
+
+      </nav>
+
+
+
+      <div class="breadcrumbs">
+      </div>
+
+
+  </div><!-- #page -->
+</template>

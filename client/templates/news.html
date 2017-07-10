@@ -1,0 +1,74 @@
+<template name='news'>
+<div class="container">
+  <div class="row">
+		<div class="col-md-12">
+			<div class="template-title">
+				Articles
+			</div>
+		</div>
+	</div>
+  {{#if currentUser}}
+    <div class="row announcements" {{announcement_visible}}>
+        <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
+          <H1>Announcements:</H1>
+        </div>
+        <div class="col-lg-9 col-md-9 col-sm-9 col-xs-9">
+          <H1>{{#with announcementsForMyClinic}}
+            {{this.announcement_text}}
+
+            <div class="pull-right" id='cancel_announcement'><span class="glyphicon glyphicon-remove-circle"></span></div>
+            <div class='pull-right small_time'>posted {{dateTimeShorten this.announcement_datetime}}</div>
+            {{/with}}
+              {{#if userIsAdmin}}
+                <button class="btn btn-info btn-small pull-right" id='edit_announcement_button' style="margin-right: 10px;">Edit Announcement</button>
+                <button class="btn btn-primary btn-small pull-right" id='add_announcement_button' style="margin-right: 10px;">Add Announcement</button>
+              {{/if}}
+</H1>
+        </div>
+    </div>
+  {{/if}}
+  <div class="row">
+    <div class="col-md-2 post_dates">
+      <!--{{#each image in allImages}}
+      {{image.name}}
+      {{imageDelete image._id}}
+      {{/each}}-->
+      {{#each postsInDateOrder}}
+        <li id="post"><a href="">{{dateTimeShortenToDate post_date}}</a></li>
+      {{/each}}
+    </div>
+      {{#if selectedPost}}
+        <div class="col-md-5">
+          {{#if thereIsNoImage}}
+            <img src="/images/ydc.png" alt="YDC Logo" />
+          {{else}}
+            {{#with imageForId selectedPost.post_image}}
+              <img src="{{this.link}}" alt="this.name" />
+            {{/with}}
+          {{/if}}
+        </div>
+        <div class="col-md-5 post_text">
+            <H2>{{selectedPost.post_headline}}</H2>
+            <H3>{{selectedPost.post_subtitle}}</H3>
+            <div class="news-leader-text">{{selectedPost.post_text}}</div>
+        </div>
+      {{else}}
+        <div class="col-md-8">
+            <div class="noNews">No posts yet</div>
+        </div>
+      {{/if}}
+      <div class="col-md-2"></div>
+  </div>
+    {{#if userIsAdmin}}
+      <div class="row">
+        <div class="adminButtonGroup">
+          <button class="btn btn-default" id="newPostButton">New Post</button>
+          <button class="btn btn-info" id="editPostButton" {{disabled}} >Edit Post</button>
+          <button class="btn btn-danger" id="deletePostButton" {{disabled}}>Delete Post</button>
+        </div>
+      </div>
+    {{/if}}
+
+</div>
+
+</template>

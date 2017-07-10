@@ -1,0 +1,115 @@
+<template name='addAnnouncementModal'>
+  <div class="modal fade">
+        <div class="modal-dialog">
+            <div class="modal-content" >
+                <div class="modal-header">
+                    <h4 class="modal-title">Add An Announcement</h4>
+                </div>
+                <form role='form' id='add_announcement_form'>
+                  <div class="modal-body">
+                    <div class="alert alert-warning" id="alertAnnouncement">
+                      {{alertMessage}}
+                    </div>
+
+                          <div class="row" style="padding-top: 50px;">
+
+                            <div class="col-md-1"></div>
+                            <div class="col-md-9">
+
+
+
+                                  <div class="form-group row">
+                                    <label for="clinic" class="col-sm-4 form-control-label">Clinic:</label>
+                                    <div class="col-sm-8">
+                                      <select class="form-control" id="clinic">
+                                        <option value="NoFilter">Select a clinic...</option>
+                                        {{#each clinicOptions}}
+                                          <option value={{this.value}}>{{this.text}}</option>
+                                        {{/each}}
+                                      </select>
+                                    </div>
+                                  </div>
+
+                                  <div class="form-group row">
+                                    <label for="announcement" class="col-sm-4 form-control-label">Announcement:</label>
+                                    <div class="col-sm-8">
+                                      <div class="input-group" id="announcement_group">
+                                        <input class="form-control" type="text" id="announcement"/>
+                                        <span class="input-group-addon">
+                                          <i class="glyphicon glyphicon-bullhorn"></i>
+                                        </span>
+                                      </div>
+                                    </div>
+                                  </div>
+
+                                  <small>This announcement will not be removed after a week</small>
+
+                            </div>
+                            <div class="col-md-1"></div>
+                          </div>
+                  </div>
+
+                  <div class="modal-footer">
+                      <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                      <button type="submit" class="btn btn-info" id="createAnnouncementButton">Create Announcement</button>
+                  </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</template>
+
+<template name='editAnnouncementModal'>
+  <div class="modal fade">
+        <div class="modal-dialog">
+            <div class="modal-content" >
+                <div class="modal-header">
+                    <h4 class="modal-title">Edit Announcement</h4>
+                </div>
+                <div class="modal-body">
+                        <div class="row" style="padding-top: 50px;">
+                          <div class="col-md-1"></div>
+                          <div class="col-md-9">
+
+                            <form role='form'>
+
+                                <div class="form-group row">
+                                  <label for="clinic" class="col-sm-4 form-control-label">Clinic:</label>
+                                  <div class="col-sm-8">
+                                    <select class="form-control" id="clinic">
+                                      <option value="ELCH">Evelina London Children's Hospital</option>
+                                      <option value="KCH">King's College Hospital</option>
+                                      <option value="PRUH">Princess Royal University Hospital</option>
+                                      <option value="UHL">University Hospital Lewisham</option>
+                                    </select>
+                                  </div>
+                                </div>
+
+                                <div class="form-group row">
+                                  <label for="announcement" class="col-sm-4 form-control-label">Announcement:</label>
+                                  <div class="col-sm-8">
+                                    <div class="input-group" id="announcement_group">
+                                      <input class="form-control" type="text" id="announcement"/>
+                                      <span class="input-group-addon">
+                                        <i class="glyphicon glyphicon-bullhorn"></i>
+                                      </span>
+                                    </div>
+                                  </div>
+                                </div>
+
+                                <small>This announcement will not be removed after a week</small>
+                            </form>
+                          </div>
+                          <div class="col-md-1"></div>
+                        </div>
+                </div>
+
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-info" id="editAnnouncementButton">Edit Announcement</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</template>

@@ -1,0 +1,88 @@
+<template name='useradmin'>
+  <container>
+    <row class="col-md-12">
+      <div class="col-md-2"></div>
+      <div class="col-md-10">
+        <h1 class='pages-promo-title'>All Users</h1>
+      </div>
+    </row>
+    <div class="row">
+			<div class="col-md-2"></div>
+			   <div class="col-md-8 searchform">{{> searchform }}
+			</div>
+			<div class="col-md-2"></div>
+		</div>
+    <div class="row">
+      <div class="col-md-2"></div>
+			<div class="col-md-8">
+        <table class="table table-bordered table-hover">
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Email</th>
+              <th>Role</th>
+              <th>Centre</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody>
+            {{#each adminUsers}}
+              <tr class={{selectedUserClass}} id="adminUsers">
+                <td>{{profile.name}}</td>
+                <td>{{emailForUser emails}}</td>
+                <td>{{roleForUser _id}}</td>
+                <td>{{ groupForUser _id }}</td>
+                <td><button class='btn btn-danger' id='deleteUserButton'>Delete</button>&nbsp;<button class='btn btn-info' id='editTeamMemberButton'><i class="fa fa-pencil-square-o" aria-hidden="true"></i></button></td>
+              </tr>
+            {{/each}}
+          </tbody>
+        </table>
+        <button class='btn btn-info' id='addTeamMemberButton'>Add Team Member</button>
+      </div>
+      <div class="col-md-2"></div>
+    </div> <!---row -->
+    <div class="row">
+      <div class="col-md-2">
+			</div>
+			<div class="col-md-8">
+        {{ #if getSelectedUser }}
+          {{#if confirmedBookingsForUser }}
+            <row class="col-md-12" style="padding-top:50px;">
+              <table class="table table-bordered table-hover">
+                <thead>
+                  <tr>
+                    <th>Course Name</th>
+                    <th>Course Dates</th>
+                    <th>Centre</th>
+                    <th>My Tickets</th>
+                    <th>Spaces Left</th>
+                    <th>Cancel</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {{#each confirmedBookingsForUser}}
+                  <tr id="courses">
+                    <td>{{coursenameforid course}}</td>
+                    <td>{{startdateForCourse course}} - {{enddateForCourse course}}</td>
+                    <td>{{clinicForCourse_id course}}</td>
+                    <td>{{places_booked}}</td>
+                    <td><span class="badge">{{spacesRemaining course}}</span></td>
+                    <td><button class = "btn btn-danger" id='cancelBookingButton'> Cancel Booking </button></td>
+                  </tr>
+                  {{/each}}
+                </tbody>
+              </table>
+            </row>
+          {{else}}
+            <H4>There are no bookings for this user</H4>
+          {{/if}}
+
+        {{/if}}
+      </div>
+			<div class="col-md-2"></div>
+    </div> <!---row -->
+
+  </container>
+
+
+</template>

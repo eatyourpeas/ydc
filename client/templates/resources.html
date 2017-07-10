@@ -1,0 +1,174 @@
+<template name='resources'>
+  <div class="container">
+    <div class="row">
+  		<div class="col-md-12">
+  			<div class="template-title">
+  				Resources
+  			</div>
+  		</div>
+  	</div>
+    <div class="row">
+      <div class="col-md-12">
+        <div class="resources-leadertext">
+          This is a growing library of resources from the YDC clinical teams. It is being updated all the time.
+          {{#if currentUserIsClinician}}
+            You are logged in as a clinician or an administrator which means you can add new or edit existing resources.<BR>
+            <button class="btn btn-primary btn-sm" id="addResourceButton">Add Resource</button>
+          {{else}}
+            If you have any resources you want included, let your team know.
+          {{/if}}
+        </div>
+      </div>
+    </div>
+    <div class="row" style="margin-bottom: 30px;">
+      <div class="col-xs-12 col-sm-6 col-lg-6">
+        <div class="home-promo-bg">
+          <div class="home-promo-red">
+            <div class="home-promo-wide-overlay">
+              <span><h3><i class="fa fa-cutlery"></i> &nbsp; Dietetic</h3></span>
+              {{#if dieteticResources}}
+                <select class="form-control" id='dieteticSelect'>
+                  <option value="NoFilter">select a dietetic resource...</option>>
+                    {{#each resource in dieteticResources}}
+                  <option value={{resource.file_title}}>{{resource.file_title}}</option>>
+                  {{/each}}
+                </select>
+              {{else}}
+                <div class="promo-text">You have no dietetic resources yet..</div>
+              {{/if}}
+              {{#with resourceForDieteticSelectedId}}
+                {{_id}}
+              {{/with}}
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-xs-12 col-sm-6 col-lg-6">
+        <div class="home-promo-green">
+          <div class="home-promo-wide-overlay">
+            <span><h3><i class="fa fa-stethoscope"></i> &nbsp; Medical/Nursing</h3></span>
+              {{#if medicalResources}}
+                <select class="form-control" id='medicalSelect'>
+                  <option value="NoFilter">select a medical/nursing resource...</option>>
+                  {{#each resource in medicalResources}}
+                    <option value={{resource._id}}>{{resource.file_title}}</option>>
+                  {{/each}}
+                </select>
+              {{else}}
+                <div class="promo-text">You have no medical/nursing resources yet..</div>
+              {{/if}}
+              {{#with resourceForMedicalSelectedId}}
+                {{>resource_table}}
+              {{/with}}
+          </div>
+        </div>
+      </div>
+    </div>
+      <div class="row" style="margin-bottom: 30px;">
+        <div class="col-xs-12 col-sm-6 col-lg-6">
+          <div class="home-promo-blue">
+            <div class="home-promo-wide-overlay">
+              <span><h3><i class="fa fa-comments"></i> &nbsp; Psychological Support</h3></span>
+              {{#if psychologyResources}}
+                <select class="form-control" id='pschologySelect'>
+                  <option value="NoFilter">select a psychology resource...</option>>
+                    {{#each resource in psychologyResources}}
+                  <option value={{resource._id}}>{{resource.file_title}}</option>>
+                  {{/each}}
+                </select>
+              {{else}}
+                <div class="promo-text">You have no medical resources yet..</div>
+              {{/if}}
+              {{#with resourceForPsychologySelectedId}}
+                {{>resource_table}}
+              {{/with}}
+            </div>
+          </div>
+        </div>
+        <div class="col-xs-12 col-sm-6 col-lg-6">
+          <div class="home-promo-pink">
+            <div class="home-promo-wide-overlay">
+              <span><h3><i class="fa fa-book"></i> &nbsp; School</h3></span>
+              {{#if schoolResources}}
+                <select class="form-control" id='schoolSelect'>
+                  <option value="NoFilter">select a school resource...</option>>
+                    {{#each resource in schoolResources}}
+                  <option value={{resource._id}}>{{resource.file_title}}</option>>
+                  {{/each}}
+                </select>
+              {{else}}
+                <div class="promo-text">You have no school resources yet..</div>
+              {{/if}}
+              {{#with resourceForSchoolSelectedId}}
+                {{>resource_table}}
+              {{/with}}
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row" style="margin-bottom: 30px;">
+        <div class="col-xs-12 col-sm-6 col-lg-6">
+          <div class="home-promo-bg">
+            <div class="home-promo-red">
+              <div class="home-promo-wide-overlay">
+                <span><h3><i class="fa fa-id-card"></i> &nbsp; Transition and Young Adult</h3></span>
+                {{#if transitionResources}}
+                  <select class="form-control" id='transitionSelect'>
+                    <option value="NoFilter">select a transition/young adult resource...</option>>
+                      {{#each resource in transitionResources}}
+                    <option value={{resource._id}}>{{resource.file_title}}</option>>
+                    {{/each}}
+                  </select>
+                {{else}}
+                  <div class="promo-text">You have no transtion/young adult resources yet..</div>
+                {{/if}}
+                {{#with resourceForTransitionSelectedId}}
+                  {{resource_table}}
+                {{/with}}
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-xs-12 col-sm-6 col-lg-6">
+          <div class="home-promo-green">
+            <div class="home-promo-wide-overlay">
+              <span><h3><i class="fa fa-users"></i> &nbsp; DUKLands Parent Group</h3></span>
+              {{#if schoolResources}}
+                <select class="form-control" id='duklandsSelect'>
+                  <option value="NoFilter">select a parent group resource...</option>>
+                    {{#each resource in duklandsResources}}
+                  <option value={{resource._id}}>{{resource.file_title}}</option>>
+                  {{/each}}
+                </select>
+              {{else}}
+                <div class="promo-text">You have no parent group resources yet..</div>
+              {{/if}}
+              {{#with resourceForDUKLandsSelectedId}}
+                {{>resource_table}}
+              {{/with}}
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-xs-12 col-sm-6 col-lg-6">
+          <div class="home-promo-bg">
+            <div class="home-promo-blue">
+              <div class="home-promo-wide-overlay">
+                <h3>National Resources</h3>
+                <p>Links to national resources go here....</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-xs-12 col-sm-6 col-lg-6">
+          <div class="home-promo-blue">
+            <div class="home-promo-wide-overlay">
+              <h3>Other Diabetes Support Groups and Charities</h3>
+              <p>Third sector go here...</p>
+            </div>
+          </div>
+        </div>
+      </div>
+  </div>
+</template>

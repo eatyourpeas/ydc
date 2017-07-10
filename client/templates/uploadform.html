@@ -1,0 +1,15 @@
+<template name="uploadForm">
+  <div class="alert alert-danger" id="errorAlert">
+    {{alertMessage}}
+  </div>
+  {{#with currentUpload}}
+    {{#if notLoaded progress.get}}
+      Uploading <b>{{file.name}}</b>:
+      <span id="progress">{{progress.get}}%</span>
+    {{else}}
+      <b>Uploaded: </b>{{file.name}}
+    {{/if}}
+  {{else}}
+    <input id="fileInput" type="file" />
+  {{/with}}
+</template>

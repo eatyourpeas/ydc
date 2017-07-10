@@ -1,0 +1,20 @@
+<template name="uploadImageForm">
+  {{#if thereIsAnImage}}
+    {{#with currentUpload}}
+      {{#if underOneHundred progress.get }}
+        Uploading <b>{{file.name}}</b>:
+        <span id="progress">{{progress.get}}%</span>
+      {{else}}
+        Loaded <b>{{file.name}}</b>:
+        <span id="progress">{{progress.get}}%</span>
+      {{/if}}
+    {{else}}
+      <span><img src={{fileURL thumbnail}} class='thumbnail'/>
+      Loaded <b>{{file.name}}</b>:
+      <span id="progress">100%</span></span>
+      <input id="fileInput" type="file" />
+    {{/with}}
+  {{else}}
+    <input id="fileInput" type="file" />
+  {{/if}}
+</template>
