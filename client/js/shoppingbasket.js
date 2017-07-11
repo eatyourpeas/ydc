@@ -149,7 +149,6 @@ Template.shoppingBasket.helpers({
 
     var bookingsAreSelected = Template.instance().bookingsAreSelected.get();
     var thereAreBookedPlaces = Template.instance().thereAreBookedPlaces.get();
-    console.log("booked places: "+thereAreBookedPlaces+ " bookings selected: "+ bookingsAreSelected);
     if (bookingsAreSelected && thereAreBookedPlaces) {
       return "";
     } else {
@@ -172,7 +171,6 @@ function checkForBookedPlaces(){
     var booking_id = selectedBookings[i];
     var booking = Bookings.findOne({_id: booking_id});
     if (booking.places_booked > 0) {
-      console.log('there are places booked');
       Template.instance().thereAreBookedPlaces.set(true);
     }
   }

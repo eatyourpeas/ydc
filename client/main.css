@@ -37,7 +37,6 @@ green: 79, 206, 0 = #4fce00
 --------------------------------------------------------------*/
 
 
-
 /*--------------------------------------------------------------
 1.0 - Reset
 --------------------------------------------------------------*/
@@ -320,7 +319,7 @@ textarea {
     margin: 0 !important;
     padding: 16px 35px;
     text-decoration: none;
-    font-size: 1.5em;
+    font-size: 1.0em;
     letter-spacing: 0.05em;
 	height: 55px;}
 
@@ -373,20 +372,20 @@ HOME PAGE PROMOS
 .home-promo-wide-overlay p{ color: white; margin: 0px 0px 20px 0px; padding: 0px 0px 10px 0px; font-size: 1.0em;}
 .home-promo-wide-overlay li{ color: white; margin: 0px 0px 5px 0px; padding: 0px 0px 0px 0px; font-size: 1.0em;}
 
-.home-promo-blue {background: #009ce6; display: block; height: 350px; max-height: 350px; width:auto; padding: 10px;}
+.home-promo-blue {background: #009ce6; display: block; max-height: 350px; width:auto; padding: 10px;}
 .home-promo-blue h2, .home-promo-wide h2, .home-main-wide h2 {margin: 0 0 15px 0; padding: 0px; line-height: 1.2em;}
 .home-promo-blue h2 a, .home-promo-wide h2 a, .home-main-wide h2 a {color: #fff; font-weight: bold;}
 .home-promo-blue p, .home-promo-wide p {color: #fff; line-height: 1.2em; margin-bottom: 0px !important;}
-.home-promo-green {background: #75c200; display: block; height: 350px; max-height: 350px; width:auto; padding: 10px;}
+.home-promo-green {background: #75c200; display: block; max-height: 350px; width:auto; padding: 10px;}
 .home-promo-green h2, .home-promo-wide h2, .home-main-wide h2 {margin: 0 0 15px 0; padding: 0px; line-height: 1.2em;}
 .home-promo-green h2 a, .home-promo-wide h2 a, .home-main-wide h2 a {color: #fff; font-weight: bold;}
 .home-promo-green p, .home-promo-wide p {color: #fff; line-height: 1.2em; font-weight: lighter; margin-bottom: 0px !important;}
-.home-promo-red {background: red; display: block; height: 350px; max-height: 350px; padding: 10px;}
+.home-promo-red {background: red; display: block; max-height: 350px; padding: 10px;}
 .home-promo-red h2, .home-promo-wide h2, .home-main-wide h2 {margin: 0 0 15px 0; padding: 0px; line-height: 1.0em;}
 .home-promo-red h2 a, .home-promo-wide h2 a, .home-main-wide h2 a {color: #fff; font-weight: bold;}
 .home-promo-red p, .home-promo-wide p {color: #fff; line-height: 1.4em;  margin-bottom: 0px !important;}
 .home-promo-red p a, .home-promo-wide p {color: #fff; line-height: 1.4em; margin-bottom: 0px !important;}
-.home-promo-pink {background: #ff0058; display: block; height: 350px; max-height: 350px; width:auto; padding: 10px;}
+.home-promo-pink {background: #ff0058; display: block; max-height: 350px; width:auto; padding: 10px;}
 .home-promo-pink h2, .home-promo-wide h2, .home-main-wide h2 {margin: 0 0 15px 0; padding: 0px; line-height: 1.2em;}
 .home-promo-pink h2 a, .home-promo-wide h2 a, .home-main-wide h2 a {color: #fff; }
 .home-promo-pink p, .home-promo-wide p {color: #fff; line-height: 1.2em; margin-bottom: 0px !important;}
@@ -559,7 +558,11 @@ footer {
 .strap {font-size: 2.4em;}
 
 .home-main-wide {background-position: 60%;}
-.home-promo-blue {padding: 15px;height: 273px; max-height: 273px;}
+.home-promo-blue {padding: 15px; height: 350px;}
+.home-promo-green {padding: 15px; height: 350px; margin-bottom: 20px;}
+.home-promo-pink {padding: 15px; height: 350px;}
+.home-promo-red {padding: 15px; height: 350px; }
+
 .home-promo-blue h2 {padding: 0 14px 0 0;}
 .home-promo-blue h2 a {line-height: 1em;}
 .home-promo-blue p, .home-promo-wide p {font-size: 0.95em; line-height: 1.4em;}
@@ -619,9 +622,6 @@ footer {
 .top {display: none;}
 .bottom {display: block !important;}
 
-
-
-
 .menu-primary-nav-container {width: 100%;}
 .navbar-search-container {background: #f1f0f0; width: 100%; height: 56px;}
 .search-input {float: left; width: 75%; padding: 0 0 0 18px !important;}
@@ -631,12 +631,15 @@ footer {
 .main-navigation .menu li a:hover {}
 
 .home-main-bg {padding: 15px 0 10px 0;}
-.home-main-wide {height: 200px; max-height: 200px; background-position: 100% 8%;}
-.home-main-wide-overlay {width: 48%; padding: 15px;}
+.home-main-wide {height: 300px; max-height: auto; background-position: 100% 8%;}
+.home-main-wide-overlay {width: 95%; padding: 15px;}
 .home-promo-bg {background:#fff; padding: 10px 0;}
-.home-promo-blue {max-height: 160px; padding: 15px;}
+.home-promo-blue {max-height: 100%; padding: 15px;}
+.home-promo-red {max-height: 100%; padding: 15px; margin-bottom: 20px;}
+.home-promo-green {max-height: 100%; padding: 15px; margin-bottom: 20px;}
+.home-promo-pink {max-height: 100%; padding: 15px; margin-bottom: 20px;}
 .home-promo-wide {margin: 20px 0 0 0;}
-.home-promo-wide-overlay {width: 48%; padding: 15px;}
+.home-promo-wide-overlay {width: 95%; padding: 15px; height: 100%;}
 
 .landing-promo-blue {height: 95px; margin:0 0 10px 0;}
 .landing-promo-blue img {max-width: 170px; display: inline-block; vertical-align: top;}
@@ -649,16 +652,14 @@ footer {
 
 .home-promo-blue h3 {font-size: 1.2em; margin-top: 5px;}
 .home-promo-red h3 {font-size: 1.2em; margin-top: 5px; margin-bottom: 5px;}
-.home-main-wide-overlay h3 {font-size: 1.2em; margin-top: 5px;}
-.home-promo-wide-overlay h3 {font-size: 1.2em; margin-top: 5px;}
+.home-main-wide-overlay h3 {font-size: 1.0em; margin-top: 5px; font-weight: bold;}
+.home-promo-wide-overlay h3 {font-size: 1.0em; margin-top: 5px; font-weight: bold;}
 
 
 .home-promo-blue p {font-size: 1.0em;}
 .home-promo-red p {font-size: 1.0em;}
 .home-main-wide-overlay p {font-size: 1.0em; line-height: 1.3em;}
 .home-promo-wide-overlay p {font-size: 1.0em; line-height: 1.3em;}
-
-.home-main-wide-overlay {max-height: 180px;}
 
 #masthead {height:100px;}
 .site-branding {height: 100px;}

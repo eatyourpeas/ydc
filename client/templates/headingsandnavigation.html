@@ -10,23 +10,6 @@
               {{ #if currentUserIsSchoolOrParent}}
                 <!--contact us can go here if felt necessary -->
               {{/if}}
-              <li class="login-buttons-div">
-                {{> loginButtons  align='right'}}
-              </li>
-              {{#if basketHasItems }}
-                <li>
-                  {{> shoppingBasket }}
-                </li>
-              {{/if}}
-              {{#if userIsAdmin}}
-              <li class="dropdown">
-                <a href="#" class="dropdown-toggle" data-toggle="dropdown">User Administration<b class="caret"></b></a>
-                <ul class="dropdown-menu">
-                  <li><a href="/useradmin">View All Users</a></li>
-                  <li><a href="/bookingadmin">View All Bookings</a></li>
-                </ul>
-              </li>
-              {{/if}}
             </ul>
           </div>
         </div>
@@ -73,15 +56,32 @@
                 </ul>
               </li>
               <li id="menu-item-40" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-40"><a href="/contact-us">Getting Help</a></li>
+              <li class="login-buttons-div">
+                {{> loginButtons  align='right'}}
+              </li>
+              {{#if basketHasItems }}
+                <li>
+                  {{> shoppingBasket }}
+                </li>
+              {{/if}}
+              {{#if userIsAdmin}}
+              <li class="dropdown">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown">User Administration<b class="caret"></b></a>
+                <ul class="dropdown-menu">
+                  <li><a href="/useradmin">View All Users</a></li>
+                  <li><a href="/bookingadmin">View All Bookings</a></li>
+                </ul>
+              </li>
+              {{/if}}
             </ul>
           </div>
-          <div class="navbar-search-container">
+          <!--div class="navbar-search-container">
             <form role="search" method="get" id="searchform" class="searchform" action="/">
               <label class="offscreen" for="s">Search for:</label>
               <input type="text" value="" name="s" id="s" class="search-input" placeholder="{{searchtext}}">
               <input type="submit" value="GO" class="search-btn">
             </form>
-          </div>
+          </div-->
         </div><!-- /.navbar-collapse -->
 
       </nav>

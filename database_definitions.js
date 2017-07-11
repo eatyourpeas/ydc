@@ -24,7 +24,10 @@ Images = new FilesCollection({
       }
 
     }
-  }
+  },
+  storagePath: () => {
+        return 'programmes/server/assets/documents/';
+    }
 });
 
 Documents = new FilesCollection({
@@ -42,5 +45,8 @@ Documents = new FilesCollection({
       }
 
     }
-  }
+  },
+  storagePath: () => {
+        return 'programmes/server/assets/images/newsfeed';
+    }
 });
