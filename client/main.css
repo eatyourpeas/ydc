@@ -363,6 +363,7 @@ HOME PAGE PROMOS
 /* Home page promos */
 .home-promo-bg-green {background:#4fce00; padding:55px 0;}
 .home-promo-bg-blue {background:#009ce6; padding: 55px 0;}
+
 .home-promo-green h3 a { color: white;}
 .home-promo-red h3 a { color: white; margin: 0px; padding: 0px; }
 .home-promo-red h3 { color: white; margin: 0px; padding: 10px; }
@@ -373,19 +374,22 @@ HOME PAGE PROMOS
 .home-promo-wide-overlay li{ color: white; margin: 0px 0px 5px 0px; padding: 0px 0px 0px 0px; font-size: 1.0em;}
 
 .home-promo-blue {background: #009ce6; display: block; max-height: 350px; width:auto; padding: 10px;}
+.home-promo-green {background: #75c200; display: block; max-height: 350px; width:auto; padding: 10px;}
+.home-promo-red {background: red; display: block; max-height: 350px; width: auto; padding: 10px;}
+.home-promo-pink {background: #ff0058; display: block; max-height: 350px; width:auto; padding: 10px;}
+
 .home-promo-blue h2, .home-promo-wide h2, .home-main-wide h2 {margin: 0 0 15px 0; padding: 0px; line-height: 1.2em;}
 .home-promo-blue h2 a, .home-promo-wide h2 a, .home-main-wide h2 a {color: #fff; font-weight: bold;}
 .home-promo-blue p, .home-promo-wide p {color: #fff; line-height: 1.2em; margin-bottom: 0px !important;}
-.home-promo-green {background: #75c200; display: block; max-height: 350px; width:auto; padding: 10px;}
 .home-promo-green h2, .home-promo-wide h2, .home-main-wide h2 {margin: 0 0 15px 0; padding: 0px; line-height: 1.2em;}
 .home-promo-green h2 a, .home-promo-wide h2 a, .home-main-wide h2 a {color: #fff; font-weight: bold;}
 .home-promo-green p, .home-promo-wide p {color: #fff; line-height: 1.2em; font-weight: lighter; margin-bottom: 0px !important;}
-.home-promo-red {background: red; display: block; max-height: 350px; padding: 10px;}
+
 .home-promo-red h2, .home-promo-wide h2, .home-main-wide h2 {margin: 0 0 15px 0; padding: 0px; line-height: 1.0em;}
 .home-promo-red h2 a, .home-promo-wide h2 a, .home-main-wide h2 a {color: #fff; font-weight: bold;}
 .home-promo-red p, .home-promo-wide p {color: #fff; line-height: 1.4em;  margin-bottom: 0px !important;}
 .home-promo-red p a, .home-promo-wide p {color: #fff; line-height: 1.4em; margin-bottom: 0px !important;}
-.home-promo-pink {background: #ff0058; display: block; max-height: 350px; width:auto; padding: 10px;}
+
 .home-promo-pink h2, .home-promo-wide h2, .home-main-wide h2 {margin: 0 0 15px 0; padding: 0px; line-height: 1.2em;}
 .home-promo-pink h2 a, .home-promo-wide h2 a, .home-main-wide h2 a {color: #fff; }
 .home-promo-pink p, .home-promo-wide p {color: #fff; line-height: 1.2em; margin-bottom: 0px !important;}
@@ -559,7 +563,7 @@ footer {
 
 .home-main-wide {background-position: 60%;}
 .home-promo-blue {padding: 15px; height: 350px;}
-.home-promo-green {padding: 15px; height: 350px; margin-bottom: 20px;}
+.home-promo-green {padding: 15px; height: 350px;}
 .home-promo-pink {padding: 15px; height: 350px;}
 .home-promo-red {padding: 15px; height: 350px; }
 
@@ -634,10 +638,10 @@ footer {
 .home-main-wide {height: 300px; max-height: auto; background-position: 100% 8%;}
 .home-main-wide-overlay {width: 95%; padding: 15px;}
 .home-promo-bg {background:#fff; padding: 10px 0;}
-.home-promo-blue {max-height: 100%; padding: 15px;}
-.home-promo-red {max-height: 100%; padding: 15px; margin-bottom: 20px;}
-.home-promo-green {max-height: 100%; padding: 15px; margin-bottom: 20px;}
-.home-promo-pink {max-height: 100%; padding: 15px; margin-bottom: 20px;}
+.home-promo-blue1 {max-height: 100%; padding: 15px;}
+.home-promo-red {max-height: 100%; padding: 15px; }
+.home-promo-green {max-height: 100%; padding: 15px; }
+.home-promo-pink {max-height: 100%; padding: 15px; }
 .home-promo-wide {margin: 20px 0 0 0;}
 .home-promo-wide-overlay {width: 95%; padding: 15px; height: 100%;}
 
@@ -697,7 +701,11 @@ footer {
 .strap {font-size: 1.3em;}
 .home-main-bg {padding: 0px 0 5px 0;}
 .home-promo-bg {padding: 5px 0;}
+
 .home-promo-blue {min-height: 200px; max-height: 270px; height: auto; padding: 12px;}
+.home-promo-green {min-height: 200px; max-height: 270px; height: auto; padding: 12px;}
+.home-promo-red {min-height: 200px; max-height: 270px; height: auto; padding: 12px;}
+.home-promo-pink {min-height: 200px; max-height: 270px; height: auto; padding: 12px;}
 .home-promo-wide {margin: 10px 0 10px 0;}
 
 
@@ -1233,18 +1241,6 @@ padding: 0 !important;
 }
 
 /*news css*/
-
-.row {
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display:         flex;
-  flex-wrap: wrap;
-}
-.row > [class*='col-'] {
-  display: flex;
-  flex-direction: column;
-}
 
 #leaderimage {
 	float: right;

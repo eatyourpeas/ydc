@@ -34,3 +34,4 @@ meteorhacks:aggregate
 ostrio:files
 email
 reactive-dict
+ostrio:meteor-root

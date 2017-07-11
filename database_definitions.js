@@ -26,8 +26,8 @@ Images = new FilesCollection({
     }
   },
   storagePath: () => {
-        return 'programmes/server/assets/documents/';
-    }
+        return Meteor.absolutePath +'/programmes/server/assets/images/newsfeed';
+  }
 });
 
 Documents = new FilesCollection({
@@ -47,6 +47,6 @@ Documents = new FilesCollection({
     }
   },
   storagePath: () => {
-        return 'programmes/server/assets/images/newsfeed';
+        return Meteor.absolutePath +'/programmes/server/assets/documents';
     }
 });
