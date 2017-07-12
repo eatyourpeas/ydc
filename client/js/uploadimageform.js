@@ -4,6 +4,8 @@ import { ReactiveVar } from 'meteor/reactive-var';
 
 Template.uploadImageForm.onCreated(function () {
   this.currentUpload = new ReactiveVar(false);
+  this.warningOrSuccess = new ReactiveVar("warning")
+  this.alertMessage = new ReactiveVar("");
   if (Session.get("editPost")) {
     var post = Posts.findOne(Session.get('selectedPost'));
     Session.set('image_id', post.post_image);
@@ -40,12 +42,29 @@ Template.uploadImageForm.helpers({
     } else {
       return false;
     }
+  },
+  'alert_class': function(){
+    if (Template.instance().warningOrSuccess.get()=="warning") {
+      return "alert alert-danger";
+    } else {
+      return "alert alert-success";
+    }
+  },
+  'alert_visible': function(){
+    if(Template.instance().alertMessage.get()==""){
+      return 'hidden';
+    } else {
+      return '';
+    }
+  },
+  'alertMessage': function(){
+    return Template.instance().alertMessage.get();
   }
 });
 
 Template.uploadImageForm.events({
   'change #fileInput'(e, template) {
-
+    $('errorAlert').hide();
     if (e.currentTarget.files && e.currentTarget.files[0]) {
       // We upload only one file, in case
       // multiple files were selected
@@ -63,9 +82,13 @@ Template.uploadImageForm.events({
       upload.on('end', function (error, fileObj) {
 
         if (error) {
-          alert('Error during upload: ' + error);
+          template.warningOrSuccess.set("warning");
+          template.alertMessage.set('Error during upload: ' + error);
+          $('#errorAlert').show();
         } else {
-          alert('File "' + fileObj.name + '" successfully uploaded');
+          template.warningOrSuccess.set("success");
+          template.alertMessage.set('File "' + fileObj.name + '" successfully uploaded');
+          $('#errorAlert').show();
           //add the file _id to Session to access later for the resources collection
           Session.set('image_id', fileObj._id);
         }
@@ -77,7 +100,12 @@ Template.uploadImageForm.events({
   }
 });
 
+Template.uploadForm.onRendered(function(){
+  $('#errorAlert').hide();
+});
+
 Template.uploadImageForm.onDestroyed(function(){
+  $('#errorAlert').hide();
   if (Session.get("image_id") == "") {
     //there is no image
   } else {

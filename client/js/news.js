@@ -52,6 +52,14 @@ Template.news.events({
 });
 
 Template.news.helpers({
+  'thereArePosts': function(){
+    var number = Posts.find({}, {sort: {post_date: -1}}).count();
+    if (number > 0) {
+        return true;
+    } else {
+      return false;
+    }
+  },
   'mostRecentPost': function(){
     return Posts.findOne({}, {sort: {post_date: -1, limit: 1}});
   },

@@ -1,4 +1,7 @@
 <template name="uploadImageForm">
+  <div class={{alert_class}} id="errorAlert" {{alert_visible}}>
+    {{alertMessage}}
+  </div>
   {{#if thereIsAnImage}}
     {{#with currentUpload}}
       {{#if underOneHundred progress.get }}
@@ -12,7 +15,7 @@
       <span><img src={{fileURL thumbnail}} class='thumbnail'/>
       Loaded <b>{{file.name}}</b>:
       <span id="progress">100%</span></span>
-      <input id="fileInput" type="file" />
+      <!--input id="fileInput" type="file" /-->
     {{/with}}
   {{else}}
     <input id="fileInput" type="file" />

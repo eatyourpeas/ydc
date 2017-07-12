@@ -29,48 +29,46 @@
         </div>
     </div>
   {{/if}}
-  <div class="row">
-    <div class="col-md-2 post_dates">
-      <!--{{#each image in allImages}}
-      {{image.name}}
-      {{imageDelete image._id}}
-      {{/each}}-->
-      {{#each postsInDateOrder}}
-        <li id="post"><a href="">{{dateTimeShortenToDate post_date}}</a></li>
-      {{/each}}
-    </div>
-      {{#if selectedPost}}
-        <div class="col-md-5">
-          {{#if thereIsNoImage}}
-            <img src="/images/ydc.png" alt="YDC Logo" />
-          {{else}}
-            {{#with imageForId selectedPost.post_image}}
-              <img src="{{this.link}}" alt="this.name" />
-            {{/with}}
-          {{/if}}
+  {{#if thereArePosts}}
+    <div class="row">
+      <div id="css-table">
+        <div class="col post_dates">
+              {{#each postsInDateOrder}}
+                <li id="post"><a href="">{{dateTimeShortenToDate post_date}}</a></li>
+              {{/each}}
         </div>
-        <div class="col-md-5 post_text">
-            <H2>{{selectedPost.post_headline}}</H2>
-            <H3>{{selectedPost.post_subtitle}}</H3>
-            <div class="news-leader-text">{{selectedPost.post_text}}</div>
+            <div class="col post_image">
+              <div class="inner">
+                  {{#if thereIsNoImage}}
+                    <img src="/images/ydc.png" alt="YDC Logo" />
+                  {{else}}
+                    {{#with imageForId selectedPost.post_image}}
+                      <img src="{{this.link}}" alt="this.name"/>
+                    {{/with}}
+                  {{/if}}
+                </div>
+            </div>
+            <div class="col post_text">
+                  <H2>{{selectedPost.post_headline}}</H2>
+                  <H3>{{selectedPost.post_subtitle}}</H3>
+                  <div class="news-leader-text">{{selectedPost.post_text}}</div>
+            </div>
         </div>
+      </div>
       {{else}}
-        <div class="col-md-8">
+        <div class="row">
             <div class="noNews">No posts yet</div>
         </div>
       {{/if}}
-      <div class="col-md-2"></div>
-  </div>
-    {{#if userIsAdmin}}
-      <div class="row">
-        <div class="adminButtonGroup">
-          <button class="btn btn-default" id="newPostButton">New Post</button>
-          <button class="btn btn-info" id="editPostButton" {{disabled}} >Edit Post</button>
-          <button class="btn btn-danger" id="deletePostButton" {{disabled}}>Delete Post</button>
+      {{#if userIsAdmin}}
+        <div class="row">
+          <div class="adminButtonGroup">
+            <button class="btn btn-default" id="newPostButton">New Post</button>
+            <button class="btn btn-info" id="editPostButton" {{disabled}} >Edit Post</button>
+            <button class="btn btn-danger" id="deletePostButton" {{disabled}}>Delete Post</button>
+          </div>
         </div>
-      </div>
-    {{/if}}
-
+      {{/if}}
 </div>
 
 </template>

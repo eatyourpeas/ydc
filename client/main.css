@@ -1167,13 +1167,13 @@ object {
     user-select: none;
 
     color: #ffffff;
-    background-color: #428bca;
-    border-color: #357ebd;
+    background-color: #c2e2ae;
+    border-color: #4fce00;
 }
 .navbar-button .navbar-nav > li #login-buttons .login-link-text:hover{
     color: #fff;
-    background-color: #3276b1;
-    border-color: #285e8e;
+    background-color: #c2e2ae;
+    border-color: ##4fce00;
 }
 .navbar-button .navbar-nav > li > #login-buttons #login-dropdown-list:before {
     left: 245px;
@@ -1360,9 +1360,36 @@ padding: 0 !important;
 }
 
 .post_dates {
-	background: #009ce6;
+
 	font-size: 1.2em;
 }
+
+#css-table{
+	display: table;
+}
+
+#css-table .col{
+	display: table-cell;
+  width: 25%;
+  padding: 10px;
+	vertical-align: top;
+}
+
+#css-table .col:nth-child(even) {
+  background: #ccc;
+}
+#css-table .col:nth-child(1) {
+  background: #009ce6;
+}
+
+#css-table .col:nth-child(1) {
+  background: #009ce6;
+}
+
+#css-table .col:nth-child(3) {
+  background: #ff0058;
+}
+
 
 #post {
 	padding-bottom: 20px;
