@@ -61,10 +61,13 @@ Template.modalAddResource.events({
     }
     template.categorySelected.set(event.target.value);
   },
-  'click .categoryBadge': function(event, template){
+  'click categoryBadge': function(event, template){
     chosenCategories = template.categoriesChosen.get("chosenCategories");
     chosenCategories = _.without(chosenCategories, event.target.id);
     template.categoriesChosen.set("chosenCategories", chosenCategories);
+    if (chosenCategories.length < 1) {
+      template.categorySelected.set("NoSelection");
+    }
   }
 });
 

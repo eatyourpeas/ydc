@@ -324,8 +324,6 @@ textarea {
 	height: 55px;}
 
 .main-navigation .menu li a:hover {background-color: #efefef; color: #477600; text-decoration: none;}
-.main-navigation .menu .current_page_item a {color:#75c200; border-bottom: 0px; font-weight: normal;}
-
 
 /* == Search form == */
 .navbar-search-container {float: right; height: 55px; text-align: right;}
@@ -416,10 +414,17 @@ ABOUT COURSES
 .textbox_green_light {background: rgb(79, 206, 0);}
 .textbox_green {background-color: #4fce00;}
 
+.quotes {
+	position: relative;
+	text-align: center;
+	margin-top: 320px;
+}
+
 blockquote {
 	font-family: 'Merriweather', serif;
 	font-style: italic;
 	font-weight: normal;
+	color: black;
 }
 
 .course_title {
@@ -435,7 +440,7 @@ blockquote {
 	font-family: 'Roboto', sans-serif;
 	font-style: normal;
 	font-weight: 300;
-	font-size: 1.8 em;
+	font-size: 1.4em;
 }
 
 .about_courses_table {
@@ -525,7 +530,7 @@ footer {
 
 .main-navigation .menu li a {
     padding: 16px 24px;
-    font-size: 1.1em;
+    font-size: 1.0em;
     letter-spacing: 0.04em;}
 
 .search-input {width: 240px;border: 0; font-size: 1.1em; letter-spacing: 0em;}
@@ -535,11 +540,18 @@ footer {
 .home-promo-blue h2 a, .home-promo-wide h2 a, .home-main-wide h2 a {font-size: 0.70em;}
 .home-promo-blue p, .home-promo-wide p  {font-size: 1.0em;}
 
+.home-promo-wide-overlay h3 { font-size: 2.0em;}
+.promo-text { font-size: 1.5em;}
+
 .landing-promo-blue h2 a {font-size: 0.70em;}
 .landing-promo-blue p {font-size: 1em;}
+.resource_table {font-size: 1.4em;}
 
 .boilerplate span {display:inline;}
 .boilerplate-title {color: #5c5b5b; display:inline;}
+.course_title {font-size: 1.8em;}
+.course_text {font-size: 1.2em;}
+.button_book {font-size: 1.2em;}
 
 }
 
@@ -579,7 +591,28 @@ footer {
 .home-promo-blue h3 {font-size: 1.2em; margin-top: 5px;}
 .home-promo-red h3 {font-size: 1.2em; margin-top: 5px; margin-bottom: 5px;}
 .home-main-wide-overlay h3 {font-size: 1.2em; margin-top: 5px;}
-.home-promo-wide-overlay h3 {font-size: 1.2em; margin-top: 5px;}
+.home-promo-wide-overlay h3 {font-size: 1.5em; margin-top: 5px;}
+
+.promo-text{font-size: 1.3em;}
+.home-promo-wide-overlay h3 { font-size: 2.0em;}
+
+.resource_table .resource_table_head{
+	font-weight:bold;
+	font-size: 0.7em;
+	color: white;
+	border-style: none;
+}
+
+.resource_table .resource_table_data {
+	font-size: 0.7em;
+}
+
+.resource_table .download_td {
+	font-weight:200;
+	font-size: 0.7em;
+	color: black;
+	border-style: none;
+}
 
 
 .home-promo-blue p {font-size: 1.0em;}
@@ -592,6 +625,15 @@ footer {
 
 #menu-footer-nav li {padding: 0 8px 0 8px; }
 #menu-footer-nav li a {font-size: 0.8em; letter-spacing: 0em;}
+
+.quotes {margin-top: 190px;}
+
+.course_title {font-size: 1.8em;}
+
+.course_text {font-size: 1.0em;}
+
+.button_book {font-size: 1.2em;}
+
 }
 
 
@@ -655,15 +697,36 @@ footer {
 
 
 .home-promo-blue h3 {font-size: 1.2em; margin-top: 5px;}
-.home-promo-red h3 {font-size: 1.2em; margin-top: 5px; margin-bottom: 5px;}
+.home-promo-red h3 {font-size: 2.0em; margin-top: 5px; margin-bottom: 5px;}
 .home-main-wide-overlay h3 {font-size: 1.0em; margin-top: 5px; font-weight: bold;}
-.home-promo-wide-overlay h3 {font-size: 1.0em; margin-top: 5px; font-weight: bold;}
+.home-main-wide-overlay a {font-size: 1.6em; margin-top: 5px; font-weight: bold;}
+.home-main-wide-overlay p {font-size: 1.4em; margin-top: 5px; font-weight: bold;}
+.home-promo-wide-overlay h3 {font-size: 2.5em; margin-top: 5px; font-weight: bold;}
 
 
 .home-promo-blue p {font-size: 1.0em;}
 .home-promo-red p {font-size: 1.0em;}
 .home-main-wide-overlay p {font-size: 1.0em; line-height: 1.3em;}
 .home-promo-wide-overlay p {font-size: 1.0em; line-height: 1.3em;}
+
+.promo-text{font-size: 1.8em;}
+.resource_table .resource_table_head{
+	font-weight:bold;
+	font-size: 1.4em;
+	color: white;
+	border-style: none;
+}
+
+.resource_table .resource_table_data {
+	font-size: 1.4em;
+}
+
+.resource_table .download_td {
+	font-weight:200;
+	font-size: 1.4em;
+	color: black;
+	border-style: none;
+}
 
 #masthead {height:100px;}
 .site-branding {height: 100px;}
@@ -694,82 +757,83 @@ footer {
 
 @media screen and (max-width: 600px) {
 
-.col-xs-6, .col-xs-12 {padding: 0 5px !important;}
+	.col-xs-6, .col-xs-12 {padding: 0 5px !important;}
 
-.title {font-size: 1.8em; border: 0px;}
-.title span {display: inline;}
-.strap {font-size: 1.3em;}
-.home-main-bg {padding: 0px 0 5px 0;}
-.home-promo-bg {padding: 5px 0;}
+	.title {font-size: 1.8em; border: 0px;}
+	.title span {display: inline;}
+	.strap {font-size: 1.3em;}
+	.home-main-bg {padding: 0px 0 5px 0;}
+	.home-promo-bg {padding: 5px 0;}
 
-.home-promo-blue {min-height: 200px; max-height: 270px; height: auto; padding: 12px;}
-.home-promo-green {min-height: 200px; max-height: 270px; height: auto; padding: 12px;}
-.home-promo-red {min-height: 200px; max-height: 270px; height: auto; padding: 12px;}
-.home-promo-pink {min-height: 200px; max-height: 270px; height: auto; padding: 12px;}
-.home-promo-wide {margin: 10px 0 10px 0;}
-
-
-.home-promo-blue h3 {font-size: 1.2em; margin-top: 5px;}
-.home-promo-red h3 {font-size: 1.2em; margin-top: 5px; margin-bottom: 5px;}
-.home-main-wide-overlay h3 {font-size: 1.2em; margin-top: 5px;}
-.home-promo-wide-overlay h3 {font-size: 1.2em; margin-top: 5px;}
+	.home-promo-blue {min-height: 200px; max-height: 270px; height: auto; padding: 12px;}
+	.home-promo-green {min-height: 200px; max-height: 270px; height: auto; padding: 12px;}
+	.home-promo-red {min-height: 200px; max-height: 270px; height: auto; padding: 12px;}
+	.home-promo-pink {min-height: 200px; max-height: 270px; height: auto; padding: 12px;}
+	.home-promo-wide {margin: 10px 0 10px 0;}
 
 
-.home-promo-blue p {font-size: 0.85em;}
-.home-promo-red p {font-size: 0.85em;}
-.home-main-wide-overlay p {font-size: 0.85em; line-height: 1.3em;}
-.home-promo-wide-overlay p {font-size: 0.85em; line-height: 1.3em;}
-
-.home-main-wide-overlay {max-height: 175px;}
-
-#masthead {height:100px;}
-.site-branding {height: 100px;}
-
-.landing-promo-blue div {width: 50%;}
-.landing-promo-blue h2 {margin: 0 0 5px 0; padding-left: 10px;}
-
-.landing-promo-blue p { padding-left: 10px !important;}
-
-#menu-global-nav li {float: left; padding: 0 4px 0 4px;}
-#menu-global-nav li a {font-size: 0.7em; font-weight: normal;}
-
-#menu-footer-nav li {padding: 0 4px 0 4px; }
-#menu-footer-nav li a {font-size: 0.7em; font-weight: normal;}
-#menu-footer-nav li:first-child {padding: 0 7px 0 0px !important;}
-
-#secondary {margin: 0px 0 0 0;}
-#secondary h3 {margin-top: 10px;}
-#secondary ul {margin: 0 0 15px 0;}
-#secondary .page_item a {line-height: 10px;}
-
-.breadcrumbs {margin: 10px 0 10px 0;}
-
-.boilerplate {font-size: 0.8em; line-height: 1.5em; padding: 0 30px 0 15px !important;}
-.kch {margin: 10px 0 70px 5px;}
-
-.site-main .comment-navigation,
-.site-main .paging-navigation,
-.site-main .post-navigation {
-	margin: 0 0 1.5em;
-	overflow: hidden;
-}
-
-.comment-navigation .nav-previous,
-.paging-navigation .nav-previous,
-.post-navigation .nav-previous {
-	float: left;
-	width: 50%;
-}
-
-.comment-navigation .nav-next,
-.paging-navigation .nav-next,
-.post-navigation .nav-next {
-	float: right;
-	text-align: right;
-	width: 50%;
-}
+	.home-promo-blue h3 {font-size: 1.2em; margin-top: 5px;}
+	.home-promo-red h3 {font-size: 1.2em; margin-top: 5px; margin-bottom: 5px;}
+	.home-main-wide-overlay h3 {font-size: 1.2em; margin-top: 5px;}
+	.home-promo-wide-overlay h3 {font-size: 1.2em; margin-top: 5px;}
 
 
+	.home-promo-blue p {font-size: 0.85em;}
+	.home-promo-red p {font-size: 0.85em;}
+	.home-main-wide-overlay p {font-size: 0.85em; line-height: 1.3em;}
+	.home-promo-wide-overlay p {font-size: 0.85em; line-height: 1.3em;}
+
+	.home-main-wide-overlay {max-height: 175px;}
+
+	#masthead {height:100px;}
+	.site-branding {height: 100px;}
+
+	.landing-promo-blue div {width: 50%;}
+	.landing-promo-blue h2 {margin: 0 0 5px 0; padding-left: 10px;}
+
+	.landing-promo-blue p { padding-left: 10px !important;}
+
+	#menu-global-nav li {float: left; padding: 0 4px 0 4px;}
+	#menu-global-nav li a {font-size: 0.7em; font-weight: normal;}
+
+	#menu-footer-nav li {padding: 0 4px 0 4px; }
+	#menu-footer-nav li a {font-size: 0.7em; font-weight: normal;}
+	#menu-footer-nav li:first-child {padding: 0 7px 0 0px !important;}
+
+	#secondary {margin: 0px 0 0 0;}
+	#secondary h3 {margin-top: 10px;}
+	#secondary ul {margin: 0 0 15px 0;}
+	#secondary .page_item a {line-height: 10px;}
+
+	.breadcrumbs {margin: 10px 0 10px 0;}
+
+	.boilerplate {font-size: 0.8em; line-height: 1.5em; padding: 0 30px 0 15px !important;}
+	.kch {margin: 10px 0 70px 5px;}
+
+	.site-main .comment-navigation,
+	.site-main .paging-navigation,
+	.site-main .post-navigation {
+		margin: 0 0 1.5em;
+		overflow: hidden;
+	}
+
+	.comment-navigation .nav-previous,
+	.paging-navigation .nav-previous,
+	.post-navigation .nav-previous {
+		float: left;
+		width: 50%;
+	}
+
+	.comment-navigation .nav-next,
+	.paging-navigation .nav-next,
+	.post-navigation .nav-next {
+		float: right;
+		text-align: right;
+		width: 50%;
+	}
+
+	.announcements h1 { font-size: 1.2em;}
+	.announcements button { width: 10em; height: 2.5em; font-size: 0.5em; margin: 1em;}
 
 }
 
@@ -1250,8 +1314,13 @@ padding: 0 !important;
 .announcements {
 	background: red;
 	color: white;
-
 	margin-bottom: 10px;
+	text-align: center;
+}
+
+.announcement_buttons {
+	text-align: center;
+	margin-bottom: 5px;
 }
 
 .announcements H1 {
@@ -1348,18 +1417,22 @@ padding: 0 !important;
 	margin-left: auto;
 	margin-right: auto;
 	border-style: none;
+	font-size: 1.3em;
+
 }
+
+.home-promo-wide-overlay h3 { font-size: 2.0em;}
 
 .resource_table .resource_table_head{
 	font-weight:bold;
-	font-size: 1em;
+
 	color: white;
 	border-style: none;
 }
 
 .resource_table .resource_table_data {
 	font-weight:200;
-	font-size: 1em;
+
 	border-style: none;
 }
 
@@ -1369,6 +1442,8 @@ padding: 0 !important;
 	color: black;
 	border-style: none;
 }
+
+.promo-text{font-size: 1.6em;}
 
 
 
@@ -1470,7 +1545,7 @@ padding: 0 !important;
 
 ul {
 	list-style-position: outside; /* our outside */
-	margin-left: 0;
+	margin-left: 15px;
 	padding-left: 0;
 	font-weight: bold;
 	padding-bottom: 5px;
@@ -1478,4 +1553,10 @@ ul {
 
 li {
 	padding-bottom: 5px;
+}
+
+
+.home-promo-red, .home-promo-green, .home-promo-blue, .home-promo-pink{
+	padding-bottom: 100%;
+	margin-bottom: 20px;
 }

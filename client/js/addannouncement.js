@@ -27,7 +27,6 @@ Template.addAnnouncementModal.events({
     });
   },
   'change #clinic': function(event, template){
-    console.log('changed'+ event.target.value);
     if (event.target.value != "NoFilter") {
       template.selectedClinic.set(event.target.value);
       $('#alertAnnouncement').hide();

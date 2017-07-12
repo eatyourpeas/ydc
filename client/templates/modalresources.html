@@ -53,9 +53,9 @@
                         <label for="resource_category" class="col-sm-4 form-control-label">*Category:</label>
                         <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
                             <select class="form-control" id="category">
-                                <option value="NoSelection">select a category...</option>
+                                <option value="NoSelection">select a category (you can have more than one)...</option>
                               {{#each resourceCategories}}
-                                <option value={{this.value}}{{selectedCategory this.value}}>{{this.text}}</option>
+                                <option value={{this.value}} {{selectedCategory this.value}}>{{this.text}}</option>
                               {{/each}}
                             </select>
                             {{#each chosenCategories}}

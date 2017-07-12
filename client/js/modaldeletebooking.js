@@ -9,6 +9,6 @@ Template.modalDeleteBooking.events({
       alert(error);
     }
   });
-    Modal.hide('modalDeleteooking');
+    Modal.hide('modalDeleteBooking');
   }
 });

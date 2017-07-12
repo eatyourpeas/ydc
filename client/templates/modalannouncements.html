@@ -66,21 +66,24 @@
                 <div class="modal-header">
                     <h4 class="modal-title">Edit Announcement</h4>
                 </div>
+                <form id='editAnnouncementForm'>
+                {{#with announcement}}
                 <div class="modal-body">
+                  <div class="alert alert-danger" id="errorAlert">
+                    {{alertMessage}}
+                  </div>
                         <div class="row" style="padding-top: 50px;">
                           <div class="col-md-1"></div>
                           <div class="col-md-9">
-
-                            <form role='form'>
 
                                 <div class="form-group row">
                                   <label for="clinic" class="col-sm-4 form-control-label">Clinic:</label>
                                   <div class="col-sm-8">
                                     <select class="form-control" id="clinic">
-                                      <option value="ELCH">Evelina London Children's Hospital</option>
-                                      <option value="KCH">King's College Hospital</option>
-                                      <option value="PRUH">Princess Royal University Hospital</option>
-                                      <option value="UHL">University Hospital Lewisham</option>
+                                      <option value="NoFilter">Select a centre..</option>
+                                      {{#each clinicOptions}}
+                                        <option value={{this.value}} {{selectedClinic this.value}}>{{this.text}}</option>
+                                      {{/each}}
                                     </select>
                                   </div>
                                 </div>
@@ -89,27 +92,46 @@
                                   <label for="announcement" class="col-sm-4 form-control-label">Announcement:</label>
                                   <div class="col-sm-8">
                                     <div class="input-group" id="announcement_group">
-                                      <input class="form-control" type="text" id="announcement"/>
+                                      <input class="form-control" type="text" id="announcement" value={{announcement_text}}/>
                                       <span class="input-group-addon">
                                         <i class="glyphicon glyphicon-bullhorn"></i>
                                       </span>
                                     </div>
                                   </div>
                                 </div>
-
                                 <small>This announcement will not be removed after a week</small>
-                            </form>
                           </div>
                           <div class="col-md-1"></div>
                         </div>
                 </div>
-
+                {{/with}}
 
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-info" id="editAnnouncementButton">Edit Announcement</button>
+                    <button type="submit" class="btn btn-info" id="editAnnouncementButton">Edit Announcement</button>
+                </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</template>
+
+<template name='deleteAnnouncementModal'>
+  <div class="modal fade">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Just Checking...</h4>
+                </div>
+                <div class="modal-body">
+                    <h2>Are you sure you want to cancel this announcement? You cannot undo this.</h2>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-danger" id="deleteannouncement">Delete Announcement</button>
                 </div>
             </div>
         </div>
     </div>
+
 </template>

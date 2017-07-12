@@ -358,14 +358,14 @@ Meteor.users.after.insert(function(userId, doc){
       }
       return mayInsert;
     },
-    'update': function (userId,doc) {
+    'update': function (userId, doc) {
       var mayUpdate = false;
       if(isAdmin(userId)){
         mayUpdate = true;
       }
       return mayUpdate;
     },
-    'remove': function (userId,doc) {
+    'remove': function (userId, doc) {
       var mayRemove = false;
       if(isAdmin(userId)){
         mayRemove = true;
