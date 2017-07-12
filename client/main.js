@@ -279,3 +279,7 @@ Router.route('/bookingadmin',{
 Router.route('/termsandconditions', {
   template: 'termsandconditions'
 });
+
+Router.route('/accessibility', {
+    template: 'accessibility'
+});
