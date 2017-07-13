@@ -1375,18 +1375,18 @@ padding: 0 !important;
 	vertical-align: top;
 }
 
-#css-table .col:nth-child(even) {
+#css-table .col:nth-child(even){
   background: #ccc;
 }
-#css-table .col:nth-child(1) {
+#css-table .col:nth-child(odd){
   background: #009ce6;
 }
 
-#css-table .col:nth-child(1) {
+#css-table .col:nth-child(1){
   background: #009ce6;
 }
 
-#css-table .col:nth-child(3) {
+#css-table .col:nth-child(3){
   background: #ff0058;
 }
 
