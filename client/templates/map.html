@@ -1,0 +1,30 @@
+<template name="map">
+  <div class="container">
+    <div class="row">
+  		<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+  			<div class="template-title">
+  				Course Location
+  			</div>
+  		</div>
+  	</div>
+    <div class="row">
+      <div class="col-lg-3 col-md-3"></div>
+      <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+        <div class="map-container">
+          {{> googleMap name="ydcMap" options=ydcMapOptions }}
+        </div>
+      </div>
+      <div class="col-lg-3 col-md-3"></div>
+    </div>
+    <div class="row">
+      <div class="col-lg-3 col-md-3"></div>
+      <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+        <h4>
+          {{address}}
+        </h4>
+        <button type="button" class="btn btn-primary pull-right" data-dismiss="modal" id='closeMapButton'>Go Back</button>
+      </div>
+      <div class="col-lg-3 col-md-3"></div>
+    </div>
+  </div>
+</template>

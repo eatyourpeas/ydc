@@ -1,9 +1,37 @@
 import { Template } from 'meteor/templating';
 import { ReactiveVar } from 'meteor/reactive-var';
 
+Template.addevent.onCreated(function(){
+  this.selectedCourse = new ReactiveVar('NoFilter');
+  this.selectedHospital = new ReactiveVar('NoFilter');
+  this.selectedCourseIsComplete = new ReactiveVar('NoFilter');
+});
+
 Template.addevent.helpers({
   'courses': function(){
-    return Courses.find({}, {sort: {'course_name': 1, 'start_date': -1}});
+    var clinicFilter = Template.instance().selectedHospital.get();
+    var courseFilter = Template.instance().selectedCourse.get();
+    var selectedCourseIsComplete = Template.instance().selectedCourseIsComplete.get();
+    var selector = {};
+
+    if (courseFilter != "NoFilter") {
+      selector.course_name = courseFilter;
+    }
+    if (clinicFilter != "NoFilter") {
+      selector.clinic = clinicFilter;
+    }
+    /*
+    if (selectedCourseIsComplete!="NoFilter") {
+      if (selectedCourseIsComplete == "upcoming") {
+        selector.start_date = '{$gt: Date.now()}';
+      }
+      if (selectedCourseIsComplete == "completed") {
+        selector.start_date = '{$lt: Date.now()}';
+      }
+    }
+    */
+
+    return Courses.find(selector, {sort: {'course_name': 1, 'start_date': -1}});
   },
   'thereAreCourses': function(){
     var numberOfCourses = Courses.find({}, {sort: {'course_name': 1, 'start_date': -1}}).count();
@@ -15,7 +43,7 @@ Template.addevent.helpers({
   },
   'courseDatesForCourse': function(start_date, end_date){
     var start = start_date;
-    var end = end_date
+    var end = end_date;
     var returnDates;
     if (shortenDateRemoveTime(start)==shortenDateRemoveTime(end)) {
       returnDates = shortenDateIncludeTime(start) + " - " + shortenDateRemoveDate(end);
@@ -123,10 +151,23 @@ Template.addevent.events({
   },
   'click .mapmarker': function(event, template){
     Session.set('address', event.currentTarget.id);
-
-    Modal.show('modalMap');
+    Meteor.call('coordinatesForAddress', event.currentTarget.id, function(error, result){
+      if (result) {
+        Session.set('latitude', result[0].latitude);
+        Session.set('longitude', result[0].longitude);
+      Router.go('/map');
+      }
+    });
+  },
+  'change #filterByHospital': function(event, template){
+    template.selectedHospital.set(event.target.value);
+  },
+  'change #filterByCourse': function(event, template){
+    template.selectedCourse.set(event.target.value);
+  },
+  'change #filterByCourseComplete': function(event, template){
+    template.selectedCourseIsComplete.set(event.target.value);
   }
-
 });
 
 //////// private functions

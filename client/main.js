@@ -1,7 +1,6 @@
 import { Template } from 'meteor/templating';
 import { ReactiveVar } from 'meteor/reactive-var';
-import { GoogleMaps } from 'meteor/dburles:google-maps';
-import { Geolocation} from "meteor/mdg:geolocation";
+
 
 import './main.html';
 
@@ -27,8 +26,7 @@ Meteor.subscribe('files.documents.all');
 Meteor.subscribe('findAllAnnouncementsAtMyCentre');
 
 Meteor.startup(function(){
-  Geolocation.currentLocation();
-  GoogleMaps.load({ key: 'AIzaSyBOdKuGzNAH-Nv1i5P5MzY9jxbrXGZBNr4' });
+  GoogleMaps.load({ v: '3', key: 'AIzaSyBOdKuGzNAH-Nv1i5P5MzY9jxbrXGZBNr4', libraries: 'geometry,places' });
 });
 
 //global helpers
@@ -147,6 +145,10 @@ Template.registerHelper('documentNameForResource', function(document_id){
 
 Template.registerHelper('clinicOptions', function(){
   return [{value: "ELCH", text:"Evelina Children's Hospital", medics:"", nurses: "", dieticians:"", psychologists:"", admin:"", team_email:"PaediatricDiabetesandEndocrinologyTeam@gstt.nhs.uk"}, {value: "KCH", text: "King's College Hospital", medics:"", nurses: "02032991738", dieticians:"02032992618", psychologists:"020329942892489", admin:"02032992335", team_email:"kch_tr.KingsPaediatricDiabetes@nhs.net"}, {value: "PRUH", text:"Princess Royal University Hospital", medics:"", nurses: "", dieticians:"01689 865 743", psychologists:"", admin:"", team_email:"KCH_TR.PRUHPaediatricDiabetes@nhs.net"}, {value: "UHL", text: "University Hospital Lewisham", medics:"", nurses: "07917267656", dieticians:"07825196306", psychologists:"", admin:"", team_email:"LH.PaediatricDiabetes@nhs.net"}];
+});
+
+Template.registerHelper('courseOptions', function(){
+  return [{value: "New Diagnosis", text:"New Diagnosis"}, {value: "Carbohydrate Counting", text: "Carbohydrate Counting"}, {value:"Secondary Transfer", text:"Secondary Transfer"}, {value:"Pump Start", text:"Pump Start"}, {value:"Pump Refresher", text:"Pump Refresher"}, {value:"DAFNE", text:"DAFNE"}];
 });
 
 //////// private functions
@@ -276,10 +278,18 @@ Router.route('/bookingadmin',{
     }
 });
 
+Router.route('/map',{
+  template: 'map'
+});
+
 Router.route('/termsandconditions', {
   template: 'termsandconditions'
 });
 
 Router.route('/accessibility', {
     template: 'accessibility'
+});
+
+Router.route('/cookies', {
+    template: 'cookies'
 });

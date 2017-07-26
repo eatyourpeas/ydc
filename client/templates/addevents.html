@@ -1,47 +1,70 @@
 <template name = 'addevent'>
   <container>
     <div class="row" >
-      <div class="col-md-2"></div>
-      <div class="col-md-8">
-        <H1 class="pages-promo-title">All Courses</H1>
+      <div class="col-lg-1 col-md-1 col-sm-1 col-xs-1"></div>
+      <div class="col-lg-10 col-md-10 col-sm-10 col-xs-10">
+        <div class="template-title">All Courses</div>
       </div>
-      <div class="col-md-2"></div>
+      <div class="col-lg-1 col-md-1 col-sm-1 col-xs-1"></div>
     </div>
     <div class="row">
-      <div class="col-md-2"></div>
-        <div class="col-md-8">
+      <div class="col-lg-1 col-md-1 col-sm-1 col-xs-1"></div>
+        <div class="col-lg-10 col-md-10 col-sm-10 col-xs-10">
           {{ #if thereAreCourses }}
-            <table class="table table-bordered table-hover">
+            <div class="row col-lg-12 col-md-12 col-sm-12 col-xs-12">
+              <label >Filters:</label>
+            </div>
+            <label for='filterByHospital'>Centre</label>
+            <select id='filterByHospital'>
+              <option value="NoFilter">No Selection</option>
+              {{#each clinicOptions}}
+                <option value={{this.value}}>{{this.text}}</option>
+              {{/each}}
+            </select>
+            <label for='filterByHospital'>Course</label>
+            <select id='filterByCourse'>
+              <option value="NoFilter">No Selection</option>
+              {{#each courseOptions}}
+                <option value={{this.value}}>{{this.text}}</option>
+              {{/each}}
+            </select>
+            <!--label for='filterByCourseComplete'>Course Complete</label>
+            <select id='filterByCourseComplete'>
+              <option value="NoFilter">No choice</option>
+              <option value="upcoming">Upcoming</option>
+              <option value="completed">Completed</option>
+            </select-->
+            <table class="table table-bordered table-hover courses_table">
               <thead>
                 <tr>
-                  <th>Course Name</th>
-                  <th>Course Dates</th>
-                  <th>Centre</th>
-                  <th>Location</th>
-                  <th>Booked Places</th>
-                  <th>Total Places</th>
-                  <th>Places Remaining</th>
-                  <th>Cancel</th>
+                  <th class="centred_th">Course Name<br><div class="small_text">(select to see bookings)</div></th>
+                  <th class="centred_th">Course Dates</th>
+                  <th class="centred_th">Centre</th>
+                  <th class="centred_th">Location</th>
+                  <th class="centred_th">Booked Places</th>
+                  <th class="centred_th">Total Places</th>
+                  <th class="centred_th">Places Remaining</th>
+                  <th class="centred_th">Cancel</th>
                 </tr>
               </thead>
               <tbody>
                 {{#each courses}}
-                <tr id="courses" class={{selectedCourseClass}}>
-                  <td>{{course_name}}</td>
+                <tr class={{selectedCourseClass}}>
+                  <td id="courses">{{course_name}}</td>
                   <td>{{courseDatesForCourse start_date end_date}}</td>
                   <td>{{clinic}}</td>
                   {{#if address}}
-                    <td class = 'mapmarker' id={{address}}><a href=""><i class="fa fa-map-marker" aria-hidden="true"></i></a></td>
+                    <td class = 'mapmarker centred_td' id={{address}}><a href=""><i class="fa fa-map-marker" aria-hidden="true"></i></a></td>
                   {{else}}
-                    <td>{{clinic}} Venue TBC</td>
+                    <td class="centred_td">{{clinic}} Venue TBC</td>
                   {{/if}}
-                  <td>{{numberOfAttendees _id}}</td>
-                  <td>{{course_places}}</td>
-                  <td><span class='badge'>{{placesRemaining _id}}</span></td>
+                  <td class="centred_td">{{numberOfAttendees _id}}</td>
+                  <td class="centred_td">{{course_places}}</td>
+                  <td class="centred_td"><span class='badge'>{{placesRemaining _id}}</span></td>
                   {{#if courseHasCompleted start_date end_date }}
-                    <td><span><i class="fa fa-check" aria-hidden="true"></i></span>Course Complete</td>
+                    <td class="centred_td"><span><i class="fa fa-check" aria-hidden="true"></i></span>Course Complete</td>
                   {{ else }}
-                      <td><button class = "btn btn-danger" id='cancelCourseButton'> Cancel Course </button></td>
+                      <td class="centred_td"><button class = "btn btn-danger btn-sm" id='cancelCourseButton'> Cancel Course </button></td>
                   {{ /if }}
                 </tr>
                 {{/each}}
@@ -51,61 +74,15 @@
             <H2>There are currently no courses booked or completed</H2>
           {{/if}}
         </div>
-      <div class="col-md-2"></div>
+      <div class="col-lg-1 col-md-1 col-sm-1 col-xs-1"></div>
     </div>
-<!-- previously blanked -
-    <div class="row" style="padding-top: 50px;">
-      <div class="col-md-2"></div>
-        <div class="col-md-8">
-          {{ #if courseIsSelected }}
-            {{ #if bookingsForCourse }}
-              <H1 class="pages-promo-title">Bookings</H1><br>
-              <table class="table table-bordered">
-                <thead>
-                  <tr>
-                    <th>Booking Holder Name</th>
-                    <th>Booking Holder Email</th>
-                    <th>Confirmation Status</th>
-                    <th>Cancel</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {{#each bookingsForCourse}}
-                    <tr id="bookings" class='default'>
-                      {{#with bookingHolder booked_by}}
-                        <td>{{profile.name}}</td>
-                        <td>{{emails[0].address}}</td>
-                      {{/with}}
-                      {{#if booking_validated}}
-                        <td>Booking Confirmed</td>
-                        {{#if selectedCourseIsComplete }}
-                          <td><span><i class="fa fa-icon-ok"></i></span>&nbsp;Course Complete</td>
-                        {{ else}}
-                          <td><button class = "btn btn-danger" id='cancelBookingButton'> Cancel Booking </button></td>
-                        {{/if}}
-                      {{else}}
-                        <td>Confirmation Pending</td>
-                        <td><button class = "btn btn-danger disabled" id='cancelBookingButton'> Cancel Booking </button></td>
-                      {{/if}}
-                    </tr>
-                  {{/each}}
-                </tbody>
-              </table>
-            {{else}}
-              <H4 class="pages-promo-title"> There is no one booked on this course currently</H4>
-            {{/if}}
-          {{/if}}
-        </div>
-      <div class="col-md-2"></div>
-    </div>
--->
 
     <div class="row" >
-      <div class="col-md-2"></div>
-      <div class="col-md-8">
+      <div class="col-lg-1 col-md-1 col-sm-1 col-xs-1"></div>
+      <div class="col-lg-10 col-md-10 col-sm-10 col-xs-10">
         <button class = "btn btn-info" id='addCourseButton'> Add New Course Dates </button>
       </div>
-      <div class="col-md-2"></div>
+      <div class="col-lg-1 col-md-1 col-sm-1 col-xs-1"></div>
     </div>
   </container>
 </template>

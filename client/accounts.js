@@ -49,7 +49,7 @@ Accounts.ui.config({
         visible: true
     }, {
         fieldName: 'terms',
-        fieldLabel: "I accept the <a href='termsandconditions' style='font-style: italic; text-decoration: underline; font-size: 1.0em;'>terms and conditions</a>",
+        fieldLabel: "I accept the terms and conditions.<a href='termsandconditions' style='font-style: italic; text-decoration: underline; font-size: 1.0em;'>terms and conditions</a>",
         inputType: 'checkbox',
         visible: true,
         saveToProfile: false,

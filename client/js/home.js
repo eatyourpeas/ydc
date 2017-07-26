@@ -6,7 +6,7 @@ Template.home.events({
     console.log('phone button');
   },
   'click #inhoursbutton': function(event){
-    Router.go('/news');
+    console.log('inhoursbutton to implement');
   },
   'click .home-promo-green':function(){
     Router.go('/aboutcourses');

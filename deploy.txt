@@ -1,0 +1,5 @@
+because you tend to update this infrequently you will probably forget how to deploy
+in database_definitions.js comment back in the storagePath as you cannot mount folders on local host and the file/image uploads will not be persistent without it
+cd into the .deploy folder
+then 'mup deploy'
+that's it...

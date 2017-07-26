@@ -1,20 +1,27 @@
 <template name='useradmin'>
   <container>
-    <row class="col-md-12">
-      <div class="col-md-2"></div>
-      <div class="col-md-10">
-        <h1 class='pages-promo-title'>All Users</h1>
-      </div>
-    </row>
     <div class="row">
-			<div class="col-md-2"></div>
-			   <div class="col-md-8 searchform">{{> searchform }}
-			</div>
-			<div class="col-md-2"></div>
+      <div class="col-lg-1 col-md-1 col-sm-1 col-xs-1"></div>
+      <div class="col-lg-10 col-md-10 col-sm-10 col-xs-10">
+        <div class="template-title">All Users</div>
+      </div>
+      <div class="col-lg-1 col-md-1 col-sm-1 col-xs-1"></div>
+    </div>
+    <div class="row">
+			<div class="col-lg-1 col-md-1 col-sm-1 col-xs-1"></div>
+			   <div class="col-lg-10 col-md-10 col-sm-10 col-xs-10 searchform">{{> searchform }}</div>
+			<div class="col-lg-1 col-md-1 col-sm-1 col-xs-1"></div>
 		</div>
     <div class="row">
-      <div class="col-md-2"></div>
-			<div class="col-md-8">
+      <div class="col-lg-1 col-md-1 col-sm-1 col-xs-1"></div>
+      <div class="col-lg-10 col-md-10 col-sm-10 col-xs-10 searchform">
+        <H4>Select a YDC Member to review their bookings</H4>
+      </div>
+      <div class="col-lg-1 col-md-1 col-sm-1 col-xs-1"></div>
+    </div>
+    <div class="row">
+      <div class="col-lg-1 col-md-1 col-sm-1 col-xs-1"></div>
+			<div class="col-lg-10 col-md-10 col-sm-10 col-xs-10">
         <table class="table table-bordered table-hover">
           <thead>
             <tr>
@@ -39,16 +46,15 @@
         </table>
         <button class='btn btn-info' id='addTeamMemberButton'>Add Team Member</button>
       </div>
-      <div class="col-md-2"></div>
-    </div> <!---row -->
+      <div class="col-lg-1 col-md-1 col-sm-1 col-xs-1"></div>
+    </div> <!--row -->
     <div class="row">
-      <div class="col-md-2">
-			</div>
-			<div class="col-md-8">
+      <div class="col-lg-1 col-md-1 col-sm-1 col-xs-1"></div>
+			<div class="col-lg-10 col-md-10 col-sm-10 col-xs-10">
         {{ #if getSelectedUser }}
           {{#if confirmedBookingsForUser }}
-            <row class="col-md-12" style="padding-top:50px;">
-              <table class="table table-bordered table-hover">
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" style="padding-top:50px;">
+              <table class="table table-bordered table-hover user_admin_table">
                 <thead>
                   <tr>
                     <th>Course Name</th>
@@ -72,15 +78,15 @@
                   {{/each}}
                 </tbody>
               </table>
-            </row>
+            </div>
           {{else}}
             <H4>There are no bookings for this user</H4>
           {{/if}}
 
         {{/if}}
       </div>
-			<div class="col-md-2"></div>
-    </div> <!---row -->
+			<div class="col-lg-1 col-md-1 col-sm-1 col-xs-1"></div>
+    </div> <!--row -->
 
   </container>
 

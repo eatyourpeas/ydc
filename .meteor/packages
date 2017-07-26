@@ -28,10 +28,10 @@ tsega:bootstrap3-datetimepicker
 ian:accounts-ui-bootstrap-3
 matb33:collection-hooks
 twbs:bootstrap
-dburles:google-maps
-mdg:geolocation
-meteorhacks:aggregate
 ostrio:files
 email@1.2.3
 reactive-dict@1.1.9
 ostrio:meteor-root
+force-ssl
+dburles:google-maps
+aldeed:geocoder

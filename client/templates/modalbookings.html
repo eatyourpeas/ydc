@@ -28,38 +28,42 @@
         <div class="modal-dialog">
             <div class="modal-content" >
                 <div class="modal-header">
-                    <h4 class="modal-title">Bookings</h4>
+                    <h4 class="modal-title">Bookings for {{selectedCourse.course_name}} ({{courseDatesForCourse selectedCourse.start_date selectedCourse.end_date}})</h4>
                 </div>
 
-                <table class="table table-bordered" >
-                  <thead>
-                    <tr>
-                      <th>Booking Holder Name</th>
-                      <th>Booking Holder Email</th>
-                      <th>Confirmation Status</th>
-                      <th>Cancel</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {{#each bookingsForCourse}}
-                      <tr id="bookings" class='default'>
-                          <td>{{bookingHolder booked_by}}</td>
-                          <td>{{bookingHolderEmail booked_by}}</td>
-                        {{#if booking_validated}}
-                          <td>Booking Confirmed</td>
-                          {{#if selectedCourseIsComplete }}
-                            <td><span><i class="fa fa-icon-ok"></i></span>&nbsp;Course Complete</td>
-                          {{ else}}
-                            <td><button class = "btn btn-danger" id='cancelBookingButton'> Cancel Booking </button></td>
-                          {{/if}}
-                        {{else}}
-                          <td>Confirmation Pending</td>
-                          <td><button class = "btn btn-danger disabled" id='cancelBookingButton'> Cancel Booking </button></td>
-                        {{/if}}
+                <div class="modal-body">
+                  <table class="table table-bordered" >
+                    <thead class="courses_table">
+                      <tr>
+                        <th>Booking Holder Name</th>
+                        <th>Booking Holder Email</th>
+                        <th>Number of Tickets</th>
+                        <th>Confirmation Status</th>
+                        <th>Cancel</th>
                       </tr>
-                    {{/each}}
-                  </tbody>
-                </table>
+                    </thead>
+                    <tbody>
+                      {{#each bookingsForCourse}}
+                        <tr id="bookings" class='default'>
+                            <td>{{bookingHolder booked_by}}</td>
+                            <td>{{bookingHolderEmail booked_by}}</td>
+                            <td class="centred_td">{{places_booked}}</td>
+                          {{#if booking_validated}}
+                            <td>Confirmed</td>
+                            {{#if selectedCourseIsComplete }}
+                              <td><span><i class="fa fa-icon-ok"></i></span>&nbsp;Course Complete</td>
+                            {{ else}}
+                              <td><button class = "btn btn-danger" id='cancelBookingButton'> Cancel Booking </button></td>
+                            {{/if}}
+                          {{else}}
+                            <td>Confirmation Pending</td>
+                            <td><button class = "btn btn-danger disabled" id='cancelBookingButton'> Cancel Booking </button></td>
+                          {{/if}}
+                        </tr>
+                      {{/each}}
+                    </tbody>
+                  </table>
+                </div>
 
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>

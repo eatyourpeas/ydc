@@ -3,7 +3,8 @@ import { Meteor } from 'meteor/meteor';
 Meteor.startup(() => {
   // code to run on server at startup
 
-    /* if users database is empty, seed these values
+  //   if users database is empty, seed these values
+  /*
     if(Meteor.users.find().count() < 1) {
       // users array
       var users = [ ///note these are fictional email addresses and for demon only
@@ -25,7 +26,8 @@ Meteor.startup(() => {
           password: d.password,
           username: d.email,
           profile: {
-            name: d.name
+            name: d.name,
+            clinician: true
           }
         });
         // verify user email
@@ -35,6 +37,7 @@ Meteor.startup(() => {
           Roles.addUsersToRoles(userId, d.roles, d.group);
 
       });
+
   }*/
 });
 
@@ -98,6 +101,16 @@ Meteor.methods({
       {$group: {_id: {course: '$course_id'}, total: { $sum: '$places_booked' } } }
     );
     console.log(me);
+  },
+  'coordinatesForAddress': function(address){
+    var geo = new GeoCoder({
+      geocoderProvider: "google",
+      httpAdapter: "https",
+      apiKey: 'AIzaSyBOdKuGzNAH-Nv1i5P5MzY9jxbrXGZBNr4'
+    });
+    var result = geo.geocode(address);
+
+    return result;
   }
 });
 

@@ -8,6 +8,9 @@ Template.contact_us.onCreated(function(){
 Template.contact_us.events({
   'change #clinic': function(event, template){
     template.clinicSelected.set(event.target.value);
+  },
+  'click #inhoursbutton':function(event, template){
+    console.log('inhoursbutton clicked');
   }
 });
 

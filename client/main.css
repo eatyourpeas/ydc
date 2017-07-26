@@ -283,9 +283,9 @@ textarea {
 /*--------------------------------------------------------------
 5.0 MASTHEAD
 --------------------------------------------------------------*/
-.site-header {height: 150px; border-bottom: 1px solid #ccc; display: block;}
-.site-branding {width: 209px; height: 150px; background: url("/images/ydc150.png") no-repeat; background: url("/images/ydc150.png") no-repeat, none; position: relative; top: 20px; float: left;}
-	.site-branding a {width: 225px; height: 96px; text-decoration: none;}
+.site-header {height: 100px; border-bottom: 1px solid #ccc; display: block;}
+.site-branding {width: 100px; height: 100px; background: url("/images/ydc100.png") no-repeat, none; position: relative; top: 25px; float: left;}
+	.site-branding a {width: auto; height: 100px; text-decoration: none;}
 .right-side {float: right; margin-top: 15px; text-align: right;}
 #menu-global-nav {margin: 0px; padding: 0px; float: right;}
 #menu-global-nav li {float: left; padding: 0 15px 0 15px; list-style: none; text-transform: uppercase;}
@@ -313,15 +313,18 @@ textarea {
 .main-navigation {border-top: 4px solid #75c200 !important; border-bottom: 1px solid #ccc; display: block; height: 60px; position: relative; background: #f1f0f0;}
 .main-navigation .menu {display: block;float: left;left: 0;margin: 0px; position: relative; height: 55px;background: #fff;}
 .main-navigation .menu li {display: inline-block;line-height: 1.5em; height: 55px; float: left; }
-.main-navigation .menu li a {
+
+
+	.main-navigation .menu li a {
     color: #75c200;
     display: inline-block;
     margin: 0 !important;
     padding: 16px 35px;
     text-decoration: none;
-    font-size: 1.0em;
+    font-size: 1.1em;
     letter-spacing: 0.05em;
 	height: 55px;}
+
 
 .main-navigation .menu li a:hover {background-color: #efefef; color: #477600; text-decoration: none;}
 
@@ -462,6 +465,20 @@ blockquote {
 	font-size: 1.2em;
 }
 
+/*----------------------------------------------------------
+ALL COURSES ADMIN - add event
+-------------------------------------------------------------*/
+.courses_table th, td{
+	font-size: 0.8em;
+}
+
+#user_admin_table thead, th, td {
+	font-size: 0.8em;
+}
+
+.small_text { font-weight: lighter; font-size: 0.7em;}
+.centred_td { text-align: center;}
+.centred_th { text-align: center;}
 
 /*--------------------------------------------------------------
 LANDING PAGE PROMOS
@@ -526,22 +543,24 @@ footer {
 /* Responsive code */
 
 @media (max-width: 1200px) {
-.ie7 .main-navigation .menu li a {height: 50px; padding: 15px 24px 0 24px;}
+.main-navigation {border-top: 4px solid #75c200 !important; border-bottom: 1px solid #ccc; display: block; height: 60px; position: relative; background: #f1f0f0;}
+.ie7 .main-navigation .menu li a {height: 50px; padding: 15px 15px 0 15px;}
 
 .main-navigation .menu li a {
-    padding: 16px 24px;
-    font-size: 1.0em;
-    letter-spacing: 0.04em;}
+    color: #75c200;
+    display: inline-block;
+    margin: 0 !important;
+    padding: 15px 20px 10px 10px;
+    text-decoration: none;
+    font-size: 1.1em;
+    letter-spacing: 0.05em;
+	height: 55px;}
 
-.search-input {width: 240px;border: 0; font-size: 1.1em; letter-spacing: 0em;}
-
-#secondary .page_item {line-height: 40px; font-size: 1em; font-weight: normal;}
-
-.home-promo-blue h2 a, .home-promo-wide h2 a, .home-main-wide h2 a {font-size: 0.70em;}
+.home-promo-blue h2 a, .home-promo-wide h2 a, .home-main-wide h2 a {font-size: 0.7em;}
 .home-promo-blue p, .home-promo-wide p  {font-size: 1.0em;}
 
-.home-promo-wide-overlay h3 { font-size: 2.0em;}
-.promo-text { font-size: 1.5em;}
+.home-promo-wide-overlay h3 { font-size: 1.5em;}
+.home-promo-red, .home-promo-blue, .home-promo-green, .home-promo-pink {max-height: 450px;}
 
 .landing-promo-blue h2 a {font-size: 0.70em;}
 .landing-promo-blue p {font-size: 1em;}
@@ -552,6 +571,8 @@ footer {
 .course_title {font-size: 1.8em;}
 .course_text {font-size: 1.2em;}
 .button_book {font-size: 1.2em;}
+.resource_table_head{font-size: 1.0em; padding: 5px;}
+.resource_table_data{font-size: 1.0em; padding: 5px;}
 
 }
 
@@ -559,25 +580,28 @@ footer {
 @media (max-width: 996px) {
 .ie7 .main-navigation .menu li a {padding: 15px 14px 0 14px;}
 
+.navbar-toggle {position: absolute !important; top: -60px; right: 10px;}
 .main-navigation .menu li a {
-    padding: 16px 14px;
-    font-size: 0.95em;
-    letter-spacing: 0.02em;}
+    color: #75c200;
+    display: inline-block;
+    margin: 0 !important;
+    padding: 15px 20px 10px 10px;
+    text-decoration: none;
+    font-size: 0.8em;
+    letter-spacing: 0.05em;
+	height: 55px;}
 
-.search-input {width: 180px; font-size: 1em;}
 
-#secondary .page_item {font-size: 0.9em;}
-#secondary .page_item a {font-weight: normal;}
 
 
 .title {font-size: 5em;}
 .strap {font-size: 2.4em;}
 
 .home-main-wide {background-position: 60%;}
-.home-promo-blue {padding: 15px; height: 350px;}
-.home-promo-green {padding: 15px; height: 350px;}
-.home-promo-pink {padding: 15px; height: 350px;}
-.home-promo-red {padding: 15px; height: 350px; }
+.home-promo-blue {padding: 15px; height: 450px;}
+.home-promo-green {padding: 15px; height: 450px;}
+.home-promo-pink {padding: 15px; height: 450px;}
+.home-promo-red {padding: 15px; height: 450px; }
 
 .home-promo-blue h2 {padding: 0 14px 0 0;}
 .home-promo-blue h2 a {line-height: 1em;}
@@ -637,27 +661,41 @@ footer {
 }
 
 
-@media(max-width:767px) {
+@media (max-width:767px) {
 
 .ie7 #google_translate_element {display: none;}
 .ie7 .top {display: none;}
-.ie7 .site-branding {width: 130px; height: 55px; background: url('img/msk-sm.png');}
+
 .ie7 .navbar-collapse.in {min-height: 240px;}
 .ie7 .landing-page-banner {margin-top:25px;}
 
 .row {margin-left: -5px !important; margin-right: -5px !important;}
 .col-xs-6, .col-xs-12 {padding: 0 10px !important;}
 /* Override BS to place the navigation toggle correctly*/
-.site-header {height: 70px; }
-.site-branding {background-size: 80%; height: 65px; width: 150px; top: 10px;}
+/* Override BS to place the navigation toggle correctly*/
 
-.navbar-toggle {position: absolute !important; top: -70px; right: 10px;}
+/* colours the navbar links to list with green background, dark green on select*/
+.navbar-toggle {position: absolute !important; top: -60px; right: 10px; z-index: 10000;}
 .navbar {min-height: 0px !important; margin-bottom: 0px !important;}
 .main-navigation {border-top: 0px !important;}
-.main-navigation .menu li {background: #67c5dd; border-right: 0px;}
+.main-navigation .menu li {background: #4fce00; border-right: 0px;} /*light green*/
 .main-navigation .menu li a {color: #fff !important;}
-.main-navigation .menu li a:hover {background: #005DAF;}
+.main-navigation .menu li a:hover {background: #348701;} /*dark green*/
 .search-btn {width: 45px; height: 45px; margin: 5px 5px 0 0; border-radius: 4px;}
+.navbar-collapse.in {overflow-y: visible !important;}
+/* move the global nav */
+.top {display: none;}
+.bottom {display: block !important;}
+
+.dropdown.open{position: static; z-index: 10000; background: grey; height: 100px;}
+
+.menu-primary-nav-container {width: 100%;}
+.navbar-search-container {background: #f1f0f0; width: 100%; height: 56px;}
+.search-input {float: left; width: 75%; padding: 0 0 0 18px !important;}
+.main-navigation .menu {display: block;float: none; position: relative; height: auto;}
+.main-navigation .menu li {display: block;line-height: 1.6em;border-bottom: 1px solid #ccc; height: 45px; float: none;}
+.main-navigation .menu li a {padding: 12px 17px;font-size: 1.1em;letter-spacing: 0em;height: 44px;width: 100%;}
+.main-navigation .menu li a:hover {}
 
 .title {font-size: 3em; border: 0px; padding: 0px;}
 .title span {display: inline;}
@@ -667,14 +705,6 @@ footer {
 /* move the global nav */
 .top {display: none;}
 .bottom {display: block !important;}
-
-.menu-primary-nav-container {width: 100%;}
-.navbar-search-container {background: #f1f0f0; width: 100%; height: 56px;}
-.search-input {float: left; width: 75%; padding: 0 0 0 18px !important;}
-.main-navigation .menu {display: block;float: none; position: relative; height: auto;}
-.main-navigation .menu li {display: block;line-height: 1.6em;border-bottom: 1px solid #ccc; height: 45px; float: none;}
-.main-navigation .menu li a {padding: 12px 17px;font-size: 1.1em;letter-spacing: 0em;height: 44px;width: 100%;}
-.main-navigation .menu li a:hover {}
 
 .home-main-bg {padding: 15px 0 10px 0;}
 .home-main-wide {height: 300px; max-height: auto; background-position: 100% 8%;}
@@ -718,7 +748,7 @@ footer {
 }
 
 .resource_table .resource_table_data {
-	font-size: 1.4em;
+	font-size: 1.2em;
 }
 
 .resource_table .download_td {
@@ -727,9 +757,6 @@ footer {
 	color: black;
 	border-style: none;
 }
-
-#masthead {height:100px;}
-.site-branding {height: 100px;}
 
 #menu-footer-nav {margin: 15px 0 20px 10px;}
 #menu-global-nav li {float: left; padding: 0 6px 0 6px;}
@@ -755,20 +782,19 @@ footer {
 
 
 
-@media screen and (max-width: 600px) {
+@media (max-width: 600px) {
 
 	.col-xs-6, .col-xs-12 {padding: 0 5px !important;}
-
 	.title {font-size: 1.8em; border: 0px;}
 	.title span {display: inline;}
 	.strap {font-size: 1.3em;}
 	.home-main-bg {padding: 0px 0 5px 0;}
 	.home-promo-bg {padding: 5px 0;}
 
-	.home-promo-blue {min-height: 200px; max-height: 270px; height: auto; padding: 12px;}
-	.home-promo-green {min-height: 200px; max-height: 270px; height: auto; padding: 12px;}
-	.home-promo-red {min-height: 200px; max-height: 270px; height: auto; padding: 12px;}
-	.home-promo-pink {min-height: 200px; max-height: 270px; height: auto; padding: 12px;}
+	.home-promo-blue {min-height: 200px; max-height: 600px; height: auto; padding: 12px;}
+	.home-promo-green {min-height: 200px; max-height: 600px; height: auto; padding: 12px;}
+	.home-promo-red {min-height: 200px; max-height: 600px; height: auto; padding: 12px;}
+	.home-promo-pink {min-height: 200px; max-height: 600px; height: auto; padding: 12px;}
 	.home-promo-wide {margin: 10px 0 10px 0;}
 
 
@@ -784,9 +810,6 @@ footer {
 	.home-promo-wide-overlay p {font-size: 0.85em; line-height: 1.3em;}
 
 	.home-main-wide-overlay {max-height: 175px;}
-
-	#masthead {height:100px;}
-	.site-branding {height: 100px;}
 
 	.landing-promo-blue div {width: 50%;}
 	.landing-promo-blue h2 {margin: 0 0 5px 0; padding-left: 10px;}
@@ -833,7 +856,11 @@ footer {
 	}
 
 	.announcements h1 { font-size: 1.2em;}
-	.announcements button { width: 10em; height: 2.5em; font-size: 0.5em; margin: 1em;}
+	.announcements button { width: 15em; height: 2.5em; font-size: 0.3em; text-align: center; padding-bottom: 10px;}
+	.resource_table_head { font-size: 0.5em; padding: 5px; }
+	.resource_table_data {font-size: 0.5em; padding: 5px;}
+	.post_dates a{font-size: 0.8em;}
+
 
 }
 
@@ -1420,8 +1447,7 @@ padding: 0 !important;
 	text-align: center;
   margin: 0 auto;
 	vertical-align: middle;
-	height: 100px;
-	width: auto;
+
 	padding-bottom: 10px;
 }
 
@@ -1459,7 +1485,7 @@ padding: 0 !important;
 
 .resource_table .resource_table_data {
 	font-weight:200;
-
+	padding: 5px;
 	border-style: none;
 }
 
@@ -1471,6 +1497,22 @@ padding: 0 !important;
 }
 
 .promo-text{font-size: 1.6em;}
+
+.hospital_table{margin-left: 100px; margin-top: 20px;}
+
+/*------------------- colours
+pink: 255, 0, 88 = 	#ff0058
+blue: 0, 156, 230 = 	#009ce6
+red: 255, 0, 0 = 	#ff0058
+green: 79, 206, 0 = #4fce00
+-----------------------*/
+/*
+.hospital_tile_red{background:#ff0058; margin: 15px; margin-right: 15px;}
+.hospital_tile_pink{background: #ff0058; margin: 15px;}
+.hospital_tile_blue{ background: #009ce6; margin: 15px;}
+.hospital_tile_green{background: #4fce00;margin: 15px;}
+*/
+.hospital_tile_grey { background: #ededed;  border-style:solid; border-width: 10px; border-color: white; }
 
 
 

@@ -23,7 +23,6 @@ Template.modalAddCourse.events({
       course_places = 12;
     }
 
-
         //moments must be converted to js date objects before storing in mongo or error is thrown
         Courses.insert({
           course_name: course,

@@ -8,17 +8,17 @@ Template.bookingsModal.helpers({
   },
   'courseDatesForCourse': function(start_date, end_date){
     var start = start_date;
-    var end = end_date
+    var end = end_date;
     var returnDates;
     if (shortenDateRemoveTime(start)==shortenDateRemoveTime(end)) {
       returnDates = shortenDateIncludeTime(start) + " - " + shortenDateRemoveDate(end);
     } else {
       returnDates = shortenDateIncludeTime(start) + " - " + shortenDateIncludeTime(end);
     }
+
     return returnDates;
   },
   'courseHasCompleted': function(start_date, end_date){
-
     var start = start_date;
     var end = end_date;
     var momentStart = moment(start);
@@ -71,6 +71,11 @@ Template.bookingsModal.helpers({
     } else {
       return false;
     }
+  },
+  'selectedCourse': function(){
+    var selectedCourse = Session.get('selectedCourse');
+    var course = Courses.findOne({_id: selectedCourse});
+    return course;
   }
 });
 
@@ -91,3 +96,20 @@ Template.bookingsModal.events({
   Modal.show('modalAddCourse');
 }
 });
+
+//private functions
+
+function shortenDateIncludeTime(date_to_shorten){
+  var newDate = moment(date_to_shorten).format('ddd DD MMM YYYY HH:mm');
+  return newDate;
+}
+
+function shortenDateRemoveTime(date_to_shorten){
+  var newDate = moment(date_to_shorten).format('ddd DD MMM YYYY');
+  return newDate;
+}
+
+function shortenDateRemoveDate(date_to_shorten){
+  var newDate = moment(date_to_shorten).format('HH:mm');
+  return newDate;
+}
