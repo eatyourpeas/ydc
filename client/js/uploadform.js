@@ -4,8 +4,10 @@ import { ReactiveVar } from 'meteor/reactive-var';
 
 Template.uploadForm.onCreated(function () {
   this.currentUpload = new ReactiveVar(false);
-  this.uploadErrorMessage = new ReactiveVar("");
+  this.warningOrSuccess = new ReactiveVar("warning")
+  this.alertMessage = new ReactiveVar("");
 });
+
 
 Template.uploadForm.onRendered(function(){
   $('#errorAlert').hide();
@@ -15,15 +17,43 @@ Template.uploadForm.helpers({
   currentUpload() {
     return Template.instance().currentUpload.get();
   },
-  alertMessage() {
-    return Template.instance().uploadErrorMessage.get();
-  },
   'notLoaded': function(percentage){
     if (percentage < 100) {
       return true;
     } else {
       return false;
     }
+  },
+  'thereIsADocument': function(){
+    if (Session.get("document_id") == "") {
+      return false;
+    } else {
+      return true;
+    }
+  },
+  'underOneHundred': function(percentage){
+    if (percentage < 100) {
+        return true;
+    } else {
+      return false;
+    }
+  },
+  'alert_class': function(){
+    if (Template.instance().warningOrSuccess.get()=="warning") {
+      return "alert alert-danger";
+    } else {
+      return "alert alert-success";
+    }
+  },
+  'alert_visible': function(){
+    if(Template.instance().alertMessage.get()==""){
+      return 'hidden';
+    } else {
+      return '';
+    }
+  },
+  'alertMessage': function(){
+    return Template.instance().alertMessage.get();
   }
 });
 
@@ -40,12 +70,12 @@ Template.uploadForm.events({
       }, false);
 
       upload.on('start', function () {
-
+        console.log('started upload');
         template.currentUpload.set(this);
       });
 
       upload.on('end', function (error, fileObj) {
-
+        /*
         if (error) {
           template.uploadErrorMessage.set('Error during upload: ' + error);
           $('#successAlert').show();
@@ -55,8 +85,40 @@ Template.uploadForm.events({
         }
         //template.currentUpload.set(false);
       });
+      */
+
+      if (error) {
+        template.warningOrSuccess.set("warning");
+        template.alertMessage.set('Error during upload: ' + error);
+        $('#errorAlert').show();
+      } else {
+        template.warningOrSuccess.set("success");
+        template.alertMessage.set('File "' + fileObj.name + '" successfully uploaded');
+        $('#errorAlert').show();
+        //add the file _id to Session to access later for the resources collection
+        Session.set('document_id', fileObj._id);
+      }
+      template.currentUpload.set(false);
+    });
 
       upload.start();
     }
   }
 });
+
+Template.uploadForm.onDestroyed(function(){
+  $('#errorAlert').hide();
+  if (Session.get("document_id") == undefined) {
+    //there is no document
+    return;
+  } else {
+    //there is a document it could be old or new
+      Meteor.call('deleteDocuments', Session.get('document_id'), function(error, success){
+        if (error) {
+          console.log(error);
+        } else {
+          console.log('successfully deleted this document');
+        }
+      });
+  }
+})

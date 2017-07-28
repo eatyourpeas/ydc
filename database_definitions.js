@@ -25,7 +25,7 @@ Images = new FilesCollection({
 
     }
   },
-  storagePath: '/images' //comment in in production, out in development
+  storagePath: '/images' //comment in in production, out in development*/
 });
 
 Documents = new FilesCollection({
@@ -44,5 +44,5 @@ Documents = new FilesCollection({
 
     }
   },
-  storagePath: '/documents'   //comment in in production, out in development
+  storagePath: '/documents'   //comment in in production, out in development*/
 });

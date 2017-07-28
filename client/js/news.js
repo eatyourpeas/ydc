@@ -91,11 +91,16 @@ Template.news.helpers({
     }
   },
   'thereIsNoImage': function(){
-    var post = Posts.findOne(Session.get("selectedPost"));
-    if (post.post_image == "") {
-      return true;
+    var selectedPost = Session.get("selectedPost");
+    if (selectedPost) {
+      var post = Posts.findOne(selectedPost);
+      if (post.post_image) {
+        return false;
+      } else {
+        return true;
+      }
     } else {
-      return false;
+      return true
     }
   },
   'announcement_visible': function(){

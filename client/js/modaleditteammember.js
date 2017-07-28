@@ -7,26 +7,24 @@ Template.modalEditTeamMember.events({
     var clinician = event.target.clinician.checked;
     var admin = event.target.admin.checked;
     var school = event.target.school.checked;
-    var email = $("#clinician-email").val();
+    //var email = $("#clinician-email").val();
     var name = $("#clinician-name").val();
-    var selectedClinic = Template.instance().selectedClinic.get();
+    var selectedClinic = template.selectedClinic.get();
 
     var selectedUser = Session.get('selectedUser');
 
-    Meteor.users.update(selectedUser, {
-      $set: {
-        'emails.0.address': email,
-        password: "password",
-        profile: {
-          name: name,
-          clinician: clinician,
-          admin: admin,
-          parent: false,
-          school: school
-        },
-        clinic: selectedClinic
+    Meteor.call('updateUser', selectedUser, name, clinician, selectedClinic, admin, school, function(error, result){
+      if (error) {
+        console.log(error);
+        return;
+      } else {
+        if (result) {
+          console.log('successfully updated user');
+        } else {
+          console.log('failed to update user');
+        }
       }
-    });
+    })
 
 
   },

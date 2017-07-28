@@ -11,18 +11,14 @@ Template.modalAddTeamMember.events({
     var name = $("#clinician-name").val();
     var selectedClinic = Template.instance().selectedClinic.get();
 
-
-    Accounts.createUser({
-      email: email,
-      password: "password",
-      profile: {
-        name: name,
-        clinician: clinician,
-        admin: admin,
-        parent: false,
-        school: school
-      },
-      clinic: selectedClinic
+    Meteor.call('createAdminOrClinicianOrSchoolUser', clinician, admin, school, email, name, selectedClinic, function(error, result){
+      if (result) {
+        alert('new user created');
+        Session.set("userAdminSuccess", "Created User");
+      } else {
+        console.log('failed');
+        Session.set("userAdminError", "Failed to Create User");
+      }
     });
 
   },

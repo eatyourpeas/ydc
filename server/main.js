@@ -47,6 +47,72 @@ Meteor.startup(() => {
 
 Meteor.methods({
 
+  createAdminOrClinicianOrSchoolUser: function(clinician, admin, school, email, name, clinic){
+    //creating admin  - must be logged in as admin to  be able to do this
+
+    if (isAdmin(Meteor.user())) {
+    var newUser = Accounts.createUser({
+        email: email,
+        password: "password",
+        profile: {
+          name: name
+        },
+        clinic: clinic
+      });
+      if (clinician) {
+        Roles.addUsersToRoles(newUser, "clinician", clinic);
+        Roles.removeUsersFromRoles(newUser, "parent", clinic);
+      }
+      if (admin) {
+        Roles.addUsersToRoles(newUser, "admin", clinic);
+        Roles.removeUsersFromRoles(newUser, "parent", clinic);
+      }
+      if (school) {
+        Roles.addUsersToRoles(newUser, "school", clinic);
+        Roles.removeUsersFromRoles(newUser, "parent", clinic);
+      }
+      if (!school && !admin && !clinician) {
+        Roles.addUsersToRoles(newUser, "parent", clinic);
+      }
+      return true;
+    } else {
+      return false;
+    }
+  },
+  updateUser: function(selectedUser, name, clinician, selectedClinic, admin, school){
+    if (isAdmin(Meteor.user())) {
+      Meteor.users.update({_id: selectedUser}, {
+        $set: {
+          profile: {
+            name: name
+          },
+          clinic: selectedClinic
+        }
+      });
+      if (admin) {
+        Roles.addUsersToRoles(selectedUser, "admin", selectedClinic);
+      } else {
+        Roles.removeUsersFromRoles(selectedUser, "admin", selectedClinic);
+      }
+      if (school) {
+        Roles.addUsersToRoles(selectedUser, "school", selectedClinic);
+      } else {
+        Roles.removeUsersFromRoles(selectedUser, "school", selectedClinic);
+      }
+      if (clinician) {
+        Roles.addUsersToRoles(selectedUser, "clinician", selectedClinic);
+      } else {
+        Roles.removeUsersFromRoles(selectedUser, "clinician", selectedClinic);
+      }
+      if (!clinician && !school && !admin) {
+        //this must be a parent
+        Roles.addUsersToRoles(selectedUser, "parent", selectedClinic);
+      }
+      return true;
+    } else {
+      return false;
+    }
+  },
   deleteBooking: function(booking_id){
     Bookings.remove({_id: booking_id});
   },
@@ -54,7 +120,12 @@ Meteor.methods({
     Courses.remove({_id:course_id});
   },
   deleteUser: function(user_id){
-    Meteor.users.remove({_id: user_id});
+    if (isAdmin(Meteor.user())) {
+      Meteor.users.remove({_id: user_id});
+      return true;
+    } else {
+      return false;
+    }
   },
   deletePost: function(post_id){
     var post = Posts.findOne(post_id);
@@ -94,7 +165,7 @@ Meteor.methods({
     return Images.findOne(image_id).cursor;
   },
   'totalBookingsForCourse_id': function(course_id){
-    console.log('course_id: ' + course_id);
+
     console.log(Bookings.find({booking_validated: true, course: course_id}).fetch());
     var me = Bookings.aggregate(
       {$match: { booking_validated: 'true', course_id: course_id } },
@@ -119,21 +190,9 @@ Accounts.onCreateUser((options, user) => {
     var admin = false;
     var clinician = false;
 
-      if (options.profile.admin) {
-        admin = true;
-      }
-      if (options.profile.clinician) {
-        clinician = true;
-      }
-      if (options.profile.school) {
-        school = true;
-      }
-
-      user.emails[0].verified = true;
+      user.emails[0].verified = true; //this to be changed if email validation enabled
       user.clinic = options.clinic;
       user.profile = options.profile;
-      user.profile.clinician = clinician;
-      user.profile.admin = admin;
 
       return user;
 
@@ -141,19 +200,10 @@ Accounts.onCreateUser((options, user) => {
 
 Meteor.users.after.insert(function(userId, doc){
 
-  //after new user created, add to role
-  if (doc.profile.clinician) {
-    Roles.addUsersToRoles(doc._id, "clinician", doc.clinic);
-  } else if (doc.profile.parent || (!doc.profile.clinician && !doc.profile.admin && !doc.profile.school)) {
+  if (!isAdmin(Meteor.user())) {
+    //I am not admin so no one is logged in. This must be a parent. New users created by admin are allocated roles to this new user is done elsewhere
     Roles.addUsersToRoles(doc._id, "parent", doc.clinic);
   }
-  if (doc.profile.admin) {
-    Roles.addUsersToRoles(doc._id, "admin", doc.clinic);
-  }
-  if (doc.profile.school) {
-    Roles.addUsersToRoles(doc._id, "school", doc.clinic);
-  }
-
 });
 
 ///publications
@@ -211,14 +261,12 @@ Meteor.users.after.insert(function(userId, doc){
     return Announcements.find({centre: myCentre[0]});
   })
 
-  Meteor.users.allow({
-    update: function() {
+  Meteor.users.deny({
+    'update': function() {
       if (isAdmin(Meteor.userId)) {
-        console.log('I am logged in as admin');
-          return true;
+          return false;
       } else {
-        console.log('iamnotadmin');
-        return false;
+        return true;
       }
     }
   });
@@ -238,7 +286,6 @@ Meteor.users.after.insert(function(userId, doc){
       if (Meteor.userId) { //I can alter any bookings if logged in as a YDC user of any type
         return true;
       } else {
-        console.log('i cannot update bookings');
         return false;
       }
     },
@@ -391,7 +438,7 @@ Meteor.users.after.insert(function(userId, doc){
 
   function isAdmin(userId){
     var isAdmin = false;
-    if ((Roles.userIsInRole(Meteor.userId(),['admin'],'KCH'))||(Roles.userIsInRole(Meteor.userId(),['admin'],'ELCH'))||(Roles.userIsInRole(Meteor.userId(),['admin'],'PRUH'))||(Roles.userIsInRole(Meteor.userId(),['admin'],'UHL'))) {
+    if ((Roles.userIsInRole(userId,['admin'],'KCH'))||(Roles.userIsInRole(Meteor.userId(),['admin'],'ELCH'))||(Roles.userIsInRole(Meteor.userId(),['admin'],'PRUH'))||(Roles.userIsInRole(Meteor.userId(),['admin'],'UHL'))) {
       isAdmin = true;
     } else {
       isAdmin = false;
@@ -401,7 +448,17 @@ Meteor.users.after.insert(function(userId, doc){
 
   function isClinician(userId){
     var isClinician = false;
-    if ((Roles.userIsInRole(Meteor.userId(),['clinician'],'KCH'))||(Roles.userIsInRole(Meteor.userId(),['clinician'],'ELCH'))||(Roles.userIsInRole(Meteor.userId(),['clinician'],'PRUH'))||(Roles.userIsInRole(Meteor.userId(),['clinician'],'UHL'))) {
+    if ((Roles.userIsInRole(userId,['clinician'],'KCH'))||(Roles.userIsInRole(Meteor.userId(),['clinician'],'ELCH'))||(Roles.userIsInRole(Meteor.userId(),['clinician'],'PRUH'))||(Roles.userIsInRole(Meteor.userId(),['clinician'],'UHL'))) {
+      isClinician = true;
+    } else {
+      isClinician = false;
+    }
+    return isClinician;
+  }
+
+  function isSchool(userId){
+    var isClinician = false;
+    if ((Roles.userIsInRole(userId,['school'],'KCH'))||(Roles.userIsInRole(Meteor.userId(),['school'],'ELCH'))||(Roles.userIsInRole(Meteor.userId(),['school'],'PRUH'))||(Roles.userIsInRole(Meteor.userId(),['school'],'UHL'))) {
       isClinician = true;
     } else {
       isClinician = false;

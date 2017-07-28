@@ -4,13 +4,13 @@
   </div>
   {{#if thereIsAnImage}}
     {{#with currentUpload}}
-      {{#if underOneHundred progress.get }}
-        Uploading <b>{{file.name}}</b>:
-        <span id="progress">{{progress.get}}%</span>
-      {{else}}
-        Loaded <b>{{file.name}}</b>:
-        <span id="progress">{{progress.get}}%</span>
-      {{/if}}
+        {{#if underOneHundred progress.get }}
+          Uploading <b>{{file.name}}</b>:
+          <span id="progress">{{progress.get}}%</span>
+        {{else}}
+          Loaded <b>{{file.name}}</b>:
+          <span id="progress">{{progress.get}}%</span>
+        {{/if}}
     {{else}}
       <span><img src={{fileURL thumbnail}} class='thumbnail'/>
       Loaded <b>{{file.name}}</b>:

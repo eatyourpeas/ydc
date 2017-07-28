@@ -99,6 +99,17 @@ Template.useradmin.helpers({
       }
     }
     return course.course_places - totalBookingsForThisCourse;
+  },
+  'alertMessage': function(){
+    var errorAlert = Session.get('userAdminError');
+    var successAlert = Session.get('userAdminSuccess');
+    
+    if (errorAlert) {
+      return errorAlert;
+    }
+    if (successAlert) {
+      return successAlert;
+    }
   }
 });
 
@@ -127,6 +138,19 @@ Template.useradmin.events({
     Session.set('selectedUser', this._id);
     Modal.show('modalEditTeamMember');
   }
+});
+
+Template.useradmin.onRendered(function(){
+  var warningMessage = Session.get('userAdminError');
+  var successMessage = Session.get('userAdminSuccess');
+  console.log('rendered: ' + warningMessage + ' ' + successMessage);
+  if (warningMessage) {
+      $('#warningAlert').show();
+  };
+  if (successMessage) {
+    $('#successAlert').show();
+  }
+
 });
 
 //////// private functions //
