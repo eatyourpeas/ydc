@@ -42,8 +42,16 @@ Template.shoppingBasket.events({
   'click #checkoutButton': function(event, template){
     for (var i = 0; i < selectedBookings.length; i++) {
       var booking_id = selectedBookings[i];
-      Bookings.update(booking_id, {
-        $set: { booking_validated : true }
+      Meteor.call('updateBookingToValidated', booking_id, function(error, result){
+        if (error) {
+          console.log(error);
+        } else {
+          if (result) {
+            console.log('booking updated to validated');
+          } else {
+            console.log('booking not updated');
+          }
+        }
       });
     }
     if (selectedBookings.length < 1) {

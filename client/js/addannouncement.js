@@ -20,11 +20,18 @@ Template.addAnnouncementModal.events({
       template.alertWarning.set('You must enter a clinic.')
     }
 
-    Announcements.insert({
-      announcement_datetime: Date.now(),
-      announcement_text: announcement_text,
-      clinic: clinic
+    Meteor.call("addAnnouncement", announcement_text, clinic, function(error, result){
+      if (error) {
+        console.log(error);
+      } else {
+        if (result) {
+          console.log('announcement added');
+        } else {
+          console.log('announcement add failed');
+        }
+      }
     });
+
   },
   'change #clinic': function(event, template){
     if (event.target.value != "NoFilter") {

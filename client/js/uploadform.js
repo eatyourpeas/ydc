@@ -113,11 +113,15 @@ Template.uploadForm.onDestroyed(function(){
     return;
   } else {
     //there is a document it could be old or new
-      Meteor.call('deleteDocuments', Session.get('document_id'), function(error, success){
+      Meteor.call('deleteDocuments', Session.get('document_id'), function(error, result){
         if (error) {
           console.log(error);
         } else {
-          console.log('successfully deleted this document');
+          if (result) {
+            console.log('successfully deleted this document');
+          } else {
+            console.log('failed to delete document');
+          }
         }
       });
   }

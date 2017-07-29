@@ -15,7 +15,6 @@ Template.bookingsModal.helpers({
     } else {
       returnDates = shortenDateIncludeTime(start) + " - " + shortenDateIncludeTime(end);
     }
-
     return returnDates;
   },
   'courseHasCompleted': function(start_date, end_date){

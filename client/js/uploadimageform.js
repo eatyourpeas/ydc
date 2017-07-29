@@ -113,11 +113,15 @@ Template.uploadImageForm.onDestroyed(function(){
     var post = Posts.findOne(Session.get('selectedPost'));
     if (Session.get('image_id') != post.post_image) {
       // this is a new image_id: delete it:
-      Meteor.call('deleteImages', Session.get('image_id'), function(error, success){
+      Meteor.call('deleteImages', Session.get('image_id'), function(error, result){
         if (error) {
           console.log(error);
         } else {
-          console.log('successfully deleted this image');
+          if (result) {
+            console.log('successfully deleted this image');
+          } else {
+            console.log('failed to delete image');
+          }
         }
       })
     }

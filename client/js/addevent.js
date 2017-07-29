@@ -20,16 +20,6 @@ Template.addevent.helpers({
     if (clinicFilter != "NoFilter") {
       selector.clinic = clinicFilter;
     }
-    /*
-    if (selectedCourseIsComplete!="NoFilter") {
-      if (selectedCourseIsComplete == "upcoming") {
-        selector.start_date = '{$gt: Date.now()}';
-      }
-      if (selectedCourseIsComplete == "completed") {
-        selector.start_date = '{$lt: Date.now()}';
-      }
-    }
-    */
 
     return Courses.find(selector, {sort: {'course_name': 1, 'start_date': -1}});
   },
@@ -53,7 +43,6 @@ Template.addevent.helpers({
     return returnDates;
   },
   'courseHasCompleted': function(start_date, end_date){
-
     var start = start_date;
     var end = end_date;
     var momentStart = moment(start);

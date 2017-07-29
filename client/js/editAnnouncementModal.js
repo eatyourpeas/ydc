@@ -16,13 +16,22 @@ Template.editAnnouncementModal.events({
       $('#errorAlert').show();
       return;
     }
-    Announcements.update(Session.get('selectedAnnouncement'), {
-      $set: {
-        announcement_datetime: Date.now(),
-        announcement_text: event.target.announcement.value,
-        clinic: clinic
+
+    var announcement_text = event.target.announcement.value;
+
+    Meteor.call("updateAnnouncement", Session.get('selectedAnnouncement'), announcement_text, clinic, function(error, result){
+      if (error) {
+        console.log(error);
+      } else {
+        if (result) {
+          console.log('announcement updated');
+        } else {
+          console.log('failed to update announcement');
+        }
       }
     });
+
+
   },
   'change #clinic': function(event, template){
     var selectedClinic = template.selectedClinic.get();

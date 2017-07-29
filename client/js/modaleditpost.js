@@ -29,12 +29,15 @@ Template.modalEditPost.events({
       });
     }
 
-    Posts.update(this._id,{
-      $set: { post_headline: newsheadlinetext,
-      post_subtitle: newssubtitletext,
-      post_text: newstext,
-      post_image: post_image,
-      post_date: Date.now()
+    Meteor.call('updatePost', this._id, newsheadlinetext, newssubtitletext, newstext, post_image, function(error, result){
+      if (error) {
+        console.log(error);
+      } else {
+        if (result) {
+          console.log('post updated');
+        } else {
+          console.log('post failed to update');
+        }
       }
     });
 

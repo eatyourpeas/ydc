@@ -33,6 +33,7 @@ Template.news.events({
   'click #post': function(event, template){
     var post = Posts.findOne({_id: this._id});
     Session.set('selectedPost', post._id);
+    Router.go('posts', {post_id: post._id});
   },
   'click #deleteimagebutton': function(event){
     Meteor.call('deleteImages', this._id);

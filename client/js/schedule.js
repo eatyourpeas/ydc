@@ -83,14 +83,18 @@ Template.schedule.events({
       var now = new Date();
       //check if this user ahs already booked a space
 
-      //update the users bookings
-      Bookings.insert({
-        booked_by: Meteor.userId(),
-        course: course_id,
-        booked_at: Date.now(),
-        booking_validated: false,
-        places_booked: 1
+      Meteor.call('createBooking', course_id, 1, function(error, result){
+        if (error) {
+          console.log(error);
+        } else {
+          if (result) {
+            console.log('booking created');
+          } else {
+            console.log('booking failed to create');
+          }
+        }
       });
+      
     } else {
       event.preventDefault();
     }

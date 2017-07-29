@@ -103,7 +103,7 @@ Template.useradmin.helpers({
   'alertMessage': function(){
     var errorAlert = Session.get('userAdminError');
     var successAlert = Session.get('userAdminSuccess');
-    
+
     if (errorAlert) {
       return errorAlert;
     }
@@ -143,7 +143,6 @@ Template.useradmin.events({
 Template.useradmin.onRendered(function(){
   var warningMessage = Session.get('userAdminError');
   var successMessage = Session.get('userAdminSuccess');
-  console.log('rendered: ' + warningMessage + ' ' + successMessage);
   if (warningMessage) {
       $('#warningAlert').show();
   };

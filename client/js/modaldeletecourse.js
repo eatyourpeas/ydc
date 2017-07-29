@@ -7,6 +7,12 @@ Template.modalDeleteCourse.events({
     Meteor.call('deleteCourse', selectedCourse, function(error, result) {
     if (error) {
       alert(error);
+    } else {
+      if (result) {
+        console.log('course deleted');
+      } else {
+        console.log('failed to delete course');
+      }
     }
   });
     Modal.hide('modalDeleteCourse');

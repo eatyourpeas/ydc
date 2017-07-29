@@ -23,18 +23,17 @@ Template.modalAddCourse.events({
       course_places = 12;
     }
 
-        //moments must be converted to js date objects before storing in mongo or error is thrown
-        Courses.insert({
-          course_name: course,
-          start_date: startdate.toDate(),
-          end_date: enddate.toDate(),
-          created_by: currentUser,
-          created_at: Date.now(),
-          clinic: selectedClinic,
-          address: address,
-          course_places: course_places
-        });
-
+    Meteor.call('createCourse', course, startdate.toDate(), enddate.toDate(), selectedClinic, address, course_places, function(error, result){
+      if (error) {
+        console.log(error);
+      } else {
+        if (result) {
+          console.log('course created');
+        } else {
+          console.log('course failed to create');
+        }
+      }
+    });
   },
   'change #clinic': function(event, template){
     var clinic = event.target.value;

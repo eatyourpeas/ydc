@@ -10,12 +10,16 @@ Template.modalNewPost.events({
 
     var image_id = Session.get("image_id");
 
-    Posts.insert({
-      post_headline: newsheadlinetext,
-      post_subtitle: newssubtitletext,
-      post_text: newstext,
-      post_image: image_id,
-      post_date: Date.now()
+    Meteor.call('createPost', newsheadlinetext, newssubtitletext, newstext, image_id, function(error, result){
+      if (error) {
+        console.log(error);
+      } else {
+        if (result) {
+          console.log("post created");
+        } else {
+          console.log("post did not create");
+        }
+      }
     });
 
     Session.set("image_id", "");
@@ -40,7 +44,7 @@ Template.modalNewPost.onDestroyed(function(){
   if (image_id == "") {
 
   } else {
-    
+
     Meteor.call('deleteImages', image_id, function(error, image){
       if (error) {
         console.log(error);

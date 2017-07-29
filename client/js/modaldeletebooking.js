@@ -7,6 +7,12 @@ Template.modalDeleteBooking.events({
     Meteor.call('deleteBooking', selectedBooking, function(error, result) {
     if (error) {
       alert(error);
+    } else {
+      if (result) {
+        console.log('booking deleted');
+      } else {
+        console.log('booking created');
+      }
     }
   });
     Modal.hide('modalDeleteBooking');

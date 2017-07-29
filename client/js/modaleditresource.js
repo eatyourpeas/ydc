@@ -52,15 +52,17 @@ Template.modalEditResource.events({
     var description = event.target.description.value;
     var document_title = event.target.document_title.value;
 
-    Resources.update(selectedResource, {
-      $set:{
-        file_date: Date.now(),
-        file_summary: description,
-        file_clinic: clinic,
-        file_category: category,
-        file_title: document_title
+    Meteor.call('updateResource', selectedResource, category, clinic, description, document_title, function(error, result){
+      if (error) {
+        console.log(error);
+      } else {
+        if (result) {
+          console.log('updated resource');
+        } else {
+          console.log('failed to update resource');
+        }
       }
-    });
+    })
 
   }
 })

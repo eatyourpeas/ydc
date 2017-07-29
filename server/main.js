@@ -80,7 +80,7 @@ Meteor.methods({
     }
   },
   updateUser: function(selectedUser, name, clinician, selectedClinic, admin, school){
-    if (isAdmin(Meteor.user())) {
+    if (isAdmin(Meteor.userId)) {
       Meteor.users.update({_id: selectedUser}, {
         $set: {
           profile: {
@@ -114,23 +114,110 @@ Meteor.methods({
     }
   },
   deleteBooking: function(booking_id){
-    Bookings.remove({_id: booking_id});
+    if (isAdmin(this.userId)) {
+      Bookings.remove({_id: booking_id});
+      return true;
+    } else {
+      return false;
+    }
+  },
+  createBooking: function(course_id, places_booked){
+    if (isClinician(this.userId) || isAdmin(this.userId)) {
+      //update the users bookings
+      Bookings.insert({
+        booked_by: this.userId,
+        course: course_id,
+        booked_at: Date.now(),
+        booking_validated: false,
+        places_booked: places_booked
+      });
+      return true;
+    } else {
+      return false;
+    }
+  },
+  updateBookingToValidated: function(booking_id){
+    if (this.userId) {
+      Bookings.update(booking_id, {
+        $set: { booking_validated : true }
+      });
+      return true;
+    } else {
+      return false;
+    }
+  },
+  createCourse: function(course, startdate, enddate, selectedClinic, address, course_places){
+    if (isAdmin(this.userId) || isClinician(this.userId)) {
+
+      Courses.insert({
+        course_name: course,
+        start_date: startdate,
+        end_date: enddate,
+        created_by: this.userId,
+        created_at: Date.now(),
+        clinic: selectedClinic,
+        address: address,
+        course_places: course_places
+      });
+      return true;
+    } else {
+      return false;
+    }
   },
   deleteCourse: function(course_id){
-    Courses.remove({_id:course_id});
+    if (isAdmin(this.userId) || isClinician(this.userId)) {
+      Courses.remove({_id:course_id});
+      return true;
+    } else {
+      return false;
+    }
   },
   deleteUser: function(user_id){
-    if (isAdmin(Meteor.user())) {
+    if (isAdmin(Meteor.userId)) {
       Meteor.users.remove({_id: user_id});
       return true;
     } else {
       return false;
     }
   },
+  createPost: function(newsheadlinetext, newssubtitletext, newstext, image_id){
+    if (isAdmin(this.userId)) {
+      Posts.insert({
+        post_headline: newsheadlinetext,
+        post_subtitle: newssubtitletext,
+        post_text: newstext,
+        post_image: image_id,
+        post_date: Date.now()
+      });
+      return true;
+    } else {
+      return false;
+    }
+  },
   deletePost: function(post_id){
-    var post = Posts.findOne(post_id);
-    Images.remove({_id: post.post_image});
-    Posts.remove({_id: post_id});
+    if (isAdmin(this.userId)) {
+      var post = Posts.findOne(post_id);
+      Images.remove({_id: post.post_image});
+      Posts.remove({_id: post_id});
+      return true;
+    } else {
+      return false;
+    }
+  },
+  updatePost: function(post_id, newsheadlinetext, newssubtitletext, newstext, post_image){
+    if (isAdmin(this._id)) {
+      Posts.update(post_id,{
+        $set: { post_headline: newsheadlinetext,
+        post_subtitle: newssubtitletext,
+        post_text: newstext,
+        post_image: post_image,
+        post_date: Date.now()
+        }
+      });
+      return true;
+    } else {
+      return false;
+    }
   },
   mostRecentPost: function(){
     var post = Posts.findOne({}, {sort: {post_date: -1, limit: 1}});
@@ -142,10 +229,36 @@ Meteor.methods({
     }
   },
   deleteImages: function(image_id){
-    Images.remove({_id: image_id});
+    if (isAdmin(this.userId)) {
+      Images.remove({_id: image_id});
+      return true;
+    } else {
+      return false;
+    }
   },
   deleteDocuments: function(document_id){
-    Documents.remove({_id: document_id});
+    if (isAdmin(this.userId)) {
+        Documents.remove({_id: document_id});
+        return true;
+    } else {
+      return false;
+    }
+  },
+  createResource: function(description, clinic, myChosenCategories, document_id, document_title){
+    if (this.userId) {
+      // need to be logged in to update resource
+      Resources.insert({
+        file_date: Date.now(),
+        file_summary: description,
+        file_clinic: clinic,
+        file_category: myChosenCategories,
+        file_id: document_id,
+        file_title: document_title
+      });
+      return true;
+    } else {
+      return false;
+    }
   },
   deleteResource: function(resource_id){
     var this_resource = Resources.findOne(resource_id);
@@ -153,8 +266,52 @@ Meteor.methods({
     Resources.remove({_id: resource_id});
     Documents.remove({_id:document_id});
   },
+  updateResource: function(selectedResource, category, clinic, description, document_title){
+    if (Meteor.userId) {
+      Resources.update(selectedResource, {
+        $set:{
+          file_date: Date.now(),
+          file_summary: description,
+          file_clinic: clinic,
+          file_category: category,
+          file_title: document_title
+        }
+      });
+    }
+  },
+  addAnnouncement: function(announcement_text, clinic){
+    if (isAdmin(Meteor.user())) {
+      Announcements.insert({
+        announcement_datetime: Date.now(),
+        announcement_text: announcement_text,
+        clinic: clinic
+      });
+      return true;
+    } else {
+      return false;
+    }
+  },
   deleteAnnouncement: function(announcement_id){
-    Announcements.remove({_id: announcement_id});
+    if (isAdmin(Meteor.user())) {
+      Announcements.remove({_id: announcement_id});
+      return true;
+    } else {
+      return false;
+    }
+  },
+  updateAnnouncement: function(announcement_id, announcement_text, clinic){
+    if (isAdmin(Meteor.user())) {
+      Announcements.update(announcement_id, {
+        $set: {
+          announcement_datetime: Date.now(),
+          announcement_text: announcement_text,
+          clinic: clinic
+        }
+      });
+      return true;
+    } else {
+      return false;
+    }
   },
   documentForResource: function(document_id){
     return Documents.findOne(document_id);
@@ -163,15 +320,6 @@ Meteor.methods({
     var this_post = Posts.findOne(post_id);
     var image_id = this_post.post_image;
     return Images.findOne(image_id).cursor;
-  },
-  'totalBookingsForCourse_id': function(course_id){
-
-    console.log(Bookings.find({booking_validated: true, course: course_id}).fetch());
-    var me = Bookings.aggregate(
-      {$match: { booking_validated: 'true', course_id: course_id } },
-      {$group: {_id: {course: '$course_id'}, total: { $sum: '$places_booked' } } }
-    );
-    console.log(me);
   },
   'coordinatesForAddress': function(address){
     var geo = new GeoCoder({
@@ -263,6 +411,13 @@ Meteor.users.after.insert(function(userId, doc){
 
   Meteor.users.deny({
     'update': function() {
+      if (isAdmin(Meteor.userId)) {
+          return false;
+      } else {
+        return true;
+      }
+    },
+    'remove': function(){
       if (isAdmin(Meteor.userId)) {
           return false;
       } else {

@@ -44,13 +44,16 @@ Template.modalAddResource.events({
       return;
     }
 
-    Resources.insert({
-      file_date: Date.now(),
-      file_summary: description,
-      file_clinic: clinic,
-      file_category: myChosenCategories,
-      file_id: document_id,
-      file_title: document_title
+    Meteor.call("createResource", description, clinic, myChosenCategories, document_id, document_title, function(error, result){
+      if (error) {
+        console.log(error);
+      } else {
+        if (result) {
+          console.log('created resources');
+        } else {
+          console.log('did not create resource');
+        }
+      }
     });
 
   },

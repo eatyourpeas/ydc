@@ -178,8 +178,13 @@ Router.route('/', {
     template: 'home'
 });
 
-Router.route('/news', {
-    template: 'news'
+Router.route('/posts', {
+    template: 'news',
+    data: function(){
+      return {
+        article: Posts.findOne({_id: this.params.post_id})
+      }
+    }
 });
 
 Router.route('/schedule', {
