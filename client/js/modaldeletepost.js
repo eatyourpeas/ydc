@@ -9,9 +9,6 @@ Template.modalDeletePost.events({
       _id: post_id
     }
 
-    /*
-    Meteor.call('deletePost', post_id, function(error, result) {
-    */
     deletePost.call(postToRemove, function(error){
       if (error) {
         alert(error);

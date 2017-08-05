@@ -1,6 +1,7 @@
 import { FilesCollection } from 'meteor/ostrio:files';
 import { Template } from 'meteor/templating';
 import { ReactiveVar } from 'meteor/reactive-var';
+import { insertResource } from '/imports/api/resources/methods.js';
 
 chosenCategories = [];
 
@@ -11,7 +12,7 @@ Template.modalAddResource.events({
     var clinic = event.target.clinic.value;
     var description = event.target.description.value;
     var document_id = Session.get('document_id');
-    var myChosenCategories = template.categoriesChosen.get("chosenCategories");
+    var myChosenCategories = template.categoriesChosen.get();
 
     if (document_title == "") {
       event.preventDefault();
@@ -45,7 +46,7 @@ Template.modalAddResource.events({
     }
 
     const newResource = {
-      file_date: Date.now(),
+      file_date: new Date(),
       file_summary: description,
       file_clinic: clinic,
       file_category: myChosenCategories,
@@ -55,37 +56,30 @@ Template.modalAddResource.events({
 
     insertResource.call(newResource, function(error){
       if (error) {
-        console.log(error.message);
+        Session.set('alert_class', 'alert alert-warning');
+        Session.set('alert_message', error.message);
+        Session.set('alert_visible', true);
+        console.log('hello error '+ error.message);
       } else {
-        console.log('new resource added');
+        Session.set('alert_class', 'alert alert-success');
+        Session.set('alert_message', 'Resource upload.');
+        Session.set('alert_visible', true);
+        console.log('hello success');
       }
     });
 
-    /*
-    Meteor.call("createResource", description, clinic, myChosenCategories, document_id, document_title, function(error, result){
-      if (error) {
-        console.log(error);
-      } else {
-        if (result) {
-          console.log('created resources');
-        } else {
-          console.log('did not create resource');
-        }
-      }
-    });
-    */
   },
   'change #category': function(event, template){
     if (!_.contains(chosenCategories, event.target.value) && (event.target.value != 'NoSelection')) {
       chosenCategories.push(event.target.value);
-      template.categoriesChosen.set("chosenCategories", chosenCategories);
+      template.categoriesChosen.set(chosenCategories);
     }
     template.categorySelected.set(event.target.value);
   },
   'click .categoryBadge': function(event, template){
-    chosenCategories = template.categoriesChosen.get("chosenCategories");
+    chosenCategories = template.categoriesChosen.get();
     chosenCategories = _.without(chosenCategories, event.target.id);
-    template.categoriesChosen.set("chosenCategories", chosenCategories);
+    template.categoriesChosen.set(chosenCategories);
     if (chosenCategories.length < 1) {
       template.categorySelected.set("NoSelection");
     }
@@ -105,7 +99,7 @@ Template.modalAddResource.helpers({
     }
   },
   'chosenCategories': function(){
-    return Template.instance().categoriesChosen.get("chosenCategories");
+    return Template.instance().categoriesChosen.get();
   },
   'alertMessage': function(){
     var alertMessage = Template.instance().alertMessage.get();
@@ -115,6 +109,8 @@ Template.modalAddResource.helpers({
 
 Template.modalAddResource.onCreated(function(){
   this.categorySelected = new ReactiveVar("NoSelection");
-  this.categoriesChosen = new ReactiveDict("chosenCategories");
+  this.categoriesChosen = new ReactiveVar();
   this.alertMessage = new ReactiveVar("");
 });
+
+Template.modalAddResource.onDestr

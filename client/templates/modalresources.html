@@ -1,31 +1,23 @@
 <template name='modalDeleteResource'>
-
   <div class="modal fade">
         <div class="modal-dialog">
             <div class="modal-content">
-
                 <div class="modal-header">
                     <h4 class="modal-title">Just Checking...</h4>
                 </div>
-
                 <div class="modal-body">
                     <h2>Are you sure you want to delete this resource? You cannot undo this.</h2>
-
                 </div>
-
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                     <button type="button" class="btn btn-danger" id="deleteresourcebutton">Delete Resource</button>
                 </div>
-
             </div>
         </div>
     </div>
-
 </template>
 
 <template name='modalAddResource'>
-
   <div class="modal fade">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -95,7 +87,6 @@
             </div>
         </div>
     </div>
-
 </template>
 
 <template name='modalEditResource'>
@@ -120,16 +111,20 @@
                       </div>
                     </div>
 
-                      <div class="form-group row">
-                        <label for="resource_category" class="col-sm-4 form-control-label">Category:</label>
-                        <div class="col-sm-8">
+                    <div class="form-group row">
+                      <label for="resource_category" class="col-sm-4 form-control-label">*Category:</label>
+                      <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
                           <select class="form-control" id="category">
-                            {{#each categoryOptions}}
+                              <option value="NoSelection">select a category (you can have more than one)...</option>
+                            {{#each resourceCategories}}
                               <option value={{this.value}} {{selectedCategory this.value}}>{{this.text}}</option>
                             {{/each}}
                           </select>
-                        </div>
+                          {{#each chosenCategories}}
+                            <label class="badge badge-default categoryBadge" id={{this}}><span class="glyphicon glyphicon-remove"></span> {{this}}</label>
+                          {{/each}}
                       </div>
+                    </div>
                       <div class="form-group row">
                         <label for="clinic" class="col-sm-2 form-control-label">Clinic:</label>
                         <div class="col-sm-10">

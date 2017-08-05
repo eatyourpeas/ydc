@@ -6,29 +6,19 @@ Template.modalDeleteCourse.events({
   'click #deleteCourse': function(){
     var selectedCourse = Session.get('selectedCourseForDelete');
 
-    /*
-    Meteor.call('deleteCourse', selectedCourse, function(error, result) {
-      if (error) {
-        alert(error);
-      } else {
-        if (result) {
-          console.log('course deleted');
-        } else {
-          console.log('failed to delete course');
-        }
-      }
-    });
-    */
-
     const course = {
       _id: selectedCourse
     }
 
     deleteCourse.call(course, function(error){
       if (error) {
-        console.log(error.message);
+        Session.set('alert_class', 'alert alert-warning');
+        Session.set('alert_message', error.message);
+        Session.set('alert_visible', true);
       } else {
-        console.log("course removed");
+        Session.set('alert_class', 'alert alert-success');
+        Session.set('alert_message', 'Course deleted.');
+        Session.set('alert_visible', true);
         Modal.hide('modalDeleteCourse');
       }
     });

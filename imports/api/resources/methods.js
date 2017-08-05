@@ -11,7 +11,7 @@ export const insertResource = new ValidatedMethod({
     file_date: { type: Date, label: "Resource Date" },
     file_summary: { type: String, label: "Resource Description" },
     file_clinic: { type: String, allowedValues: ["KCH", "ELCH", "UHL", "PRUH"], label: "Clinic" },
-    file_category: { type: String, allowedValues: ["Medical/Nursing", "Dietetic", "Psychology", "School", "Transition/Young Adult", "DUKLands"], label: "Resource Category" },
+    file_category: { type: [String], allowedValues: ["Medical/Nursing", "Dietetic", "Psychology", "School", "Transition/Young Adult", "DUKLands"], label: "Resource Category" },
     file_id: { type: String, label: "Document Identifier" },
     file_title: { type: String, label: "Resource Title" }
   }).validator(),

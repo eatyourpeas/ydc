@@ -58,7 +58,7 @@ Template.resources.helpers({
   'resourceForDieteticSelectedId': function(){
     var dieteticResource_Id = Template.instance().dieteticSelection.get();
     if (dieteticResource_Id != null) {
-      return Resources.findOne(dieteticResource_Id);
+      return Resources.findOne(dieteticResource_Id); 
     }
   },
   'resourceForPsychologySelectedId': function(){

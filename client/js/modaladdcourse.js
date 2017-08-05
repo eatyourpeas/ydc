@@ -36,19 +36,6 @@ Template.modalAddCourse.events({
         console.log(error.message);
       }
     });
-    /*
-    Meteor.call('createCourse', course, startdate.toDate(), enddate.toDate(), selectedClinic, address, course_places, function(error, result){
-      if (error) {
-        console.log(error);
-      } else {
-        if (result) {
-          console.log('course created');
-        } else {
-          console.log('course failed to create');
-        }
-      }
-    });
-    */
   },
   'change #clinic': function(event, template){
     var clinic = event.target.value;
