@@ -1,5 +1,6 @@
 import { Template } from 'meteor/templating';
 import { ReactiveVar } from 'meteor/reactive-var';
+import { insertAnnouncement } from '/imports/api/announcements/methods.js';
 
 Template.addAnnouncementModal.events({
   'submit #add_announcement_form': function(event, template){
@@ -20,18 +21,19 @@ Template.addAnnouncementModal.events({
       template.alertWarning.set('You must enter a clinic.')
     }
 
-    Meteor.call("addAnnouncement", announcement_text, clinic, function(error, result){
+    const announcement = {
+      announcement_text: announcement_text,
+      clinic: clinic,
+      announcement_datetime: new Date()
+    };
+
+    insertAnnouncement.call(announcement, function(error){
       if (error) {
-        console.log(error);
+        console.log(error.message);
       } else {
-        if (result) {
-          console.log('announcement added');
-        } else {
-          console.log('announcement add failed');
-        }
+        console.log('announcement added');
       }
     });
-
   },
   'change #clinic': function(event, template){
     if (event.target.value != "NoFilter") {

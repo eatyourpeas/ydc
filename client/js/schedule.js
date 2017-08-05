@@ -1,5 +1,8 @@
 import { Template } from 'meteor/templating';
 import { ReactiveVar } from 'meteor/reactive-var';
+import { Courses } from '/imports/api/courses/courses';
+import { insertBooking } from '/imports/api/bookings/methods.js';
+import { Bookings } from '/imports/api/bookings/bookings';
 
 Template.schedule.onCreated(function scheduleOnCreated() {
   Meteor.subscribe('findmybookings');
@@ -83,6 +86,23 @@ Template.schedule.events({
       var now = new Date();
       //check if this user ahs already booked a space
 
+      const newBooking = {
+        booked_at: new Date(),
+        places_booked: 1,
+        course: course_id,
+        booking_validated: false,
+        booked_by: Meteor.userId()
+      };
+
+      insertBooking.call(newBooking, function(error){
+        if (error) {
+          console.log(error.message);
+        } else {
+          console.log('booking created');
+        }
+      });
+
+      /*
       Meteor.call('createBooking', course_id, 1, function(error, result){
         if (error) {
           console.log(error);
@@ -94,14 +114,23 @@ Template.schedule.events({
           }
         }
       });
-      
+      */
+
     } else {
       event.preventDefault();
     }
   },
   'click .mapmarker': function(event, template){
-    Modal.show('modalMap', function(){
-      Session.set('address', event.currentTarget.id);
+    Session.set('address', event.currentTarget.id);
+    Meteor.call('coordinatesForAddress', event.currentTarget.id, function(error, result){
+      if (error) {
+        console.log(error);
+      }
+      if (result.length > 0) {
+        Session.set('latitude', result[0].latitude);
+        Session.set('longitude', result[0].longitude);
+      Router.go('/map');
+      }
     });
   }
 });

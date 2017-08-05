@@ -1,4 +1,12 @@
 import { Meteor } from 'meteor/meteor';
+import '/imports/startup/server';
+import { Announcements } from '/imports/api/announcements/announcements';
+import { Courses } from '/imports/api/courses/courses';
+import { Bookings } from '/imports/api/bookings/bookings';
+import { Documents } from '/imports/api/documents/documents';
+import { Images } from '/imports/api/images/images';
+import { Posts } from '/imports/api/posts/posts';
+import { Resources } from '/imports/api/resources/resources';
 
 Meteor.startup(() => {
   // code to run on server at startup
@@ -113,6 +121,7 @@ Meteor.methods({
       return false;
     }
   },
+  /*
   deleteBooking: function(booking_id){
     if (isAdmin(this.userId)) {
       Bookings.remove({_id: booking_id});
@@ -146,6 +155,7 @@ Meteor.methods({
       return false;
     }
   },
+  /*
   createCourse: function(course, startdate, enddate, selectedClinic, address, course_places){
     if (isAdmin(this.userId) || isClinician(this.userId)) {
 
@@ -172,7 +182,8 @@ Meteor.methods({
       return false;
     }
   },
-  deleteUser: function(user_id){
+  */
+  deleteUser: function(user_id){ //can only delete user if logged in user has admin status
     if (isAdmin(Meteor.userId)) {
       Meteor.users.remove({_id: user_id});
       return true;
@@ -180,6 +191,7 @@ Meteor.methods({
       return false;
     }
   },
+  /*
   createPost: function(newsheadlinetext, newssubtitletext, newstext, image_id){
     if (isAdmin(this.userId)) {
       Posts.insert({
@@ -219,6 +231,7 @@ Meteor.methods({
       return false;
     }
   },
+  */
   mostRecentPost: function(){
     var post = Posts.findOne({}, {sort: {post_date: -1, limit: 1}});
     if (post) {
@@ -244,6 +257,7 @@ Meteor.methods({
       return false;
     }
   },
+  /*
   createResource: function(description, clinic, myChosenCategories, document_id, document_title){
     if (this.userId) {
       // need to be logged in to update resource
@@ -260,11 +274,24 @@ Meteor.methods({
       return false;
     }
   },
+  */
   deleteResource: function(resource_id){
-    var this_resource = Resources.findOne(resource_id);
-    var document_id = this_resource.file_id;
-    Resources.remove({_id: resource_id});
-    Documents.remove({_id:document_id});
+    //can only delete resources if logged in as admin - this must be a meteor method as removal included Documents as well as Resources collections
+    if (isAdmin(this.userId)) {
+      var this_resource = Resources.findOne(resource_id);
+      var document_id = this_resource.file_id;
+      const resourceToRemove = { _id: this_resource };
+      deleteResource.call(resourceToRemove, function(error){
+        if (error) {
+          console.log(error.message);
+        } else {
+          console.log('resource removed');
+        }
+      })
+      Resources.remove({_id: resource_id});
+      Documents.remove({_id:document_id});
+    }
+
   },
   updateResource: function(selectedResource, category, clinic, description, document_title){
     if (Meteor.userId) {
@@ -277,40 +304,6 @@ Meteor.methods({
           file_title: document_title
         }
       });
-    }
-  },
-  addAnnouncement: function(announcement_text, clinic){
-    if (isAdmin(Meteor.user())) {
-      Announcements.insert({
-        announcement_datetime: Date.now(),
-        announcement_text: announcement_text,
-        clinic: clinic
-      });
-      return true;
-    } else {
-      return false;
-    }
-  },
-  deleteAnnouncement: function(announcement_id){
-    if (isAdmin(Meteor.user())) {
-      Announcements.remove({_id: announcement_id});
-      return true;
-    } else {
-      return false;
-    }
-  },
-  updateAnnouncement: function(announcement_id, announcement_text, clinic){
-    if (isAdmin(Meteor.user())) {
-      Announcements.update(announcement_id, {
-        $set: {
-          announcement_datetime: Date.now(),
-          announcement_text: announcement_text,
-          clinic: clinic
-        }
-      });
-      return true;
-    } else {
-      return false;
     }
   },
   documentForResource: function(document_id){
@@ -328,7 +321,6 @@ Meteor.methods({
       apiKey: 'AIzaSyBOdKuGzNAH-Nv1i5P5MzY9jxbrXGZBNr4'
     });
     var result = geo.geocode(address);
-
     return result;
   }
 });
@@ -371,14 +363,14 @@ Meteor.users.after.insert(function(userId, doc){
   });
 
   Meteor.publish('findallbookings', function(){
-    var result = [];
-    if (Roles.userIsInRole(this.userId, 'admin', 'KCH')||Roles.userIsInRole(this.userId, 'clinician', 'KCH')) {
-         result = Bookings.find({}); //protected - accessible only by clinicians or admin
+  //  var result = [];
+    if (isAdmin(this.userId)||isClinician(this.userId)) {
+         return Bookings.find(); //protected - accessible only by clinicians or admin
     } else {
          this.stop();
          // YOUUU SHALL NOT.... PASS!!!  ~Gandalf
     }
-    return result;
+    return [];
   })
 
   Meteor.publish('findAllCourses', function(){
@@ -407,7 +399,7 @@ Meteor.users.after.insert(function(userId, doc){
   Meteor.publish('findAllAnnouncementsAtMyCentre', function(){
     var myCentre = Roles.getGroupsForUser(this.UserId);
     return Announcements.find({centre: myCentre[0]});
-  })
+  });
 
   Meteor.users.deny({
     'update': function() {
@@ -565,6 +557,7 @@ Meteor.users.after.insert(function(userId, doc){
     }
   });
 
+/*
   Announcements.allow({
     'insert': function(userId, doc){
       var mayInsert = false;
@@ -588,6 +581,7 @@ Meteor.users.after.insert(function(userId, doc){
       return mayRemove;
     }
   });
+  */
 
   //private functions
 

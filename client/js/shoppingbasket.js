@@ -1,5 +1,11 @@
 import { Template } from 'meteor/templating';
 import { ReactiveVar } from 'meteor/reactive-var';
+import { Bookings } from '/imports/api/bookings/bookings';
+import { Courses } from '/imports/api/courses/courses';
+import { deleteBooking } from '/imports/api/bookings/methods.js';
+import { updateBookingToValidated } from '/imports/api/bookings/methods.js';
+import { updatePlacesBooked } from '/imports/api/bookings/methods.js';
+import { updateBooking } from '/imports/api/bookings/methods.js';
 
 
 Template.shoppingBasket.onCreated(function(){
@@ -31,7 +37,15 @@ Template.shoppingBasket.events({
   'click #removeButton': function(event, template){
       for (var i = 0; i < selectedBookings.length; i++) {
         var booking_id = selectedBookings[i];
-        Bookings.remove({_id: booking_id});
+        //Bookings.remove({_id: booking_id});
+        const bookingToRemove = { _id: booking_id };
+        deleteBooking.call(bookingToRemove, function(error){
+          if (error) {
+            console.log(error.message);
+          } else {
+            console.log('booking removed');
+          }
+        });
       }
 
       if (selectedBookings.length < 1) {
@@ -42,6 +56,20 @@ Template.shoppingBasket.events({
   'click #checkoutButton': function(event, template){
     for (var i = 0; i < selectedBookings.length; i++) {
       var booking_id = selectedBookings[i];
+
+      const bookingToUpdate = {
+        _id: booking_id,
+        booking_validated: true
+       };
+
+      updateBookingToValidated.call(bookingToUpdate, function(error){
+        if (error) {
+          console.log(error.message);
+        } else {
+          console.log("booking updated to validated");
+        }
+      });
+      /*
       Meteor.call('updateBookingToValidated', booking_id, function(error, result){
         if (error) {
           console.log(error);
@@ -53,6 +81,7 @@ Template.shoppingBasket.events({
           }
         }
       });
+      */
     }
     if (selectedBookings.length < 1) {
       template.bookingsAreSelected.set(false);
@@ -87,7 +116,18 @@ Template.shoppingBasket.events({
     }
 
      //update the users bookings
-    Bookings.update(booking_id, {$set:{places_booked: numberOfItems}});
+    //Bookings.update(booking_id, {$set:{places_booked: numberOfItems}});
+    const updatedBooking = {
+      _id: booking_id,
+      places_booked: numberOfItems
+    };
+    updatePlacesBooked.call(updatedBooking, function(error){
+      if (error) {
+        console.log(error.message);
+      } else {
+        console.log('updated booking');
+      }
+    });
     checkForBookedPlaces();
 
   },
@@ -103,7 +143,18 @@ Template.shoppingBasket.events({
     }
 
       //update the users bookings
-     Bookings.update(booking_id, {$set:{places_booked: numberOfItems}});
+     //Bookings.update(booking_id, {$set:{places_booked: numberOfItems}});
+     const updatedBooking = {
+       _id: booking_id,
+       places_booked: numberOfItems
+     };
+     updatePlacesBooked.call(updatedBooking, function(error){
+       if (error) {
+         console.log(error.message);
+       } else {
+         console.log('updated booking');
+       }
+     });
      checkForBookedPlaces();
   }
 

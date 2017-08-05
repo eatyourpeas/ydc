@@ -1,6 +1,6 @@
 import { Template } from 'meteor/templating';
 import { ReactiveVar } from 'meteor/reactive-var';
-
+import { updatePost } from '/imports/api/posts/methods.js';
 
 Template.modalEditPost.helpers({
   'selectedPost': function(){
@@ -29,6 +29,24 @@ Template.modalEditPost.events({
       });
     }
 
+    const newPost = {
+      _id: currentPost,
+      post_headline: newsheadlinetext,
+      post_subtitle: newssubtitletext,
+      post_text: newstext,
+      post_image: post_image,
+      post_date: new Date()
+    }
+
+    updatePost.call(newPost, function(error){
+      if (error) {
+        console.log(error.message);
+      } else {
+        console.log('post updated');
+      }
+    });
+
+    /*
     Meteor.call('updatePost', this._id, newsheadlinetext, newssubtitletext, newstext, post_image, function(error, result){
       if (error) {
         console.log(error);
@@ -40,7 +58,7 @@ Template.modalEditPost.events({
         }
       }
     });
-
+    */
   }
 });
 

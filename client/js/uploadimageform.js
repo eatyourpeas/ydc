@@ -1,6 +1,7 @@
 import { FilesCollection } from 'meteor/ostrio:files';
 import { Template } from 'meteor/templating';
 import { ReactiveVar } from 'meteor/reactive-var';
+import { Images } from '/imports/api/images/images.js';
 
 Template.uploadImageForm.onCreated(function () {
   this.currentUpload = new ReactiveVar(false);

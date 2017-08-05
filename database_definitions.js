@@ -1,14 +1,18 @@
 import { FilesCollection } from 'meteor/ostrio:files';
+import { Meteor } from 'meteor/meteor';
+import { SimpleSchema } from 'meteor/aldeed:simple-schema';
+import { ValidatedMethod } from 'meteor/mdg:validated-method';
+
 ///MongoDB declarations
 
-Bookings = new Mongo.Collection('bookings');
-Courses = new Mongo.Collection('courses');
-Resources = new Mongo.Collection('resources');
-Posts = new Mongo.Collection('posts');
-Announcements = new Mongo.Collection('announcements');
+//Bookings = new Mongo.Collection('bookings');
+//Courses = new Mongo.Collection('courses');
+//Resources = new Mongo.Collection('resources');
+//Posts = new Mongo.Collection('posts');
+//Announcements = new Mongo.Collection('announcements');
 selectedBookings = [];
 
-
+/*
 Images = new FilesCollection({
   collectionName: 'YDCImages',
   allowClientCode: false, // Disallow remove files from Client
@@ -25,9 +29,10 @@ Images = new FilesCollection({
 
     }
   }/*,
-  storagePath: '/images' //comment in in production, out in development*/
+  storagePath: '/images' //comment in in production, out in development
 });
 
+/*
 Documents = new FilesCollection({
   collectionName: 'YDCDocuments',
   allowClientCode: false, // Disallow remove files from Client
@@ -43,6 +48,6 @@ Documents = new FilesCollection({
       }
 
     }
-  }/*,
-  storagePath: '/documents'   //comment in in production, out in development*/
-});
+  },
+  storagePath: '/documents'   //comment in in production, out in development
+});*/

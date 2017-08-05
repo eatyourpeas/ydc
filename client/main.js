@@ -1,12 +1,12 @@
 import { Template } from 'meteor/templating';
 import { ReactiveVar } from 'meteor/reactive-var';
-
+import { Bookings } from '/imports/api/bookings/bookings';
+import { Courses } from '/imports/api/courses/courses';
+import { Posts } from '/imports/api/posts/posts';
+import { Documents } from '/imports/api/documents/documents';
+import { FilesCollection } from 'meteor/ostrio:files';
 
 import './main.html';
-
-import { FilesCollection } from 'meteor/ostrio:files';
-const Images = new FilesCollection({collectionName: 'Images'});
-export default Images; // To be imported in other files
 
 // counter starts at 0
 Session.setDefault('counter', 0);
@@ -33,7 +33,7 @@ Meteor.startup(function(){
 
 Template.registerHelper('basketHasItems', function(){
     var basketHasItems;
-    var bookings = Bookings.find({booked_by: Meteor.userId(), booking_validated: false });
+    var bookings = Bookings.find({ booked_by: Meteor.userId(), booking_validated: false });
     if (bookings.count() > 0) {
       basketHasItems = true;
     } else {
@@ -178,12 +178,26 @@ Router.route('/', {
     template: 'home'
 });
 
-Router.route('/posts', {
-    template: 'news',
+Router.route('/posts',{
+  template: 'posts',
+  data: function(){
+    //redirect to first posts
+    var latestPost = Posts.findOne({},{sort: {post_date: -1, limit: 1}});
+    if (latestPost) {
+      Router.go('/posts/'+latestPost._id);
+    } else {
+      //there are no posts - redirect to no posts page
+    }
+
+  }
+});
+
+Router.route('/posts/:_id', {
+    template: 'posts',
     data: function(){
-      return {
-        article: Posts.findOne({_id: this.params.post_id})
-      }
+      //return Posts.findOne({_id: this.params.post_id});
+      var post_id = this.params._id;
+      return Posts.findOne({_id: post_id});
     }
 });
 

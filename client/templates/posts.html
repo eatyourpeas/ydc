@@ -1,0 +1,60 @@
+<template name="posts">
+<div class="container">
+  <div class="row">
+		<div class="col-md-12">
+			<div class="template-title">
+				Articles
+			</div>
+		</div>
+	</div>
+  {{#if currentUser}}
+    {{>announcements}}
+  {{/if}}
+  {{#if thereArePosts}}
+    <div class="row">
+      <div class="container">
+          <div class="col-md-3">
+            <h4>Previous Posts</h4>
+            <ul class="nav nav-tabs nav-stacked">
+              {{#each postsInDateOrder}}
+                <li id="post"><a href="/posts/{{this._id}}">{{dateTimeShortenToDate post_date}}</a></li>
+              {{/each}}
+            </ul>
+          </div>
+          <div class='col-md-9'>
+            {{>postpage}}
+          </div>
+      </div>
+    </div>
+  {{else}}
+        <div class="row">
+            <div class="noNews">No posts yet</div>
+        </div>
+  {{/if}}
+  {{#if userIsAdmin}}
+        <div class="row">
+          <div class="adminButtonGroup">
+            <button class="btn btn-default" id="newPostButton">New Post</button>
+            <button class="btn btn-info" id="editPostButton" {{disabled}} >Edit Post</button>
+            <button class="btn btn-danger" id="deletePostButton" {{disabled}}>Delete Post</button>
+          </div>
+        </div>
+  {{/if}}
+    </div>
+</template>
+
+
+<template name='postpage'>
+  <div class="post_text">
+    <H2>{{post_headline}}</H2>
+    <H3>{{post_subtitle}}</H3>
+    {{#if thereIsNoImage}}
+      <img src="/images/ydc.png" alt="YDC Logo" />
+    {{else}}
+      {{#with imageForId post_image}}
+        <img src="{{this.link}}" alt="{{this.name}}"/>
+      {{/with}}
+    {{/if}}
+    <H4>{{post_text}}</H4>
+  </div>
+</template>

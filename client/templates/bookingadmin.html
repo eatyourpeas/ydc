@@ -7,6 +7,20 @@
       </div>
       <div class="col-lg-1 col-md-1 col-sm-1 col-xs-1"></div>
     </div> <!---div-->
+    <div class="row">
+      <div class="col-lg-1 col-md-1 col-sm-1 col-xs-1"></div>
+      <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2"></div>
+      <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+        <select class="form-control" name='course_name' id="course_select">
+          <option value="NoFilter">select a course...</option>
+          {{#each allCourses}}
+          <option value={{this._id}}>{{this.course_name}} {{dateTimeShortenToDate this.start_date}}</option>
+          {{/each}}
+        </select>
+      </div>
+      <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2"></div>
+      <div class="col-lg-1 col-md-1 col-sm-1 col-xs-1"></div>
+    </div>
     <div class = "row">
       <div class="col-lg-1 col-md-1 col-sm-1 col-xs-1"></div>
 			<div class="col-lg-10 col-md-10 col-sm-10 col-xs-10">
@@ -19,6 +33,7 @@
                 <th>Clinic</th>
                 <th>Validated</th>
                 <th>YDC Member</th>
+                <th>Places</th>
                 <th>Cancel</th>
               </tr>
             </thead>
@@ -34,6 +49,7 @@
                         <td>Pending Confirmation</td>
                       {{/if}}
                       <td>{{courseUserForBooking booked_by}}</td>
+                      <td>{{ places_booked }}</td>
                       {{#if courseHasCompleted course}}
                         <td><span class="glyphicon glyphicon-ok"></span>&nbsp;Course Complete</td>
                       {{ else }}

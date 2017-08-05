@@ -1,13 +1,25 @@
 import { Template } from 'meteor/templating';
 import { ReactiveVar } from 'meteor/reactive-var';
+import { Bookings } from '/imports/api/bookings/bookings';
+import { Courses } from '/imports/api/courses/courses';
+
+Template.bookingadmin.onCreated(function(){
+  this.course = new ReactiveVar("NoFilter");
+})
 
 Template.bookingadmin.helpers({ //
   'getAllBookings': function(){
-    var bookings = Bookings.find({},{sort: [
-          ["booked_by", "asc"]
-      ]}).fetch();
+    var course_to_filter_to = Template.instance().course.get();
+    var bookings = [];
+    if (course_to_filter_to == "NoFilter") {
+      bookings = Bookings.find({},{sort: ["booked_by", "asc"]});
+    } else {
+      bookings = Bookings.find({"course": course_to_filter_to},{sort: ["booked_by", "asc"]});
+    }
     return bookings;
-
+  },
+  'allCourses': function(){
+    return Courses.find({}, {sort: ["course_name", "asc"]});
   },
   'courseNameForBooking': function(course_id){
     var course = Courses.findOne({_id: course_id});
@@ -37,10 +49,10 @@ Template.bookingadmin.helpers({ //
   },
   'bookingExpiredClass': function(course_id){
     var course = Courses.findOne({_id: course_id});
-    var start = course.start_date;
+  //  var start = course.start_date;
     var end = course.end_date;
-    var momentStart = moment(start);
-    if (momentStart.isAfter(moment())) {
+    var today = new Date();
+    if (today < end) {
       return 'info';
     } else {
       return 'danger';
@@ -50,10 +62,10 @@ Template.bookingadmin.helpers({ //
       var course = Courses.findOne({_id: course_id});
       var start = course.start_date;
       var end = course.end_date;
-      var momentStart = moment(start);
-      if (momentStart.isAfter(moment())) {
+      var today = new Date();
+      if (today < start) {
         return false;
-      } else {
+      }else {
         return true;
       }
   },
@@ -67,6 +79,9 @@ Template.bookingadmin.events({
   'click #cancelBookingButton': function(){
     Session.set('selectedBooking', this._id);
     Modal.show('modalDeleteBooking');
+  },
+  'change #course_select': function(event, template){
+    template.course.set(event.currentTarget.value);
   }
 });
 

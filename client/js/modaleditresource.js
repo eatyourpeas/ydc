@@ -52,6 +52,25 @@ Template.modalEditResource.events({
     var description = event.target.description.value;
     var document_title = event.target.document_title.value;
 
+    const updatedResource = { //cannot update document in resource - have to delete and reupload new one
+      file_date: new Date(),
+      file_summary: description,
+      file_clinic: clinic,
+      file_category: category,
+      file_title: document_title
+    };
+
+
+
+    updateResource.call(updateResource,function(error){
+      if (error) {
+        console.log(error.message);
+      } else {
+        console.log('updated resource');
+      }
+    });
+
+    /*
     Meteor.call('updateResource', selectedResource, category, clinic, description, document_title, function(error, result){
       if (error) {
         console.log(error);
@@ -63,6 +82,7 @@ Template.modalEditResource.events({
         }
       }
     })
+    */
 
   }
 })

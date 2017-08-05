@@ -1,5 +1,7 @@
 import { Template } from 'meteor/templating';
 import { ReactiveVar } from 'meteor/reactive-var';
+import { updateAnnouncement } from '/imports/api/announcements/methods.js';
+import { Announcements } from '/imports/api/announcements/announcements.js';
 
 Template.editAnnouncementModal.events({
   'submit #editAnnouncementForm': function(event, template){
@@ -17,21 +19,22 @@ Template.editAnnouncementModal.events({
       return;
     }
 
+    var announcement_id = Session.get('selectedAnnouncement');
     var announcement_text = event.target.announcement.value;
+    const newAnnouncement = {
+      _id: announcement_id,
+      announcement_datetime: new Date(),
+      clinic: clinic,
+      announcement_text: announcement_text
+    };
 
-    Meteor.call("updateAnnouncement", Session.get('selectedAnnouncement'), announcement_text, clinic, function(error, result){
+    updateAnnouncement.call(newAnnouncement, function(error){
       if (error) {
-        console.log(error);
+        console.log(error.message);
       } else {
-        if (result) {
-          console.log('announcement updated');
-        } else {
-          console.log('failed to update announcement');
-        }
+        console.log('updated announcement');
       }
     });
-
-
   },
   'change #clinic': function(event, template){
     var selectedClinic = template.selectedClinic.get();

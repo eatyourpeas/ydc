@@ -4,6 +4,7 @@ import { ReactiveVar } from 'meteor/reactive-var';
 Template.modalDeleteResource.events({
   'click #deleteresourcebutton': function(event){
     var resourceToDeleteId = Session.get('selectedResource');
+
     Meteor.call('deleteResource', resourceToDeleteId, function(error, result){
       if (error) {
         console.log(error);
@@ -16,5 +17,6 @@ Template.modalDeleteResource.events({
       }
       Modal.hide('modalDeleteResource');
     });
+    
   }
 });

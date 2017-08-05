@@ -1,5 +1,6 @@
 import { Template } from 'meteor/templating';
 import { ReactiveVar } from 'meteor/reactive-var';
+import { insertPost } from '/imports/api/posts/methods.js';
 
 Template.modalNewPost.events({
   'submit #newpost': function(event){
@@ -10,6 +11,23 @@ Template.modalNewPost.events({
 
     var image_id = Session.get("image_id");
 
+    const newPost = {
+      post_headline: newsheadlinetext,
+      post_subtitle: newssubtitletext,
+      post_text: newstext,
+      post_image: image_id,
+      post_date: new Date()
+    };
+
+    insertPost.call(newPost, function(error){
+      if (error) {
+        console.log(error.message);
+      } else {
+        console.log('post added');
+      }
+    });
+
+    /*
     Meteor.call('createPost', newsheadlinetext, newssubtitletext, newstext, image_id, function(error, result){
       if (error) {
         console.log(error);
@@ -21,6 +39,7 @@ Template.modalNewPost.events({
         }
       }
     });
+    */
 
     Session.set("image_id", "");
 

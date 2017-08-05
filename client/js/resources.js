@@ -1,6 +1,8 @@
 import { Template } from 'meteor/templating';
 import { ReactiveVar } from 'meteor/reactive-var';
 import { FilesCollection } from 'meteor/ostrio:files';
+import { Documents } from '/imports/api/documents/documents';
+import { Resources } from '/imports/api/resources/resources';
 
 
 Template.resources.helpers({

@@ -1,5 +1,7 @@
 import { Template } from 'meteor/templating';
 import { ReactiveVar } from 'meteor/reactive-var';
+import { Bookings } from '/imports/api/bookings/bookings';
+import { Courses } from '/imports/api/courses/courses';
 
 Template.useradmin.helpers({
   'adminUsers': function(){

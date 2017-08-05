@@ -44,6 +44,24 @@ Template.modalAddResource.events({
       return;
     }
 
+    const newResource = {
+      file_date: Date.now(),
+      file_summary: description,
+      file_clinic: clinic,
+      file_category: myChosenCategories,
+      file_id: document_id,
+      file_title: document_title
+    }
+
+    insertResource.call(newResource, function(error){
+      if (error) {
+        console.log(error.message);
+      } else {
+        console.log('new resource added');
+      }
+    });
+
+    /*
     Meteor.call("createResource", description, clinic, myChosenCategories, document_id, document_title, function(error, result){
       if (error) {
         console.log(error);
@@ -55,7 +73,7 @@ Template.modalAddResource.events({
         }
       }
     });
-
+    */
   },
   'change #category': function(event, template){
     if (!_.contains(chosenCategories, event.target.value) && (event.target.value != 'NoSelection')) {

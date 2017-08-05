@@ -1,5 +1,7 @@
 import { Template } from 'meteor/templating';
 import { ReactiveVar } from 'meteor/reactive-var';
+import { Courses } from '/imports/api/courses/courses';
+import { Bookings } from '/imports/api/bookings/bookings';
 
 Template.addevent.onCreated(function(){
   this.selectedCourse = new ReactiveVar('NoFilter');

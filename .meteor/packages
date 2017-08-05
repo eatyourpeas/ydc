@@ -35,3 +35,5 @@ ostrio:meteor-root
 force-ssl
 dburles:google-maps
 aldeed:geocoder
+mdg:validated-method
+aldeed:simple-schema
