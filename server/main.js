@@ -214,6 +214,7 @@ Meteor.methods({
     }
     return total_bookings_for_course;
   }
+
 });
 
 Accounts.onCreateUser((options, user) => {
@@ -254,13 +255,9 @@ Meteor.users.after.insert(function(userId, doc){
   });
 
   Meteor.publish('findallbookings', function(){
-  //  var result = [];
-    if (isAdmin(this.userId)||isClinician(this.userId)) {
-         return Bookings.find(); //protected - accessible only by clinicians or admin
-    } else {
-         this.stop();
-    }
-    return [];
+
+         return Bookings.find(); //does not need protecting
+
   })
 
   Meteor.publish('findAllCourses', function(){

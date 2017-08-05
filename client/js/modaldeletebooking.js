@@ -1,33 +1,26 @@
 import { Template } from 'meteor/templating';
 import { ReactiveVar } from 'meteor/reactive-var';
+import { deleteBooking } from '/imports/api/bookings/methods.js';
 
 Template.modalDeleteBooking.events({
-  'click #deleteBooking': function(){
-    var selectedBooking = Session.get('bookingSelected');
+  'submit #deleteBookingForm': function(){
+    var selectedBooking = Session.get('selectedBooking');
     const thisBooking = {
       _id: selectedBooking
     };
-    /*
-    Meteor.call('deleteBooking', selectedBooking, function(error, result) {
-    if (error) {
-      alert(error);
-    } else {
-      if (result) {
-        console.log('booking deleted');
-      } else {
-        console.log('booking created');
-      }
-    }
-  });
-  */
+
     deleteBooking.call(thisBooking, function(error){
       if (error) {
-        console.log(error.message);
+        Session.set('alert_class', 'alert alert-warning');
+        Session.set('alert_message', error.message);
+        Session.set('alert_visible', true);
       } else {
-        Modal.hide('modalDeleteBooking');
+        Session.set('alert_class', 'alert alert-success');
+        Session.set('alert_message', 'Booking Cancelled. An email confirmation has been sent'); //TODO  - implement email
+        Session.set('alert_visible', true);
       }
+      Modal.hide('modalDeleteBooking');
     });
-
 
   }
 });

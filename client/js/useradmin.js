@@ -31,7 +31,6 @@ Template.useradmin.helpers({
     if (Roles.userIsInRole(user_id,'clinician', myGroup[0])) {
       return true;
     } else {
-      console.log('i am not admin');
       return false;
     }
   },
@@ -61,7 +60,7 @@ Template.useradmin.helpers({
   'confirmedBookingsForUser': function(){
     var selectedUser = Session.get('selectedUser');
     if (selectedUser) {
-      var userBookings = Bookings.find({'booked_by': selectedUser, booking_validated: true }).fetch();
+      var userBookings = Bookings.find({'booked_by': selectedUser, booking_validated: true }, {sort: {course: -1}}).fetch();
       return userBookings;
     }
   },

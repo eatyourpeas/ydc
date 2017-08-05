@@ -18,6 +18,7 @@ Session.setDefault('alert_class', "alert alert-success");
 Session.setDefault('alert_visible', false);
 Session.setDefault('alert_message', "");
 
+
 Meteor.subscribe('adminUsers');
 Meteor.subscribe('findallbookings');
 Meteor.subscribe('findAllCourses');
@@ -27,6 +28,8 @@ Meteor.subscribe('findAllPosts');
 Meteor.subscribe('files.images.all');
 Meteor.subscribe('files.documents.all');
 Meteor.subscribe('findAllAnnouncementsAtMyCentre');
+
+selectedBookings = [];
 
 Meteor.startup(function(){
   GoogleMaps.load({ v: '3', key: 'AIzaSyBOdKuGzNAH-Nv1i5P5MzY9jxbrXGZBNr4', libraries: 'geometry,places' });
@@ -72,15 +75,15 @@ Template.registerHelper('getBasketItems', function(){
 });
 
 Template.registerHelper('spacesRemaining', function(course_id){
-  var course = Courses.findOne(course_id);
-  var bookingsForCourse = Bookings.find({course: course_id, booking_validated: true}).fetch();
-  var totalBookingsForThisCourse = 0
-  for (var i = 0; i < bookingsForCourse.length; i++) {
-    if(bookingsForCourse[i].course == course_id){
-      totalBookingsForThisCourse += bookingsForCourse[i].places_booked;
+    var course = Courses.findOne(course_id);
+    var bookingsForCourse = Bookings.find({course: course_id, booking_validated: true}).fetch();
+    var totalBookingsForThisCourse = 0
+    for (var i = 0; i < bookingsForCourse.length; i++) {
+      if(bookingsForCourse[i].course == course_id){
+        totalBookingsForThisCourse += bookingsForCourse[i].places_booked;
+      }
     }
-  }
-  return course.course_places - totalBookingsForThisCourse;
+    return course.course_places - totalBookingsForThisCourse;
 });
 
 Template.registerHelper('dateTimeShorten', function(date_to_shorten){

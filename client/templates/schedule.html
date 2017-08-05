@@ -67,7 +67,7 @@
                   {{#if courseUnavailable this.value}}
                     <option value={{this.value}} disabled>{{this.text}} - <i>currently unavailable</i></option>
                   {{else}}
-                    <option value={{this.value}} {{selectedCourse this.value}}>{{this.text}}</option>
+                      <option value={{this.value}} {{selectedCourse this.value}}>{{this.text}}</option>
                   {{/if}}
                 {{/each}}
               </select>
@@ -78,13 +78,15 @@
               <div class="form-group row">
                 <label for="availablebookings" class="col-md-2 form-control-label">Available Dates:</label>
                 <div class='col-md-10'>
+                  {{#each courseDatesForCourse}}
                     <select class="form-control" id="availablebookings">
-                        {{#if courseIsFullyBooked _id}}
+                        {{#if courseIsFullyBooked this._id}}
                           <option value="{{_id}}" disabled>{{ dateTimeShorten start_date }} - {{ dateTimeShorten end_date}} at {{clinic}} <small>FULLY BOOKED</small></option>
                         {{else}}
                           <option value="{{_id}}">{{ dateTimeShorten start_date }} - {{ dateTimeShorten end_date}} at {{clinic}}</option>
                         {{/if}}
                     </select>
+                  {{/each}}
                 </div>
               </div>
               <div class="form-group row">
@@ -97,7 +99,7 @@
               </div>
               <div class="form-group row">
                 <label for="places_remaining" class="col-md-2 form-control-label">Places Remaining:</label>
-                <div class='col-md-10'>{{spacesRemaining _id}}</div>
+                <div class='col-md-10'>{{isZero (spacesRemaining _id)}}</div>
               </div>
           {{else}}
               <H4>Currently No Dates Available</H4>
@@ -106,12 +108,12 @@
           <div class="form-group row">
             {{#if courseHasDates }}
               {{#if courseIsFullyBooked _id}}
-                <button type="submit" class="btn btn-default disabled" id="addToBasketButtonDisabled">Add To Basket</button>
+                <button type="submit" class="btn btn-default disabled" disabled="disabled" id="addToBasketButtonDisabled">Add To Basket</button>
               {{else}}
                 <button type="submit" class="btn btn-default" id="addToBasketButton">Add To Basket</button>
               {{/if}}
             {{else}}
-              <button type="submit" class="btn btn-default disabled" id="addToBasketButtonDisabled">Add To Basket</button>
+              <button type="submit" class="btn btn-default disabled" disabled="disabled" id="addToBasketButtonDisabled">Add To Basket</button>
             {{/if}}
           </div>
           {{ /each }}

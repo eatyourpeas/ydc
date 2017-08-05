@@ -12,7 +12,7 @@ Template.bookingadmin.helpers({
     var course_to_filter_to = Template.instance().course.get();
     var bookings = [];
     if (course_to_filter_to == "NoFilter") {
-      bookings = Bookings.find({},{sort: ["booked_by", "asc"]}).fetch();
+      bookings = Bookings.find({},{sort: ["course", "asc"]}).fetch();
     } else {
       bookings = Bookings.find({"course": course_to_filter_to},{sort: ["booked_by", "asc"]}).fetch();
     }

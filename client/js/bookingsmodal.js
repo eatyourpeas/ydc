@@ -91,7 +91,6 @@ Template.bookingsModal.events({
   Modal.show('modalDeleteBooking');
 },
 'click #addCourseButton': function(){
-  console.log('clicked');
   Modal.show('modalAddCourse');
 }
 });

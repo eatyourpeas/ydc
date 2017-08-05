@@ -13,7 +13,7 @@ Template.schedule.onCreated(function scheduleOnCreated() {
 
 Template.schedule.helpers({
   validatedbookings: function () {
-    var myBookings = Bookings.find({ booking_validated: true },{fields:{'course':1}});
+    var myBookings = Bookings.find({ booking_validated: true, booked_by: Meteor.userId() },{fields:{'course':1}});
     return myBookings;
   },
 
@@ -63,7 +63,7 @@ Template.schedule.helpers({
   },
 
   courseDatesForCourse: function(){
-    var selectedCourse = Session.get('selectedCourse');
+    var selectedCourse = Template.instance().selectedCourse.get();
     return Courses.find({
       course_name: selectedCourse,
       start_date: { $gt: new Date() }
@@ -71,6 +71,7 @@ Template.schedule.helpers({
   },
 
   courseIsFullyBooked: function(course_id){
+
     if (course_id) {
       var course = Courses.findOne(course_id);
       var bookingsForCourse = Bookings.find({course: course_id}).fetch();
@@ -81,6 +82,7 @@ Template.schedule.helpers({
         }
       }
       var places_remaining = course.course_places - totalBookingsForThisCourse;
+
       if (places_remaining == 0) {
         return true;
       } else {
@@ -89,7 +91,7 @@ Template.schedule.helpers({
     }
   },
   courseHasDates: function(){
-    var selectedCourse = Session.get('selectedCourse');
+    var selectedCourse = Template.instance().selectedCourse.get();
     if (Courses.find({course_name: selectedCourse}).count() > 0) {
       return true;
     } else {
@@ -103,13 +105,20 @@ Template.schedule.helpers({
     } else {
       return '';
     }
+  },
+  isZero: function(numberOfPlaces){
+    if (numberOfPlaces == 0) {
+      return 'Fully Booked';
+    } else {
+      return numberOfPlaces;
+    }
   }
 });
 
 Template.schedule.events({
-  'change #course': function(event){
+  'change #course': function(event, template){
     var selectedCourse = event.target.value;
-    Session.set('selectedCourse', selectedCourse);
+    template.selectedCourse.set(selectedCourse);
   },
 
   'submit form': function(event, template){

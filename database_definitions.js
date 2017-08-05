@@ -10,7 +10,7 @@ import { ValidatedMethod } from 'meteor/mdg:validated-method';
 //Resources = new Mongo.Collection('resources');
 //Posts = new Mongo.Collection('posts');
 //Announcements = new Mongo.Collection('announcements');
-selectedBookings = [];
+
 
 /*
 Images = new FilesCollection({
