@@ -14,6 +14,9 @@ Session.setDefault('selectedUser', "");
 Session.setDefault('bookingSelected', "");
 Session.setDefault('mapLoaded', false);
 Session.setDefault('userSelected', "");
+Session.setDefault('alert_class', "alert alert-success");
+Session.setDefault('alert_visible', false);
+Session.setDefault('alert_message', "");
 
 Meteor.subscribe('adminUsers');
 Meteor.subscribe('findallbookings');
@@ -66,6 +69,18 @@ Template.registerHelper('getBasketItems', function(){
   var bookings = Bookings.find({booked_by: Meteor.userId(), booking_validated: false });
 
   return bookings;
+});
+
+Template.registerHelper('spacesRemaining', function(course_id){
+  var course = Courses.findOne(course_id);
+  var bookingsForCourse = Bookings.find({course: course_id, booking_validated: true}).fetch();
+  var totalBookingsForThisCourse = 0
+  for (var i = 0; i < bookingsForCourse.length; i++) {
+    if(bookingsForCourse[i].course == course_id){
+      totalBookingsForThisCourse += bookingsForCourse[i].places_booked;
+    }
+  }
+  return course.course_places - totalBookingsForThisCourse;
 });
 
 Template.registerHelper('dateTimeShorten', function(date_to_shorten){

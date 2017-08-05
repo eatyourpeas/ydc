@@ -7,6 +7,7 @@ import { Bookings } from '/imports/api/bookings/bookings';
 Template.schedule.onCreated(function scheduleOnCreated() {
   Meteor.subscribe('findmybookings');
   Meteor.subscribe('findAllCourses');
+  this.selectedCourse = new ReactiveVar('New Diagnosis');
 });
 
 
@@ -49,15 +50,44 @@ Template.schedule.helpers({
     return true;
   },
 
+  courseUnavailable: function(course_value){
+    var courses = Courses.find({
+      course_name: course_value,
+      start_date: { $gt: new Date() }
+    }).fetch();
+    if (courses.length > 0) {
+      return false;
+    } else {
+      return true;
+    }
+  },
+
   courseDatesForCourse: function(){
     var selectedCourse = Session.get('selectedCourse');
     return Courses.find({
       course_name: selectedCourse,
       start_date: { $gt: new Date() }
-    }, {sort: {start_date: -1}}); //select all courses which have not yet started, in descending order
-    ////NB MUST INCLUDE AND DISABLE ANY OPTIONS WHICH ARE FULLY BOOKED - TO DO
+    }, {sort: {start_date: -1}});
   },
 
+  courseIsFullyBooked: function(course_id){
+    if (course_id) {
+      var course = Courses.findOne(course_id);
+      var bookingsForCourse = Bookings.find({course: course_id}).fetch();
+      var totalBookingsForThisCourse = 0
+      for (var i = 0; i < bookingsForCourse.length; i++) {
+        if(bookingsForCourse[i].course == course_id){
+          totalBookingsForThisCourse += bookingsForCourse[i].places_booked;
+        }
+      }
+      var places_remaining = course.course_places - totalBookingsForThisCourse;
+      if (places_remaining == 0) {
+        return true;
+      } else {
+        return false;
+      }
+    }
+  },
   courseHasDates: function(){
     var selectedCourse = Session.get('selectedCourse');
     if (Courses.find({course_name: selectedCourse}).count() > 0) {
@@ -66,11 +96,14 @@ Template.schedule.helpers({
       return false;
     }
   },
-
-  datesForCourse: function(){
-
+  selectedCourse: function(courseOption){
+    var selectedCourse = Template.instance().selectedCourse.get();
+    if (selectedCourse == courseOption) {
+      return 'selected';
+    } else {
+      return '';
+    }
   }
-
 });
 
 Template.schedule.events({
@@ -94,28 +127,13 @@ Template.schedule.events({
         booked_by: Meteor.userId()
       };
 
-      insertBooking.call(newBooking, function(error){
+      insertBooking.call(newBooking, function(error, result){
         if (error) {
           console.log(error.message);
         } else {
-          console.log('booking created');
+          console.log('booking created' + result);
         }
       });
-
-      /*
-      Meteor.call('createBooking', course_id, 1, function(error, result){
-        if (error) {
-          console.log(error);
-        } else {
-          if (result) {
-            console.log('booking created');
-          } else {
-            console.log('booking failed to create');
-          }
-        }
-      });
-      */
-
     } else {
       event.preventDefault();
     }

@@ -14,7 +14,7 @@
         <select class="form-control" name='course_name' id="course_select">
           <option value="NoFilter">select a course...</option>
           {{#each allCourses}}
-          <option value={{this._id}}>{{this.course_name}} {{dateTimeShortenToDate this.start_date}}</option>
+          <option value={{this._id}}>{{this.course_name}} {{dateTimeShortenToDate this.start_date}} </option>
           {{/each}}
         </select>
       </div>
@@ -24,8 +24,12 @@
     <div class = "row">
       <div class="col-lg-1 col-md-1 col-sm-1 col-xs-1"></div>
 			<div class="col-lg-10 col-md-10 col-sm-10 col-xs-10">
+        {{#with selectedCourse}}
+          <H4><small>Total Places: <b>{{this.course_places}}</b><BR>Number of places remaining: <b>{{ spacesRemaining this._id }}</b></small></H4>
+        {{/with}}
         {{ #if getAllBookings }}
           <table class="table table-bordered">
+
             <thead>
               <tr>
                 <th>Course Name</th>
@@ -56,11 +60,12 @@
                         <td><button class="btn btn-danger" id='cancelBookingButton'>Cancel</button></td>
                       {{ /if }}
                     </tr>
-                {{/each}}
+                    {{/each}}
             </tbody>
+
           </table>
         {{ else }}
-          <H2> There are no bookings so far... </H2>
+          <H5> There are no bookings so far... </H5>
         {{ /if }}
       </div>
       <div class="col-lg-1 col-md-1 col-sm-1 col-xs-1"></div>

@@ -63,42 +63,58 @@
             <label for="course" class="col-md-2 form-control-label">Course:</label>
             <div class='col-md-10'>
               <select class="form-control" id="course">
-                <option>New Diagnosis</option>
-                <option>Carbohydrate Counting</option>
-                <option>Secondary Transfer</option>
-                <option>Pump Start</option>
-                <option>Pump Refresher</option>
-                <option>DAFNE</option>
+                {{#each courseOptions}}
+                  {{#if courseUnavailable this.value}}
+                    <option value={{this.value}} disabled>{{this.text}} - <i>currently unavailable</i></option>
+                  {{else}}
+                    <option value={{this.value}} {{selectedCourse this.value}}>{{this.text}}</option>
+                  {{/if}}
+                {{/each}}
               </select>
             </div>
           </div>
-          <div class="form-group row">
-            <label for="availablebookings" class="col-md-2 form-control-label">Available Dates:</label>
-            <div class='col-md-10'>
-              {{ #each courseDatesForCourse }}
-                <select class="form-control" id="availablebookings">
-                    <option value="{{_id}}">{{ dateTimeShorten start_date }} - {{ dateTimeShorten end_date}} at {{clinic}}</option>
-                </select>
-                <label for="clinic" class="col-md-2 form-control-label">Address:</label>
-                  {{#if address}}
-                    <div class='col-md-10 mapmarker' id={{address}}>{{address}}  <a href=""><i class="fa fa-map-marker" aria-hidden="true"></i></a></div>
-                  {{else}}
-                    <div class='col-md-10'>To Be Arranged</div>
-                  {{/if}}
-                {{ else }}
-                    <option>Currently No Dates Available</option>
-                {{ /each }}
-
-            </div>
-          </div>
+          {{ #each courseDatesForCourse }}
+          {{#if courseDatesForCourse}}
+              <div class="form-group row">
+                <label for="availablebookings" class="col-md-2 form-control-label">Available Dates:</label>
+                <div class='col-md-10'>
+                    <select class="form-control" id="availablebookings">
+                        {{#if courseIsFullyBooked _id}}
+                          <option value="{{_id}}" disabled>{{ dateTimeShorten start_date }} - {{ dateTimeShorten end_date}} at {{clinic}} <small>FULLY BOOKED</small></option>
+                        {{else}}
+                          <option value="{{_id}}">{{ dateTimeShorten start_date }} - {{ dateTimeShorten end_date}} at {{clinic}}</option>
+                        {{/if}}
+                    </select>
+                </div>
+              </div>
+              <div class="form-group row">
+                <label for="address" class="col-md-2 form-control-label">Address:</label>
+                {{#if address}}
+                  <div class='col-md-10 mapmarker' id={{address}}>{{address}}  <a href=""><i class="fa fa-map-marker" aria-hidden="true"></i></a></div>
+                {{else}}
+                  <div class='col-md-10'>To Be Arranged</div>
+                {{/if}}
+              </div>
+              <div class="form-group row">
+                <label for="places_remaining" class="col-md-2 form-control-label">Places Remaining:</label>
+                <div class='col-md-10'>{{spacesRemaining _id}}</div>
+              </div>
+          {{else}}
+              <H4>Currently No Dates Available</H4>
+          {{/if}}
 
           <div class="form-group row">
             {{#if courseHasDates }}
-              <button type="submit" class="btn btn-default" id="addToBasketButton">Add To Basket</button>
+              {{#if courseIsFullyBooked _id}}
+                <button type="submit" class="btn btn-default disabled" id="addToBasketButtonDisabled">Add To Basket</button>
+              {{else}}
+                <button type="submit" class="btn btn-default" id="addToBasketButton">Add To Basket</button>
+              {{/if}}
             {{else}}
               <button type="submit" class="btn btn-default disabled" id="addToBasketButtonDisabled">Add To Basket</button>
             {{/if}}
           </div>
+          {{ /each }}
         </form>
       </div>
       <div class="col-md-2"></div>

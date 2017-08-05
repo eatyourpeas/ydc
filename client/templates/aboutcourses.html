@@ -29,16 +29,7 @@
                     </tr>
                   </tbody>
                 </table>
-                {{#if currentUserIsParent}}
-                  <div class="button_book">
-                    <a class="btn btn-primary btn-small" id='booknowbutton'><span><i class="fa fa-pencil-square-o" aria-hidden="true"></i> Book Now</span></a>
-                  </div>
-                {{else}}
-                  <div class="button_book">
-                    Want to book a place?<BR>
-                    All places are free to YDC members. Just sign up for an account...
-                  </div>
-                {{/if}}
+                {{>sign_up_for_course}}
               </div>
             </div>
           </div>
@@ -85,16 +76,7 @@
                   </tr>
                 </tbody>
               </table>
-              {{#if currentUserIsParent}}
-                <div class="button_book">
-                  <a class="btn btn-primary btn-small" id='booknowbutton'><span><i class="fa fa-pencil-square-o" aria-hidden="true"></i> Book Now</span></a>
-                </div>
-              {{else}}
-                <div class="button_book">
-                  Want to book a place?<BR>
-                  All places are free to YDC members. Just sign up for an account...
-                </div>
-              {{/if}}
+              {{>sign_up_for_course}}
             </div>
           </div>
         </div>
@@ -119,16 +101,7 @@
                     </tr>
                   </tbody>
                 </table>
-                {{#if currentUserIsParent}}
-                  <div class="button_book">
-                    <a class="btn btn-primary btn-small" id='booknowbutton'><span><i class="fa fa-pencil-square-o" aria-hidden="true"></i> Book Now</span></a>
-                  </div>
-                {{else}}
-                  <div class="button_book">
-                    Want to book a place?<BR>
-                    All places are free to YDC members. Just sign up for an account...
-                  </div>
-                {{/if}}
+                {{>sign_up_for_course}}
               </div>
             </div>
           </div>
@@ -188,16 +161,7 @@
                   </tr>
                 </tbody>
               </table>
-              {{#if currentUserIsParent}}
-                <div class="button_book">
-                  <a class="btn btn-primary btn-small" id='booknowbutton'><span><i class="fa fa-pencil-square-o" aria-hidden="true"></i> Book Now</span></a>
-                </div>
-              {{else}}
-                <div class="button_book">
-                  Want to book a place?<BR>
-                  All places are free to YDC members. Just sign up for an account...
-                </div>
-              {{/if}}
+              {{>sign_up_for_course}}
             </div>
           </div>
         </div>
@@ -221,16 +185,7 @@
                   </tr>
                 </tbody>
               </table>
-              {{#if currentUserIsParent}}
-                <div class="button_book">
-                  <a class="btn btn-primary btn-small" id='booknowbutton'><span><i class="fa fa-pencil-square-o" aria-hidden="true"></i> Book Now</span></a>
-                </div>
-              {{else}}
-                <div class="button_book">
-                  Want to book a place?<BR>
-                  All places are free to YDC members. Just sign up for an account...
-                </div>
-              {{/if}}
+              {{>sign_up_for_course}}
             </div>
           </div>
         </div>
@@ -251,4 +206,23 @@
         </div>
       </div>
   </div>
+</template>
+
+<Template name="sign_up_for_course">
+  {{#if currentUserIsParent}}
+    <div class="button_book">
+      <a class="btn btn-primary btn-small" id='booknowbutton'><span><i class="fa fa-pencil-square-o" aria-hidden="true"></i> Book Now</span></a>
+    </div>
+  {{else}}
+    {{#if currentUserIsClinicianOrAdmin}}
+      <div class="button_book">
+        All places are free to YDC members. Encourage your families to sign up!
+      </div>
+    {{else}}
+      <div class="button_book">
+        Want to book a place?<BR>
+        All places are free to YDC members. Just sign up for an account...
+      </div>
+    {{/if}}
+  {{/if}}
 </template>

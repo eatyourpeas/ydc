@@ -121,68 +121,6 @@ Meteor.methods({
       return false;
     }
   },
-  /*
-  deleteBooking: function(booking_id){
-    if (isAdmin(this.userId)) {
-      Bookings.remove({_id: booking_id});
-      return true;
-    } else {
-      return false;
-    }
-  },
-  createBooking: function(course_id, places_booked){
-    if (isClinician(this.userId) || isAdmin(this.userId)) {
-      //update the users bookings
-      Bookings.insert({
-        booked_by: this.userId,
-        course: course_id,
-        booked_at: Date.now(),
-        booking_validated: false,
-        places_booked: places_booked
-      });
-      return true;
-    } else {
-      return false;
-    }
-  },
-  updateBookingToValidated: function(booking_id){
-    if (this.userId) {
-      Bookings.update(booking_id, {
-        $set: { booking_validated : true }
-      });
-      return true;
-    } else {
-      return false;
-    }
-  },
-  /*
-  createCourse: function(course, startdate, enddate, selectedClinic, address, course_places){
-    if (isAdmin(this.userId) || isClinician(this.userId)) {
-
-      Courses.insert({
-        course_name: course,
-        start_date: startdate,
-        end_date: enddate,
-        created_by: this.userId,
-        created_at: Date.now(),
-        clinic: selectedClinic,
-        address: address,
-        course_places: course_places
-      });
-      return true;
-    } else {
-      return false;
-    }
-  },
-  deleteCourse: function(course_id){
-    if (isAdmin(this.userId) || isClinician(this.userId)) {
-      Courses.remove({_id:course_id});
-      return true;
-    } else {
-      return false;
-    }
-  },
-  */
   deleteUser: function(user_id){ //can only delete user if logged in user has admin status
     if (isAdmin(Meteor.userId)) {
       Meteor.users.remove({_id: user_id});
@@ -191,47 +129,6 @@ Meteor.methods({
       return false;
     }
   },
-  /*
-  createPost: function(newsheadlinetext, newssubtitletext, newstext, image_id){
-    if (isAdmin(this.userId)) {
-      Posts.insert({
-        post_headline: newsheadlinetext,
-        post_subtitle: newssubtitletext,
-        post_text: newstext,
-        post_image: image_id,
-        post_date: Date.now()
-      });
-      return true;
-    } else {
-      return false;
-    }
-  },
-  deletePost: function(post_id){
-    if (isAdmin(this.userId)) {
-      var post = Posts.findOne(post_id);
-      Images.remove({_id: post.post_image});
-      Posts.remove({_id: post_id});
-      return true;
-    } else {
-      return false;
-    }
-  },
-  updatePost: function(post_id, newsheadlinetext, newssubtitletext, newstext, post_image){
-    if (isAdmin(this._id)) {
-      Posts.update(post_id,{
-        $set: { post_headline: newsheadlinetext,
-        post_subtitle: newssubtitletext,
-        post_text: newstext,
-        post_image: post_image,
-        post_date: Date.now()
-        }
-      });
-      return true;
-    } else {
-      return false;
-    }
-  },
-  */
   mostRecentPost: function(){
     var post = Posts.findOne({}, {sort: {post_date: -1, limit: 1}});
     if (post) {
@@ -257,24 +154,6 @@ Meteor.methods({
       return false;
     }
   },
-  /*
-  createResource: function(description, clinic, myChosenCategories, document_id, document_title){
-    if (this.userId) {
-      // need to be logged in to update resource
-      Resources.insert({
-        file_date: Date.now(),
-        file_summary: description,
-        file_clinic: clinic,
-        file_category: myChosenCategories,
-        file_id: document_id,
-        file_title: document_title
-      });
-      return true;
-    } else {
-      return false;
-    }
-  },
-  */
   deleteResource: function(resource_id){
     //can only delete resources if logged in as admin - this must be a meteor method as removal included Documents as well as Resources collections
     if (isAdmin(this.userId)) {
@@ -322,6 +201,18 @@ Meteor.methods({
     });
     var result = geo.geocode(address);
     return result;
+  },
+  'numberOfPlacesForCourse': function(course_id){
+    var course_to_book_on = Courses.findOne(course_id);
+
+    var total_course_places = course_to_book_on.course_places;
+    var total_places_booked_for_course = 0;
+    var bookings_for_course = Bookings.find({course: course_id}).fetch();
+    var total_bookings_for_course = 0;
+    for (var i = 0; i < bookings_for_course.length; i++) {
+      total_bookings_for_course += bookings_for_course[i].places_booked;
+    }
+    return total_bookings_for_course;
   }
 });
 
@@ -341,7 +232,7 @@ Accounts.onCreateUser((options, user) => {
 Meteor.users.after.insert(function(userId, doc){
 
   if (!isAdmin(Meteor.user())) {
-    //I am not admin so no one is logged in. This must be a parent. New users created by admin are allocated roles to this new user is done elsewhere
+    //I am not admin so no one is logged in. This must be a parent. New users created by admin are allocated roles elsewhere
     Roles.addUsersToRoles(doc._id, "parent", doc.clinic);
   }
 });
@@ -368,7 +259,6 @@ Meteor.users.after.insert(function(userId, doc){
          return Bookings.find(); //protected - accessible only by clinicians or admin
     } else {
          this.stop();
-         // YOUUU SHALL NOT.... PASS!!!  ~Gandalf
     }
     return [];
   })
@@ -383,7 +273,6 @@ Meteor.users.after.insert(function(userId, doc){
           result = Meteor.users.find();
      } else {
           this.stop();
-          // YOUUU SHALL NOT.... PASS!!!  ~Gandalf
      }
      return result;
   });

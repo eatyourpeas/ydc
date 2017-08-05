@@ -67,21 +67,12 @@ Template.shoppingBasket.events({
           console.log(error.message);
         } else {
           console.log("booking updated to validated");
+          Session.set("alert_class", "alert alert-success");
+          Session.set("alert_visible", true);
+          Session.set("alert_message", "Booked! A confirmation email has been sent.");
         }
       });
-      /*
-      Meteor.call('updateBookingToValidated', booking_id, function(error, result){
-        if (error) {
-          console.log(error);
-        } else {
-          if (result) {
-            console.log('booking updated to validated');
-          } else {
-            console.log('booking not updated');
-          }
-        }
-      });
-      */
+
     }
     if (selectedBookings.length < 1) {
       template.bookingsAreSelected.set(false);
@@ -142,8 +133,6 @@ Template.shoppingBasket.events({
       template.thereAreBookedPlaces.set(0);
     }
 
-      //update the users bookings
-     //Bookings.update(booking_id, {$set:{places_booked: numberOfItems}});
      const updatedBooking = {
        _id: booking_id,
        places_booked: numberOfItems

@@ -91,17 +91,6 @@ Template.useradmin.helpers({
     var clinic = course.clinic;
     return clinic;
   },
-  'spacesRemaining': function(course_id){
-    var course = Courses.findOne(course_id);
-    var bookingsForCourse = Bookings.find({course: course_id}).fetch();
-    var totalBookingsForThisCourse = 0
-    for (var i = 0; i < bookingsForCourse.length; i++) {
-      if(bookingsForCourse[i].course == course_id){
-        totalBookingsForThisCourse += bookingsForCourse[i].places_booked;
-      }
-    }
-    return course.course_places - totalBookingsForThisCourse;
-  },
   'alertMessage': function(){
     var errorAlert = Session.get('userAdminError');
     var successAlert = Session.get('userAdminSuccess');

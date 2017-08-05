@@ -1,5 +1,6 @@
 import { Meteor } from 'meteor/meteor';
 import { Bookings } from './bookings';
+import { Courses } from '/imports/api/courses/courses';
 import { SimpleSchema } from 'meteor/aldeed:simple-schema';
 import { ValidatedMethod } from 'meteor/mdg:validated-method';
 import { currentUserisLoggedInAsAdmin } from '/imports/api/users/user_role_validation';
@@ -18,7 +19,20 @@ export const insertBooking = new ValidatedMethod({
     if (!this.userId) {
       throw new Meteor.Error('unauthorized', 'You must be logged in to make a booking!');
     }
-    Bookings.insert(booking);
+    //test if course full
+    var course_id_to_book_on = booking.course;
+    var numberOfPlacesBooked = numberOfPlacesBookedOnCourse(course_id_to_book_on);
+    var totalNumberOfPlaces = totalNumberOfPlacesOnCourse(course_id_to_book_on);
+    var numberOfPlacesRemaining = totalNumberOfPlaces - numberOfPlacesBooked;
+    if ((numberOfPlacesRemaining - booking.places_booked)< 0) {
+      return Meteor.error('There are only '+numberOfPlacesRemaining+' places remaining.');
+    }
+    if ((numberOfPlacesRemaining - booking.places_booked)== 0) {
+      return Meteor.error('This course is fully booked.')
+    } else {
+      Bookings.insert(booking);
+      return (totalNumberOfPlaces - numberOfPlacesBooked - booking.places_booked) + " places remaining. ";
+    }
   },
 });
 
@@ -100,3 +114,19 @@ export const updateBookingToValidated = new ValidatedMethod({
     }
   }
 });
+
+function numberOfPlacesBookedOnCourse(course_id){
+  var total_places_booked_for_course = 0;
+  var bookings_for_course = [];
+  bookings_for_course = Bookings.find({'course': course_id, 'booking_validated': true});
+  var total_bookings_for_course = 0;
+  for (var i = 0; i < bookings_for_course.length; i++) {
+    total_bookings_for_course += bookings_for_course[i].places_booked;
+  }
+  return total_bookings_for_course;
+}
+
+function totalNumberOfPlacesOnCourse(course_id){
+  var course_to_book_on = Courses.findOne(course_id);
+  return total_course_places = course_to_book_on.course_places;
+}
