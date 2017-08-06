@@ -30,14 +30,14 @@
                 <select class="form-control" id='dieteticSelect'>
                   <option value="NoFilter">select a dietetic resource...</option>>
                     {{#each resource in dieteticResources}}
-                  <option value={{resource.file_title}}>{{resource.file_title}}</option>>
-                  {{/each}}
+                      <option value={{resource._id}}>{{resource.file_title}}</option>>
+                    {{/each}}
                 </select>
               {{else}}
                 <div class="promo-text">You have no dietetic resources yet..</div>
               {{/if}}
               {{#with resourceForDieteticSelectedId}}
-                {{_id}}
+                {{>resource_table}}
               {{/with}}
             </div>
           </div>
