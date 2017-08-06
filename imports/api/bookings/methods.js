@@ -105,20 +105,37 @@ export const updateBookingToValidated = new ValidatedMethod({
   run( booking ) {
     if (!this.userId) {
       throw new Meteor.Error('unauthorized', 'You must be logged in to make a booking!');
+      return;
     } else {
+      var selectedBooking = Bookings.findOne(booking._id, {fields: {places_booked: 1, course: 1}});
+
+      var course_id_to_book_on = selectedBooking.course;
+      var numberOfPlacesBooked = numberOfPlacesBookedOnCourse(course_id_to_book_on);
+      var totalNumberOfPlaces = totalNumberOfPlacesOnCourse(course_id_to_book_on);
+      var numberOfPlacesRemaining = totalNumberOfPlaces - numberOfPlacesBooked;
+      if (numberOfPlacesRemaining < selectedBooking.places_booked) {
+        throw new Meteor.Error('Unauthorized', 'There are only ' + numberOfPlacesRemaining + ' places left. Please reduce your booking or contact the administrator for your clinic.');
+        return;
+      }
+      if (selectedBooking.places_booked > 4) {
+        throw new Meteor.Error('Unauthorized', 'You cannot book more than 4 places!');
+        return;
+      }
+
       Bookings.update(booking._id, {
         $set: {
           booking_validated: booking.booking_validated
         }
       });
+
     }
   }
 });
 
 function numberOfPlacesBookedOnCourse(course_id){
-  var total_places_booked_for_course = 0;
+
   var bookings_for_course = [];
-  bookings_for_course = Bookings.find({'course': course_id, 'booking_validated': true});
+  bookings_for_course = Bookings.find({'course': course_id, 'booking_validated': true}).fetch();
   var total_bookings_for_course = 0;
   for (var i = 0; i < bookings_for_course.length; i++) {
     total_bookings_for_course += bookings_for_course[i].places_booked;

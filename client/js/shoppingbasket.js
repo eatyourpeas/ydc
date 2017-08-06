@@ -37,13 +37,14 @@ Template.shoppingBasket.events({
   'click #removeButton': function(event, template){
       for (var i = 0; i < selectedBookings.length; i++) {
         var booking_id = selectedBookings[i];
-        //Bookings.remove({_id: booking_id});
+
         const bookingToRemove = { _id: booking_id };
         deleteBooking.call(bookingToRemove, function(error){
           if (error) {
             console.log(error.message);
-          } else {
-            console.log('booking removed');
+            Session.set("alert_class", "alert alert-warning");
+            Session.set("alert_visible", true);
+            Session.set("alert_message", error.message);
           }
         });
       }
@@ -54,6 +55,8 @@ Template.shoppingBasket.events({
       selectedBookings = [];
   },
   'click #checkoutButton': function(event, template){
+    //test for more than 4 bookings
+
     for (var i = 0; i < selectedBookings.length; i++) {
       var booking_id = selectedBookings[i];
 
@@ -65,11 +68,13 @@ Template.shoppingBasket.events({
       updateBookingToValidated.call(bookingToUpdate, function(error){
         if (error) {
           console.log(error.message);
+          Session.set("alert_class", "alert alert-warning");
+          Session.set("alert_visible", true);
+          Session.set("alert_message", error.message);
         } else {
-          console.log("booking updated to validated");
           Session.set("alert_class", "alert alert-success");
           Session.set("alert_visible", true);
-          Session.set("alert_message", "Booked! A confirmation email has been sent.");
+          Session.set("alert_message", "Booked! A confirmation email has been sent."); //TODO email needs implementing
         }
       });
 
@@ -79,7 +84,7 @@ Template.shoppingBasket.events({
     }
     selectedBookings = [];
   },
-  'click .keepopen': function(){
+  'click .keepopen': function(){ //keep the basket dialog open
 
     $('#menu-global-nav').on('click.bs.dropdown', function(e){
         var $a  = $(e.target), is_a = $a.is('.is_a');
@@ -102,12 +107,12 @@ Template.shoppingBasket.events({
     var myBooking = Bookings.findOne({_id: booking_id});
     var numberOfItems = myBooking.places_booked;
     numberOfItems ++;
-    if (numberOfItems > 10) {
-      numberOfItems = 10;
+    if (numberOfItems > 4) { ///cannot book more than 4 places
+      numberOfItems = 4;
     }
 
      //update the users bookings
-    //Bookings.update(booking_id, {$set:{places_booked: numberOfItems}});
+
     const updatedBooking = {
       _id: booking_id,
       places_booked: numberOfItems
@@ -115,8 +120,9 @@ Template.shoppingBasket.events({
     updatePlacesBooked.call(updatedBooking, function(error){
       if (error) {
         console.log(error.message);
-      } else {
-        console.log('updated booking');
+        Session.set("alert_class", "alert alert-warning");
+        Session.set("alert_visible", true);
+        Session.set("alert_message", error.message);
       }
     });
     checkForBookedPlaces();
@@ -140,8 +146,6 @@ Template.shoppingBasket.events({
      updatePlacesBooked.call(updatedBooking, function(error){
        if (error) {
          console.log(error.message);
-       } else {
-         console.log('updated booking');
        }
      });
      checkForBookedPlaces();
