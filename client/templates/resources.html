@@ -73,7 +73,7 @@
             <div class="home-promo-wide-overlay">
               <span><h3><i class="fa fa-comments"></i> &nbsp; Psychological Support</h3></span>
               {{#if psychologyResources}}
-                <select class="form-control" id='pschologySelect'>
+                <select class="form-control" id='psychologySelect'>
                   <option value="NoFilter">select a psychology resource...</option>>
                     {{#each resource in psychologyResources}}
                   <option value={{resource._id}}>{{resource.file_title}}</option>>
@@ -129,7 +129,7 @@
                   <div class="promo-text">You have no transtion/young adult resources yet..</div>
                 {{/if}}
                 {{#with resourceForTransitionSelectedId}}
-                  {{resource_table}}
+                  {{>resource_table}}
                 {{/with}}
               </div>
             </div>
