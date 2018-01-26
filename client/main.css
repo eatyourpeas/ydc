@@ -528,7 +528,7 @@ footer {
 	margin-top: 100px;
 }
 
-#menu-footer-nav {margin: 16px 0 20px 0; padding: 0px; float: left; display: inline-block; background-color: : #fff;}
+#menu-footer-nav {margin: 16px 0 20px 0; padding: 0px; float: left; display: inline-block; background-color: #fff;}
 #menu-footer-nav li {float: left; padding: 0 15px 0 15px; list-style: none; text-transform: uppercase;}
 #menu-footer-nav li a {text-decoration: none; font-size: 0.9em; color: #3b3a3a; letter-spacing: 0.07em;}
 #menu-footer-nav li a:hover {border-bottom: 1px solid #444;}

@@ -8,6 +8,7 @@ import { Images } from '/imports/api/images/images';
 import { Posts } from '/imports/api/posts/posts';
 import { Resources } from '/imports/api/resources/resources';
 
+
 Meteor.startup(() => {
   // code to run on server at startup
 

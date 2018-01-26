@@ -28,11 +28,11 @@ Images = new FilesCollection({
       }
 
     }
-  }/*,
+  },
   storagePath: '/images' //comment in in production, out in development
 });
 
-/*
+
 Documents = new FilesCollection({
   collectionName: 'YDCDocuments',
   allowClientCode: false, // Disallow remove files from Client
@@ -50,4 +50,5 @@ Documents = new FilesCollection({
     }
   },
   storagePath: '/documents'   //comment in in production, out in development
-});*/
+});
+*/

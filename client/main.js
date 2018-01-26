@@ -6,7 +6,7 @@ import { Posts } from '/imports/api/posts/posts';
 import { Documents } from '/imports/api/documents/documents';
 import { FilesCollection } from 'meteor/ostrio:files';
 
-import './main.html';
+//import './main.html';
 
 // counter starts at 0
 Session.setDefault('counter', 0);
@@ -188,6 +188,7 @@ function shortenDateRemoveDate(date_to_shorten){
 
 ///////// Routes
 
+
 Router.configure({
     layoutTemplate: 'main'
 });
@@ -195,6 +196,7 @@ Router.configure({
 Router.route('/', {
     template: 'home'
 });
+
 
 Router.route('/posts',{
   template: 'posts',
